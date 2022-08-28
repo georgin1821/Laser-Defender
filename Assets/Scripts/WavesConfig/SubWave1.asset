@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 818839784f98c974ea8d06d067903b02, type: 3}
+  m_Name: SubWave1
+  m_EditorClassIdentifier: 
+  waveConfigFormation: {fileID: 11400000, guid: f67dce9b566bb724f826824e0ec143b8, type: 2}
+  pathPrefab: {fileID: 2548754990223341494, guid: 1a42f79fd75410a4eaef56dab0c13548, type: 3}
+  isDeploingWithFormation: 1
+  numberOfEnemies: 5
+  enemyPrefab: {fileID: 7482149211567149601, guid: ad39f5981172b60408bbdbb38ffce367, type: 3}
