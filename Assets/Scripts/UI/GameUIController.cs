@@ -51,13 +51,13 @@ public class GameUIController : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
-        coinsText.text = GameManager.Instance.coins.ToString();
+        coinsText.text = GameDataManager.Instance.coins.ToString();
         UpdateHealthText();
     }
 
     void Update()
     {
-        levelText.text = GameManager.Instance.CurrentLevel.ToString();
+        levelText.text = GameDataManager.Instance.CurrentLevel.ToString();
     }
 
     public void UpdateHealthText()
@@ -96,7 +96,7 @@ public class GameUIController : MonoBehaviour
     public void LoadNextStage()
     {
         //Debug.Log("Laod Next Level");
-        GameManager.Instance.CurrentLevel++;
+        GameDataManager.Instance.CurrentLevel++;
         GamePlayController.instance.UpdateState(GameState.LOADLEVEL);
     }
 
@@ -109,7 +109,7 @@ public class GameUIController : MonoBehaviour
         switch (state)
         {
             case GameState.LEVELCOMPLETEUI:
-                stageCompleteText.text = "Stage " + GameManager.Instance.CurrentLevel + " Completed!";
+                stageCompleteText.text = "Stage " + GameDataManager.Instance.CurrentLevel + " Completed!";
                 break;
         }
     }

@@ -49,9 +49,9 @@ public class LevelMenuController : MonoBehaviour
     void InitializeLevelMenu()
     {
 
-        coinText.text = "" + GameManager.Instance.coins;
+        coinText.text = "" + GameDataManager.Instance.coins;
 
-        levels = GameManager.Instance.levels;
+        levels = GameDataManager.Instance.levels;
 
         for (int i = 0; i < levels.Length; i++)
         {
@@ -78,23 +78,24 @@ public class LevelMenuController : MonoBehaviour
 
             case "Level0":
                 //    Debug.Log("Level0");
-                GameManager.Instance.LoadLevel(0);
+               // FadeScenes.Instance.PlayLoadingScene();
+                GameDataManager.Instance.LoadLevel(0);
                 break;
             case "Level1":
                 //    Debug.Log("Level1");
-                GameManager.Instance.LoadLevel(1);
+                GameDataManager.Instance.LoadLevel(1);
                 break;
             case "Level2":
                 //  Debug.Log("Level2");
-                GameManager.Instance.LoadLevel(2);
+                GameDataManager.Instance.LoadLevel(2);
                 break;
             case "Level3":
                 //  Debug.Log("Level3");
-                GameManager.Instance.LoadLevel(3);
+                GameDataManager.Instance.LoadLevel(3);
                 break;
             case "Level4":
                 //  Debug.Log("Level3");
-                GameManager.Instance.LoadLevel(4);
+                GameDataManager.Instance.LoadLevel(4);
                 break;
 
         }

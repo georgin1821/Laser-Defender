@@ -48,9 +48,9 @@ public class CoinsBehavior : MonoBehaviour
                 Destroy(gameObject);
                 SoundEffectController.instance.CollectGoldSound();
 
-                int currentCoins = GameManager.Instance.coins;
-                GameManager.Instance.coins += 100;
-                GameUIController.instance.UpdateCoins(currentCoins, GameManager.Instance.coins);
+                int currentCoins = GameDataManager.Instance.coins;
+                GameDataManager.Instance.coins += 100;
+                GameUIController.instance.UpdateCoins(currentCoins, GameDataManager.Instance.coins);
             }
         }
 

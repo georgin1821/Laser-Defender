@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine.Events;
+
 public class GamePlayController : MonoBehaviour
 {
     public static GamePlayController instance;
     public static event Action<GameState> OnGameStateChange;
+
+    public Event gevent;
 
     public const int valuse = 10;
     public GameState state;
@@ -35,7 +39,7 @@ public class GamePlayController : MonoBehaviour
 
     void OnLevelSpawnCompleted()
     {
-        if (GameManager.Instance.CurrentLevel < GameManager.Instance.levels.Length)
+        if (GameDataManager.Instance.CurrentLevel < GameDataManager.Instance.levels.Length)
         {
            // UpdateState(GameState.DELAY);
             UpdateState(GameState.LEVELCOMPLETE);
@@ -48,7 +52,7 @@ public class GamePlayController : MonoBehaviour
         // testing
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("LevelMenu");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelMenu");
         }
         //
         switch (state)
@@ -94,7 +98,7 @@ public class GamePlayController : MonoBehaviour
                 // Debug.Log("LOADLEVEL");
 
                 Player.instance.gunIsUpgraded = false;
-                Levels.instance.SpawnLevelWithIndex(GameManager.Instance.CurrentLevel);
+                Levels.instance.SpawnLevelWithIndex(GameDataManager.Instance.CurrentLevel);
                 UpdateState(GameState.PLAY);
                 break;
             case GameState.PLAY:
@@ -103,12 +107,12 @@ public class GamePlayController : MonoBehaviour
             case GameState.LEVELCOMPLETE:
                // Time.timeScale = 0;
 
-                int unlockedLevel = GameManager.Instance.CurrentLevel;
-                if (!(unlockedLevel >= GameManager.Instance.levels.Length))
+                int unlockedLevel = GameDataManager.Instance.CurrentLevel;
+                if (!(unlockedLevel >= GameDataManager.Instance.levels.Length))
                 {
-                    GameManager.Instance.levels[unlockedLevel] = true;
+                    GameDataManager.Instance.levels[unlockedLevel] = true;
                 }
-                GameManager.Instance.Save();
+                GameDataManager.Instance.Save();
                 StartCoroutine(DelayRoutine());
 
                 break;

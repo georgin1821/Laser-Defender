@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameDataManager : Singleton<GameDataManager>
 {
 
     public int coins;
@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager>
     public void LoadLevel(int index)
     {
         CurrentLevel = index;
-        SceneManager.LoadScene("Game");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
     }
 
     public void Save()

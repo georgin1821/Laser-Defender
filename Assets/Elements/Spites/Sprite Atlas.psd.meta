@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Coins BG
+      name: Sprite Atlas_0
       rect:
         serializedVersion: 2
         x: 7
@@ -136,41 +136,20 @@ TextureImporter:
         width: 163
         height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2a8a182dddebc54486f027f227c98de
-      internalID: -1412625107
+      spriteID: a26405e083b34404b83c2ad5f3a213ff
+      internalID: -1734673990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lock Icon
-      rect:
-        serializedVersion: 2
-        x: 275
-        y: 452
-        width: 62
-        height: 65
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3d527ecd82ea8ec42a87aab4d52f70fa
-      internalID: -1491758560
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Coins bug
+      name: Sprite Atlas_1
       rect:
         serializedVersion: 2
         x: 191
@@ -178,20 +157,41 @@ TextureImporter:
         width: 51
         height: 78
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f8af4f8c0711dd48bdbf89a015dafb4
-      internalID: -441180754
+      spriteID: 9f76d152aaad2704792ffc8a6fbe831a
+      internalID: 1190367154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heart
+      name: Sprite Atlas_2
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 452
+        width: 62
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b035cca4c9513046a3723010a4d71f3
+      internalID: -2143747932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Atlas_3
       rect:
         serializedVersion: 2
         x: 358
@@ -199,20 +199,20 @@ TextureImporter:
         width: 75
         height: 62
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f28a33ab1be22241a131a966b736fa9
-      internalID: -1119465077
+      spriteID: 147485fa976915e44bbbbf392ce10607
+      internalID: 967070866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coins pile
+      name: Sprite Atlas_4
       rect:
         serializedVersion: 2
         x: 454
@@ -220,14 +220,35 @@ TextureImporter:
         width: 56
         height: 74
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ca880dec0af5884295ff2ec5bcbdf99
-      internalID: -1095779269
+      spriteID: bed7d91e35add204ca5d78503a9a392c
+      internalID: -210898813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Loading
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 386
+        width: 184
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21d60ad23b4d79e4baf892d5e441d6a1
+      internalID: 916925080
       vertices: []
       indices: 
       edges: []
@@ -243,11 +264,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Heart: -1119465077
-      Lock Icon: -1491758560
-      Coins BG: -1412625107
-      Coins bug: -441180754
-      Coins pile: -1095779269
+      Loading: 916925080
+      Sprite Atlas_0: -1734673990
+      Sprite Atlas_4: -210898813
+      Sprite Atlas_2: -2143747932
+      Sprite Atlas_3: 967070866
+      Sprite Atlas_1: 1190367154
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 1
