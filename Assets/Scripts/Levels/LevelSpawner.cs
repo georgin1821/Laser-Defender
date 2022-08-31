@@ -83,7 +83,6 @@ public class LevelSpawner : MonoBehaviour
             newEnemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine();
             newEnemy.GetComponent<Enemy>().placeAtWave = enemyCount;
 
-            // you have to set the path of each enemy seting the current waveConfig and current SubWaveConfig
 
             yield return new WaitForSeconds(waveConfig.GetTimeBetweenSpawns());
 

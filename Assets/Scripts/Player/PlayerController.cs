@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         yMax = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
         yMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
 
-        float shipSizeXAdjustment = gameObject.GetComponent<Renderer>().bounds.size.x / 2;
+        float shipSizeXAdjustment = gameObject.GetComponent<Renderer>().bounds.size.x / 4;
         float shipSizeYAdjustment = gameObject.GetComponent<Renderer>().bounds.size.y / 2;
 
         Vector3 temp = this.transform.position;

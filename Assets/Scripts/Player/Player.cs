@@ -9,16 +9,22 @@ public class Player : MonoBehaviour
 
     public static Player instance;
 
+
     [SerializeField] private float speed = 5f;
     [SerializeField] int health;
 
     [SerializeField] bool isAlwaysShooting = false;
     [SerializeField] bool isMovingWithMouse = true;
+    [SerializeField] ParticleSystem rocketFlames;
+    [SerializeField] ParticleSystem shootingFlames;
 
     PlayerController playerController;
     GunController gunController;
     AudioSource audioSource;
+    Animator anim;
+
     int upgradeRank = 1;
+    bool isGameStatePLAY;
 
     [Header("GameDev Settings")]
     [SerializeField] bool collideWithEnemy = true;
@@ -32,19 +38,29 @@ public class Player : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
         audioSource = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
+
+        GamePlayController.OnGameStateChange += GameStateChangeHandle;
     }
 
+    private void OnDestroy()
+    {
+        GamePlayController.OnGameStateChange -= GameStateChangeHandle;
+    }
     private void Start()
     {
         audioSource.Stop();
-        audioSource.Play();
     }
     void Update()
     {
-        audioSource.loop = isAlwaysShooting;
-        Move();
+        if (isGameStatePLAY)
+        {
+            audioSource.loop = isAlwaysShooting;
+            Move();
 
-        Shoot();
+            Shoot();
+
+        }
     }
 
     void Move()
@@ -142,5 +158,22 @@ public class Player : MonoBehaviour
         return isAlwaysShooting;
     }
 
+    void GameStateChangeHandle(GameState state)
+    {
+        isGameStatePLAY = (state == GameState.PLAY);
+        if (state == GameState.PLAY)
+        {
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            audioSource.Play();
+            anim.enabled = false;
+            rocketFlames.Play();
+            shootingFlames.Play();
+        }
+    }
+
+    public void PlayerAnimation()
+    {
+        anim.Play("Intro");
+    }
 }
 

@@ -17,6 +17,8 @@ public class GameUIController : MonoBehaviour
     [SerializeField] Button retryBtn;
     [SerializeField] TMP_Text waveText;
     [SerializeField] TMP_Text startWaveText;
+    [SerializeField] TMP_Text introText;
+
 
 
     [SerializeField] TMP_Text stageCompleteText;
@@ -52,7 +54,7 @@ public class GameUIController : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
         coinsText.text = GameDataManager.Instance.coins.ToString();
-        UpdateHealthText();
+        //UpdateHealthText();
     }
 
     void Update()
@@ -105,6 +107,7 @@ public class GameUIController : MonoBehaviour
 
         stageCompletedPanel.SetActive(state == GameState.LEVELCOMPLETEUI);
         defeatPanel.SetActive(state == GameState.DEFEAT);
+        introText.gameObject.SetActive(state == GameState.INIT);
 
         switch (state)
         {

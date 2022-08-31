@@ -41,7 +41,7 @@ public class GamePlayController : MonoBehaviour
     {
         if (GameDataManager.Instance.CurrentLevel < GameDataManager.Instance.levels.Length)
         {
-           // UpdateState(GameState.DELAY);
+            // UpdateState(GameState.DELAY);
             UpdateState(GameState.LEVELCOMPLETE);
 
         }
@@ -89,10 +89,10 @@ public class GamePlayController : MonoBehaviour
                 break;
             case GameState.INIT:
                 InitializePlayer();
+                BeginIntroSequence();
                 Score = 0;
                 DestroyLevel();
                 GameUIController.instance.UpdateScore(Score);
-                UpdateState(GameState.LOADLEVEL);
                 break;
             case GameState.LOADLEVEL:
                 // Debug.Log("LOADLEVEL");
@@ -104,7 +104,7 @@ public class GamePlayController : MonoBehaviour
                 Time.timeScale = 1;
                 break;
             case GameState.LEVELCOMPLETE:
-               // Time.timeScale = 0;
+                // Time.timeScale = 0;
 
                 int unlockedLevel = GameDataManager.Instance.CurrentLevel;
                 if (!(unlockedLevel >= GameDataManager.Instance.levels.Length))
@@ -142,7 +142,8 @@ public class GamePlayController : MonoBehaviour
         Player player = FindObjectOfType<Player>();
         if (player == null)
         {
-            Instantiate(playerPrefab, new Vector3(0, -4, 0), Quaternion.identity);
+            GameObject p = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            p.SetActive(false);
         }
         else
         {
@@ -150,6 +151,21 @@ public class GamePlayController : MonoBehaviour
         }
     }
 
+    IEnumerator PlayerStartingAnim()
+    {
+        yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(.5f));
+        Player.instance.gameObject.SetActive(true);
+        Player.instance.PlayerAnimation();
+        yield return new WaitForSecondsRealtime(3f);
+
+        UpdateState(GameState.LOADLEVEL);
+
+    }
+
+    void BeginIntroSequence()
+    {
+        StartCoroutine(PlayerStartingAnim());
+    }
     public void AddToScore(int scoreValue)
     {
         int currentScore = Score;
