@@ -7,8 +7,12 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] public int projectilesCount;
 
-    private float speed;
+    public float speed;
 
+    private void Start()
+    {
+        speed = Gun.instance.GetProjectileSpeed();
+    }
     void Update()
     {
         MoveProjectile();
@@ -16,14 +20,8 @@ public class Projectile : MonoBehaviour
 
     private void MoveProjectile()
     {
-       transform.Translate(Vector3.up * Time.deltaTime * speed);
+        transform.Translate(Vector3.up * Time.deltaTime * speed);
     }
-
-    public void SetSpeed(float newSpeed)
-    {
-        speed = newSpeed;
-    }
-
 
 
 }

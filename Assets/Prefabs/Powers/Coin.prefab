@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8dcf6256d331a14c8c07eb4cfb3c1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 2
-  playerRange: 1.7
+  forwardSpeed: 1.5
+  playerRange: 2
   smoothTime: 0.2
 --- !u!114 &768387223508118650
 MonoBehaviour:

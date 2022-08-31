@@ -11,19 +11,17 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float speed = 5f;
     [SerializeField] int health;
+
     [SerializeField] bool isAlwaysShooting = false;
-    [SerializeField] bool isMovingFromKeybord;
-    [SerializeField] bool isMovingwithMouse;
+    [SerializeField] bool isMovingWithMouse = true;
 
-    [SerializeField] bool canPlayerCollideWithEnemy = true;
+    PlayerController playerController;
+    GunController gunController;
+    AudioSource audioSource;
+    int upgradeRank = 1;
 
-    private PlayerController playerController;
-    private GunController gunController;
-
-    //private bool gunIsUpgaded;
-    public bool gunIsUpgraded
-    { get; set; }
-
+    [Header("GameDev Settings")]
+    [SerializeField] bool collideWithEnemy = true;
 
     private void Awake()
     {
@@ -33,9 +31,17 @@ public class Player : MonoBehaviour
         }
         playerController = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        audioSource.Stop();
+        audioSource.Play();
     }
     void Update()
     {
+        audioSource.loop = isAlwaysShooting;
         Move();
 
         Shoot();
@@ -43,57 +49,53 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        if (isMovingFromKeybord)
+        // Player Inputs From keyboard
+        Vector3 translation = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0).normalized;
+        translation *= speed * Time.deltaTime;
+        playerController.KeyboardMovement(translation);
+
+        if (isMovingWithMouse)
         {
-            Vector3 translation = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0).normalized;
-            translation *= speed * Time.deltaTime;
-            playerController.KeyboardMovement(translation);
+            playerController.MoveTowards(speed);
         }
-        else if (Input.touchCount > 0)
+
+        if (Input.touchCount > 0)
         {
-            playerController.MobileMovement(speed);
-        }
-        else if (isMovingwithMouse)
-        {
-            MovingWithMouse();
+            playerController.MoveTowards(speed);
         }
     }
     void Shoot()
     {
         if (isAlwaysShooting)
         {
-            Fire();
+            gunController.Shoot(upgradeRank);
         }
         else
         {
             if (Input.GetMouseButton(0))
             {
-                Fire();
+                gunController.Shoot(upgradeRank);
             }
         }
     }
 
-    private void Fire()
-    {
-        gunController.Shoot();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        ImpactController damageDealer = other.gameObject.GetComponent<ImpactController>();
         //if (other.tag == "Projectile")
         {
             switch (other.tag)
             {
                 case "Projectile":
+                    ImpactController damageDealer = other.gameObject.GetComponent<ImpactController>();
                     if (damageDealer == null) { return; }
                     ProcessHit(damageDealer);
                     break;
                 case "powerUpgradeGun":
-                    gunIsUpgraded = true;
+                    upgradeRank++;
                     break;
                 case "Enemy":
-                    if (canPlayerCollideWithEnemy)
+                    if (collideWithEnemy)
                     {
                         PlayerDeath();
                     }
@@ -135,9 +137,9 @@ public class Player : MonoBehaviour
         return health;
     }
 
-    void MovingWithMouse()
+    public bool GetIsAlwaysShooting()
     {
-        playerController.MoveTowards(speed);
+        return isAlwaysShooting;
     }
 
 }

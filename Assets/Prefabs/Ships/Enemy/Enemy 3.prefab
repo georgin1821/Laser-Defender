@@ -117,9 +117,10 @@ MonoBehaviour:
   minTimeBetweenShots: 4
   maxTimeBetweenShots: 8
   projectilePrefab: {fileID: 3209645738409717074, guid: 37c6320dd62847f4ba5ca7fc90f9e08c, type: 3}
+  chasingProjectilePrefab: {fileID: 0}
   deathVFX: {fileID: 7184155248780615259, guid: 8e48df2e5417f47438c3b26b724e83ab, type: 3}
-  chanchToDropPower: 5
-  chanceOfDropingGold: 6
+  chanchToDropPower: 12
+  chanceOfDropingGold: 12
   placeAtWave: 0
 --- !u!114 &6701738404485287227
 MonoBehaviour:
@@ -135,5 +136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0
   linearSpeed: 0
+  randomValue: 0
   enemyPrefab: {fileID: 0}
   isMovingAtFormation: 0

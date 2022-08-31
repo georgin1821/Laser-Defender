@@ -24,27 +24,7 @@ public class LevelMenuController : MonoBehaviour
 
     private void Start()
     {
-       // InitializeLists();
         InitializeLevelMenu();
-
-        void InitializeLists()
-        {
-            GameObject[] lockObj = GameObject.FindGameObjectsWithTag("lockIcon");
-            for (int i = 0; i < lockObj.Length; i++)
-            {
-                lockIcons.Add(lockObj[i].GetComponent<Image>());
-            }
-            GameObject[] lvlButn = GameObject.FindGameObjectsWithTag("levelBtn");
-            for (int i = 0; i < lvlButn.Length; i++)
-            {
-                levelButtons.Add(lvlButn[i].GetComponent<Button>());
-            }
-            GameObject[] lvlText = GameObject.FindGameObjectsWithTag("levelText");
-            for (int i = 0; i < lvlText.Length; i++)
-            {
-                levelText.Add(lvlText[i].GetComponent<TMP_Text>());
-            }
-        }
     }
     void InitializeLevelMenu()
     {
@@ -77,9 +57,9 @@ public class LevelMenuController : MonoBehaviour
         {
 
             case "Level0":
-                //    Debug.Log("Level0");
+                    Debug.Log("Level0");
                // FadeScenes.Instance.PlayLoadingScene();
-                GameDataManager.Instance.LoadLevel(0);
+                GameDataManager.Instance.CurrentLevel = 0;
                 break;
             case "Level1":
                 //    Debug.Log("Level1");
@@ -97,7 +77,9 @@ public class LevelMenuController : MonoBehaviour
                 //  Debug.Log("Level3");
                 GameDataManager.Instance.LoadLevel(4);
                 break;
-
         }
+
+        LoadingWithFadeScenes.Instance.setSceneName("Game");
+        LoadingWithFadeScenes.Instance.FadeOut();
     }
 }

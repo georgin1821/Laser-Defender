@@ -148,8 +148,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 5954409456616382599}
   projectile: {fileID: 8881646053843649493, guid: 369bbd1176bb1a84788040303430eb7d, type: 3}
-  msBetweenShots: 150
-  projectileVelocity: 30
+  msBetweenShots: 100
+  projectileVelocity: 14
 --- !u!1 &5908303228380686027
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,7 +43,8 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void LoadLevelScene()
     {
-        FadeScenes.Instance.FadeOut();
+        LoadingWithFadeScenes.Instance.setSceneName("LevelSelect");
+        LoadingWithFadeScenes.Instance.FadeOut();
     }
 
 }

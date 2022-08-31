@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Levels : MonoBehaviour
+public class StagesToSpawn : MonoBehaviour
 {
 
-    public static Levels instance;
+    public static StagesToSpawn instance;
 
     [SerializeField] List<LevelConfig> levels;
 

@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public static Gun instance;
+
     [SerializeField] public Transform firePoint;
     [SerializeField] Projectile projectile;
-    [SerializeField] float msBetweenShots = 100;
-    [SerializeField] float projectileVelocity = 35;
+    [SerializeField] float msBetweenShots;
+    [SerializeField] float projectileVelocity;
 
     private int fireArcAngle = 50;
     private float nextShotTime;
 
-    // testing
-
-    public void Shoot()
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    public void Shoot(int upgrades)
     {
         if (Time.time > nextShotTime)
         {
@@ -25,27 +32,27 @@ public class Gun : MonoBehaviour
             if (projectiles == 1)
 
             {
-                if (Player.instance.gunIsUpgraded)
-                {
-                    InstatiateDoublePRojectiles();
-                }
-                else
-                {
-                    SpawnProjectileWithAngle(projectiles, 0);
-
-                }
+                InstatiateDoublePRojectiles(upgrades);
             }
             else
             {
-                float angle = (fireArcAngle / 2);
+                SpawnProjectileWithAngle(projectiles, 0);
 
-                for (int i = 0; i < projectiles; i++)
-                {
-                    SpawnProjectileWithAngle(projectiles, angle);
-                    angle -= fireArcAngle / (projectiles - 1);
-                }
             }
-            SoundEffectController.instance.PlayerShootClip();
+            //else
+            //{
+            //    float angle = (fireArcAngle / 2);
+
+            //    for (int i = 0; i < projectiles; i++)
+            //    {
+            //        SpawnProjectileWithAngle(projectiles, angle);
+            //        angle -= fireArcAngle / (projectiles - 1);
+            //    }
+            //}
+            if (!Player.instance.GetIsAlwaysShooting())
+            {
+                SoundEffectController.instance.PlayerShootClip();
+            }
 
         }
     }
@@ -53,17 +60,41 @@ public class Gun : MonoBehaviour
     private Projectile SpawnProjectileWithAngle(int projectiles, float angle)
     {
         Projectile newProjectile = Instantiate(projectile, firePoint.position, Quaternion.Euler(0, 0, angle)) as Projectile;
-        newProjectile.SetSpeed(projectileVelocity);
         return newProjectile;
     }
 
-    private void InstatiateDoublePRojectiles()
+    private void InstatiateDoublePRojectiles(int upgrades)
     {
-        Projectile newProjectile1 = Instantiate(projectile, firePoint.position - new Vector3(-.4f, 0, 0), Quaternion.identity) as Projectile;
-        newProjectile1.SetSpeed(projectileVelocity);
-        Projectile newProjectile2 = Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity) as Projectile;
-        newProjectile2.SetSpeed(projectileVelocity);
+        if (upgrades == 1)
+        {
+            Instantiate(projectile, firePoint.position, Quaternion.identity);
 
+        }
+        if (upgrades == 2)
+        {
+            Instantiate(projectile, firePoint.position - new Vector3(-.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity);
+
+        }
+        if (upgrades == 3)
+        {
+            Instantiate(projectile, firePoint.position, Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity);
+        }
+        if (upgrades == 4)
+        {
+            Instantiate(projectile, firePoint.position - new Vector3(-.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.6f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.6f, 0, 0), Quaternion.identity);
+
+        }
+    }
+
+    public float GetProjectileSpeed()
+    {
+        return projectileVelocity;
     }
 
 }

@@ -97,8 +97,7 @@ public class GamePlayController : MonoBehaviour
             case GameState.LOADLEVEL:
                 // Debug.Log("LOADLEVEL");
 
-                Player.instance.gunIsUpgraded = false;
-                Levels.instance.SpawnLevelWithIndex(GameDataManager.Instance.CurrentLevel);
+                StagesToSpawn.instance.SpawnLevelWithIndex(GameDataManager.Instance.CurrentLevel);
                 UpdateState(GameState.PLAY);
                 break;
             case GameState.PLAY:

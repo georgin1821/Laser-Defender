@@ -258,6 +258,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120770271}
   m_CullTransparentMesh: 1
+--- !u!1 &171019016 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5009289890815306862, guid: 7c81484eb1b6505449141efec5b0d2df, type: 3}
+  m_PrefabInstance: {fileID: 246356715}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &171019017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171019016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1dffe3086ba1ba40a22f4863a005611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coins: 0
+  gems: 0
+  isGameStartedFirstTime: 0
+  levels: 
 --- !u!1 &195162887
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +619,8 @@ PrefabInstance:
       propertyPath: levels.Array.data[0]
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7891997455994258701, guid: 7c81484eb1b6505449141efec5b0d2df, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7c81484eb1b6505449141efec5b0d2df, type: 3}
 --- !u!1 &249426195
 GameObject:
@@ -1024,9 +1046,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7197185777655308194, guid: b9d503df14d571749838fe52664fb13a, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.587
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

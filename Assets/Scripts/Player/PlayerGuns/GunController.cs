@@ -25,9 +25,9 @@ public class GunController : MonoBehaviour
         equippedGun.transform.parent = weaponHold;
     }
 
-    public void Shoot()
+    public void Shoot(int upgrades)
     {
         //Debug.Log("Gun controller Shoot()");
-        equippedGun.Shoot();
+        equippedGun.Shoot(upgrades);
     }
 }

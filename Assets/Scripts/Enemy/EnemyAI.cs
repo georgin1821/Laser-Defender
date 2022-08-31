@@ -64,7 +64,6 @@ public class EnemyAI : MonoBehaviour
             }
 
             transform.position = Vector3.MoveTowards(pos, dest, speed * Time.deltaTime);
-            Debug.Log("trnsform");
             yield return null;
         }
     }

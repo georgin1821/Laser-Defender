@@ -32,7 +32,6 @@ public class GameDataManager : Singleton<GameDataManager>
     public void LoadLevel(int index)
     {
         CurrentLevel = index;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
     }
 
     public void Save()

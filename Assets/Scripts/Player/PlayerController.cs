@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private bool isMovingWithDragingMouse;
 
     private float xMin, xMax, yMin, yMax;
     private Vector3 translation;
@@ -22,31 +21,34 @@ public class PlayerController : MonoBehaviour
 
         RestrictPlayerToScreen();
     }
-
-    public void MoveTowards(float speed)
-    {
-        if (Input.GetMouseButton(0))
-        {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = Vector2.MoveTowards(transform.position, mousePosition, speed * Time.deltaTime);
-
-        }
-
-    }
     public void MobileMovement(float speed)
     {
         Touch touch = Input.GetTouch(0);
 
         if (touch.phase == TouchPhase.Moved)
         {
-            Vector3 point = viewCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
+            Vector2 point = viewCamera.ScreenToWorldPoint(new Vector2(touch.position.x, touch.position.y));
+
+            // Vector3 point = viewCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
             transform.position = Vector3.MoveTowards(transform.position, point, speed * Time.deltaTime);
 
             RestrictPlayerToScreen();
         }
 
     }
-        private void RestrictPlayerToScreen()
+
+    public void MoveTowards(float speed)
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = Vector2.MoveTowards(transform.position, mousePosition, speed * Time.deltaTime);
+            RestrictPlayerToScreen();
+
+        }
+
+    }
+    private void RestrictPlayerToScreen()
     {
         xMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
         xMax = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+
 
 
 }

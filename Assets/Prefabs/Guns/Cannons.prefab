@@ -109,7 +109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2364493503912545719}
-  - component: {fileID: 8237389720318720379}
+  - component: {fileID: 8658761036365714419}
   m_Layer: 0
   m_Name: Cannons
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8237389720318720379
+--- !u!114 &8658761036365714419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   firePoint: {fileID: 7864848783463562485}
   projectile: {fileID: 8881646053843649493, guid: bc7b3756f256764498dcb582d293fd7b, type: 3}
   msBetweenShots: 400
-  projectileVelocity: 5
+  projectileVelocity: 4
 --- !u!1 &4649677451825676761
 GameObject:
   m_ObjectHideFlags: 0

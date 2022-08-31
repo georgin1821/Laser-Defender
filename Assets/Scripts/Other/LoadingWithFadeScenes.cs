@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class FadeScenes : Singleton<FadeScenes>
+public class LoadingWithFadeScenes : Singleton<LoadingWithFadeScenes>
 {
     [SerializeField] Animator anim;
     [SerializeField] GameObject fadePanel;
+
+    string sceneName;
 
     override protected void Awake()
     {
@@ -31,9 +33,7 @@ public class FadeScenes : Singleton<FadeScenes>
 
     public void OnAnimFadeOutComplete()
     {
-        Debug.Log("LevelSelect");
-        //fadePanel.SetActive(false);
-        SceneManager.LoadScene("LevelSelect");
+        SceneManager.LoadScene(sceneName);
 
     }
 
@@ -41,5 +41,8 @@ public class FadeScenes : Singleton<FadeScenes>
     {
         fadePanel.SetActive(false);
     }
-
+     public void setSceneName(string name)
+    {
+        sceneName = name;
+    }
 }
