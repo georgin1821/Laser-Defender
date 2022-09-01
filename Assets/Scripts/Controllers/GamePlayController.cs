@@ -25,12 +25,6 @@ public class GamePlayController : MonoBehaviour
         {
             instance = this;
         }
-        //Using?
-        LevelSpawner.NoEnemiesOnLevel += OnLevelSpawnCompleted;
-    }
-    private void OnDestroy()
-    {
-        LevelSpawner.NoEnemiesOnLevel -= OnLevelSpawnCompleted;
     }
     private void Start()
     {
@@ -153,10 +147,10 @@ public class GamePlayController : MonoBehaviour
 
     IEnumerator PlayerStartingAnim()
     {
-        yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(.5f));
+        //yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(.5f));
         Player.instance.gameObject.SetActive(true);
         Player.instance.PlayerAnimation();
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(.1f);
 
         UpdateState(GameState.LOADLEVEL);
 

@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
 
         //Subtract enemies count
-        LevelSpawner.instance.totalEnemiesPerWave--;
+        LevelSpawner.instance.noe--;
         SoundEffectController.instance.EnemyDeathSound();
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         Destroy(explosion, 1f);

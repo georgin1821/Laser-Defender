@@ -565,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5009289890815306865, guid: 7c81484eb1b6505449141efec5b0d2df, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5009289890815306865, guid: 7c81484eb1b6505449141efec5b0d2df, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8548,7 +8548,6 @@ GameObject:
   - component: {fileID: 1328183882}
   - component: {fileID: 1328183885}
   - component: {fileID: 1328183886}
-  - component: {fileID: 1328183887}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -8570,7 +8569,7 @@ Transform:
   m_Children:
   - {fileID: 431362347}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1328183882
 MonoBehaviour:
@@ -8603,7 +8602,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b516625e93b7254b8c359614717256c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveScripts: []
   totalEnemiesPerWave: 0
+  waypoints: []
+  waveEnemies: []
+  waveConfig: {fileID: 0}
+  noe: 0
+  waveObjects: []
 --- !u!114 &1328183884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8647,18 +8652,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 4923407849108656689, guid: 798ff6814fa43a744b18c331380f3b49, type: 3}
---- !u!114 &1328183887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328183880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82474d74680f5db4f9e25d078e086f63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1337401065
 GameObject:
   m_ObjectHideFlags: 0

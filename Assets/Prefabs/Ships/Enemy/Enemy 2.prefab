@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2851242410757949135}
   - component: {fileID: 5718241582689784005}
   - component: {fileID: 7821587295327252401}
-  - component: {fileID: -4291025508096543490}
   m_Layer: 3
   m_Name: Enemy 2
   m_TagString: Enemy
@@ -122,20 +121,3 @@ MonoBehaviour:
   chanchToDropPower: 12
   chanceOfDropingGold: 12
   placeAtWave: 0
---- !u!114 &-4291025508096543490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4588450936851247635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 0
-  linearSpeed: 0
-  randomValue: 0
-  enemyPrefab: {fileID: 0}
-  isMovingAtFormation: 0

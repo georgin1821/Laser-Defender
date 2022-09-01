@@ -9920,7 +9920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   health: 20000
-  isAlwaysShooting: 1
+  isAlwaysShooting: 0
   isMovingWithMouse: 1
   rocketFlames: {fileID: 1560787947}
   shootingFlames: {fileID: 1059050182630161250}

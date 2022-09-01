@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7728371002386133502}
   - component: {fileID: 8296172668079004567}
   - component: {fileID: 6297788516384175224}
-  - component: {fileID: 8296172668079004569}
+  - component: {fileID: -814515649900333430}
   m_Layer: 3
   m_Name: Enemy Proto 2
   m_TagString: Enemy
@@ -122,7 +122,7 @@ MonoBehaviour:
   chanchToDropPower: 5
   chanceOfDropingGold: 6
   placeAtWave: 0
---- !u!114 &8296172668079004569
+--- !u!114 &-814515649900333430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
-  linearSpeed: 0.3
+  distance: 0
+  linearSpeed: 0
   randomValue: 0
-  enemyPrefab: {fileID: 8321638869878801698}
-  isMovingAtFormation: 1
+  enemyPrefab: {fileID: 0}
+  isMovingAtFormation: 0

@@ -5,17 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Levels Config")]
 public class LevelConfig : ScriptableObject
 {
-    [SerializeField] List<WaveConfig> waves;
+    [SerializeField] List<WaveScripts> waves;
 
-    public List<WaveConfig> GetWaves()
+    public List<WaveScripts> GetWaves()
     {
-        var waveConfigs = new List<WaveConfig>();
 
-        foreach (WaveConfig child in waves)
-        {
-            waveConfigs.Add(child);
-        }
-        return waveConfigs;
+        
+        return waves;
 
     }
 }

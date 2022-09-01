@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16cb1e8e2a9b3fc44acea0fe3d862e7d, type: 3}
   m_Name: Wave Prototype 1
   m_EditorClassIdentifier: 
-  subWaveConfigs:
-  - {fileID: 11400000, guid: 8284229ea702809499eb9cb3a5f8a213, type: 2}
-  - {fileID: 11400000, guid: 3ecc9a2fd0bd8044685800e0e8deb558, type: 2}
-  timeBetweenSpawns: 0.3
-  spawnRandomFactor: 0.3
+  timeBetweenSpawns: 0.2
   moveSpeed: 4
-  isDeploingWithFormation: 1
-  rotationSpeed: 250
+  rotationSpeed: 300
+  numberOfEnemies: 5
+  enemyPrefab: {fileID: 8321638869878801698, guid: d821a21903c0cb24f92ba0604f329c5a, type: 3}
+  pathPrefab: {fileID: 3361098210251750786, guid: 49b5ac859a671d148ab26ffcf11bf904, type: 3}

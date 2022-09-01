@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6cc83194c5eba458d4e6d72f7bbf63, type: 3}
-  m_Name: Formation Proto 1
+  m_Script: {fileID: 11500000, guid: a5302410e7e64144a8b6394a1fb16566, type: 3}
+  m_Name: WaveScript1
   m_EditorClassIdentifier: 
-  formationPrefab: {fileID: 4194949785058969338, guid: 6c9d1ab76689607499c12650691cda95, type: 3}
+  listWaveScripts:
+  - {fileID: 5049398550342009626, guid: c022b7eb7ea227b48b25161898ab6ae1, type: 3}
+  - {fileID: 5049398550342009626, guid: 98d73bcb201c3df478398ef8c22a09e7, type: 3}
