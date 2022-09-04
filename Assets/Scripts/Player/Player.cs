@@ -15,15 +15,26 @@ public class Player : MonoBehaviour
 
     [SerializeField] bool isAlwaysShooting = false;
     [SerializeField] bool isMovingWithMouse = true;
-    [SerializeField] ParticleSystem rocketFlames;
+    [SerializeField] ParticleSystem engineFlames;
     [SerializeField] ParticleSystem shootingFlames;
+    [SerializeField] GameObject rocketPrefab;
+    [SerializeField] Transform firePos;
+    [SerializeField] GameObject shieldsVFX;
 
     PlayerController playerController;
     GunController gunController;
     AudioSource audioSource;
     Animator anim;
+    float arcAngle = 40;
+    bool playerHasShield;
 
-    int upgradeRank = 1;
+    Coroutine co;
+    GameObject shields;
+
+    public GameObject[] Targets { get; set; }
+
+    public int UpgradeRank { get; private set; }
+
     bool isGameStatePLAY;
 
     [Header("GameDev Settings")]
@@ -42,7 +53,6 @@ public class Player : MonoBehaviour
 
         GamePlayController.OnGameStateChange += GameStateChangeHandle;
     }
-
     private void OnDestroy()
     {
         GamePlayController.OnGameStateChange -= GameStateChangeHandle;
@@ -50,6 +60,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         audioSource.Stop();
+        UpgradeRank = 1;
     }
     void Update()
     {
@@ -62,7 +73,6 @@ public class Player : MonoBehaviour
 
         }
     }
-
     void Move()
     {
         // Player Inputs From keyboard
@@ -84,18 +94,16 @@ public class Player : MonoBehaviour
     {
         if (isAlwaysShooting)
         {
-            gunController.Shoot(upgradeRank);
+            gunController.Shoot(UpgradeRank);
         }
         else
         {
             if (Input.GetMouseButton(0))
             {
-                gunController.Shoot(upgradeRank);
+                gunController.Shoot(UpgradeRank);
             }
         }
     }
-
-
     private void OnTriggerEnter(Collider other)
     {
         //if (other.tag == "Projectile")
@@ -107,41 +115,65 @@ public class Player : MonoBehaviour
                     if (damageDealer == null) { return; }
                     ProcessHit(damageDealer);
                     break;
-                case "powerUpgradeGun":
-                    upgradeRank++;
+
+                case "gunUpgrade":
+                    if (UpgradeRank < 6)
+                    {
+                        UpgradeRank++;
+                        GameUIController.instance.UpdateRankStatus();
+                    }
+                    break;
+                case "gainRockets":
+                    FireRockets();
                     break;
                 case "Enemy":
                     if (collideWithEnemy)
                     {
-                        PlayerDeath();
+                        if (!playerHasShield)
+                        {
+                            PlayerDeath();
+                        }
                     }
+                    break;
+                case "shield":
+                    if (co != null)
+                    {
+                        StopCoroutine(co);
+                        Destroy(shields);
+                    }
+                    co = StartCoroutine(ShieldsCountDown());
                     break;
             }
 
         }
     }
-
-    /* comuniacates with the impact controller of each projectile ans process damage health
-    and die method 
-    */
-
-    private void ProcessHit(ImpactController impactController)
+    IEnumerator ShieldsCountDown()
     {
 
-        health -= impactController.GetDamage();
-        GameUIController.instance.UpdateHealthText();
-        impactController.Hit();
+        playerHasShield = true;
+        shields = Instantiate(shieldsVFX, transform.position, Quaternion.identity);
+        shields.transform.SetParent(gameObject.transform);
+        SoundEffectController.instance.PlayerHasShields();
+        yield return new WaitForSeconds(4);
+        playerHasShield = false;
+        Destroy(shields);
+
+    }
+    private void ProcessHit(ImpactController impactController)
+    {
+        if (!playerHasShield)
+        {
+            health -= impactController.GetDamage();
+            GameUIController.instance.UpdateHealthText();
+            impactController.ImapctProcess();
+
+        }
 
         if (health <= 0)
         {
             PlayerDeath();
         }
-        else
-        {
-            impactController.ImapctProcess();
-        }
     }
-
     private void PlayerDeath()
     {
         SoundEffectController.instance.PlayerDeathSound();
@@ -152,28 +184,44 @@ public class Player : MonoBehaviour
     {
         return health;
     }
-
     public bool GetIsAlwaysShooting()
     {
         return isAlwaysShooting;
     }
-
     void GameStateChangeHandle(GameState state)
     {
+        anim.enabled = (state != GameState.PLAY);
         isGameStatePLAY = (state == GameState.PLAY);
+
         if (state == GameState.PLAY)
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             audioSource.Play();
-            anim.enabled = false;
-            rocketFlames.Play();
+            //anim.enabled = false;
+            engineFlames.Play();
             shootingFlames.Play();
+        }
+        if (state == GameState.INIT)
+        {
+            UpgradeRank = 1;
+        }
+    }
+    public void PlayerAnimation()
+    {
+        //Debug.Log("Player Intro Anim");
+        anim.enabled = true;
+        anim.Play("Intro");
+    }
+    public void FireRockets()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            GameObject rocket = Instantiate(rocketPrefab, firePos.position, transform.rotation);
+            rocket.transform.Rotate(0, 0, arcAngle - i * 15);
+            Targets = GameObject.FindGameObjectsWithTag("Enemy");
+            SoundEffectController.instance.PlayerShootRockets();
         }
     }
 
-    public void PlayerAnimation()
-    {
-        anim.Play("Intro");
-    }
 }
 

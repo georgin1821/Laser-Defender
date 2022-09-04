@@ -11,7 +11,6 @@ public class Gun : MonoBehaviour
     [SerializeField] float msBetweenShots;
     [SerializeField] float projectileVelocity;
 
-    private int fireArcAngle = 50;
     private float nextShotTime;
 
     private void Awake()
@@ -88,8 +87,27 @@ public class Gun : MonoBehaviour
             Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity);
             Instantiate(projectile, firePoint.position - new Vector3(.6f, 0, 0), Quaternion.identity);
             Instantiate(projectile, firePoint.position - new Vector3(-.6f, 0, 0), Quaternion.identity);
+        }
+        if (upgrades == 5)
+        {
+            Instantiate(projectile, firePoint.position, Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.6f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.6f, 0, 0), Quaternion.identity);
 
         }
+        if (upgrades == 6)
+        {
+            Instantiate(projectile, firePoint.position - new Vector3(-.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.4f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.6f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.6f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(.8f, 0, 0), Quaternion.identity);
+            Instantiate(projectile, firePoint.position - new Vector3(-.8f, 0, 0), Quaternion.identity);
+
+        }
+
     }
 
     public float GetProjectileSpeed()

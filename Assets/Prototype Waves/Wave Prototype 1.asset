@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16cb1e8e2a9b3fc44acea0fe3d862e7d, type: 3}
   m_Name: Wave Prototype 1
   m_EditorClassIdentifier: 
+  waveConfigFormation: {fileID: 0}
   timeBetweenSpawns: 0.2
-  moveSpeed: 4
+  moveSpeed: 3
   rotationSpeed: 300
-  numberOfEnemies: 5
-  enemyPrefab: {fileID: 8321638869878801698, guid: d821a21903c0cb24f92ba0604f329c5a, type: 3}
+  numberOfEnemies: 7
+  enemyPrefab: {fileID: 7622337546863318348, guid: 7dfcd00323dc9ad4dae9722af74530fa, type: 3}
   pathPrefab: {fileID: 3361098210251750786, guid: 49b5ac859a671d148ab26ffcf11bf904, type: 3}

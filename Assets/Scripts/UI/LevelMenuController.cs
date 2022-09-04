@@ -10,17 +10,10 @@ public class LevelMenuController : MonoBehaviour
     public List<Image> lockIcons;
     public List<Button> levelButtons;
     public List<TMP_Text> levelText;
-
+    public GameObject lvlSelectPanel;
 
     public string level;
     public TMP_Text coinText;
-
-
-    private void Awake()
-    {
-
-
-    }
 
     private void Start()
     {
@@ -49,7 +42,7 @@ public class LevelMenuController : MonoBehaviour
         }
     }
 
-    public void LoadLevel()
+    public void SelectLevel()
     {
         level = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
 
@@ -57,7 +50,6 @@ public class LevelMenuController : MonoBehaviour
         {
 
             case "Level0":
-                    Debug.Log("Level0");
                // FadeScenes.Instance.PlayLoadingScene();
                 GameDataManager.Instance.CurrentLevel = 0;
                 break;
@@ -78,8 +70,24 @@ public class LevelMenuController : MonoBehaviour
                 GameDataManager.Instance.LoadLevel(4);
                 break;
         }
+        lvlSelectPanel.SetActive(true);
+    }
 
+    public void LoadLevel()
+    {
         LoadingWithFadeScenes.Instance.setSceneName("Game");
+        LoadingWithFadeScenes.Instance.FadeOut();
+
+    }
+
+    public void HideLvlSelectPanel()
+    {
+        lvlSelectPanel.SetActive(false);
+    }
+
+    public void BackToMainScene()
+    {
+        LoadingWithFadeScenes.Instance.setSceneName("MainScene");
         LoadingWithFadeScenes.Instance.FadeOut();
     }
 }

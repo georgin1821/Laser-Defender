@@ -10,14 +10,16 @@ public class ImpactController : MonoBehaviour
     [SerializeField] AudioClip impactClip;
     [SerializeField] float impactClipVolume;
 
+    public int Damage
+    {
+        get { return Damage; }
+        set { }
+    }
+
+
     public int GetDamage()
     {
         return damage;
-    }
-
-    public void Hit()
-    {
-        Destroy(gameObject);
     }
 
     public void ImapctProcess()
@@ -30,5 +32,6 @@ public class ImpactController : MonoBehaviour
 
         Destroy(explotion, 1f);
 
+        Destroy(gameObject);
     }
 }

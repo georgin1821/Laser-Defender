@@ -7,20 +7,27 @@ public class PowersBehavior : MonoBehaviour
     [SerializeField] float speed;
 
     [SerializeField] GameObject gainPowerVFX;
+    // [SerializeField] AudioClip gainPowerClip;
 
     void Update()
     {
         transform.Translate(-Vector3.up * speed * Time.deltaTime);
-        Destroy(gameObject, 3);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Power OnTriggerEnter()");
-        Destroy(gameObject);
-        SoundEffectController.instance.PowerUpSFX();
-        GameObject vfx = Instantiate(gainPowerVFX, Player.instance.transform.position, Quaternion.identity);
-        Destroy(vfx, 1.5f);
+        if (other.tag == "Player")
+        {
+            Destroy(gameObject);
+            SoundEffectController.instance.PowerUpSFX();
+            // SoundEffectController.instance.PlayAudioClip(gainPowerClip, 1);
+            if(gainPowerVFX != null)
+            {
+            GameObject vfx = Instantiate(gainPowerVFX, Player.instance.transform.position, Quaternion.identity);
+            Destroy(vfx, 1.5f);
+
+            }
+        }
     }
 
 

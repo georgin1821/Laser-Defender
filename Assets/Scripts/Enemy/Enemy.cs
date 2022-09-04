@@ -11,11 +11,8 @@ public class Enemy : MonoBehaviour
 
     [Header("Shooting")]
     float shotCounter;
-    [SerializeField] float minTimeBetweenShots = 0.2f;
-    [SerializeField] float maxTimeBetweenShots = 3f;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] GameObject chasingProjectilePrefab;
-
+    [SerializeField] float chanceToFire;
     [Header("VFX")]
     [SerializeField] GameObject deathVFX;
 
@@ -25,66 +22,44 @@ public class Enemy : MonoBehaviour
 
 
     [HideInInspector] public int placeAtWave;
-    private void Start()
-    {
-        shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
-    }
 
-    private void Update()
+    void FireChance()
     {
-        CountDownShoot();
-    }
-
-    void CountDownShoot()
-    {
-        shotCounter -= Time.deltaTime;
-        if (shotCounter <= 0f)
+        if (Random.Range(1, 100) <= chanceToFire)
         {
             Fire();
-            shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
         }
+
     }
 
-    private void Fire()
+    public void Fire()
     {
         float firePadding = GetComponent<Renderer>().bounds.size.y / 2;
         Vector3 firePos = new Vector3(transform.position.x, transform.position.y - firePadding, transform.position.z);
         GameObject projectile = Instantiate(projectilePrefab,
             firePos,
             projectilePrefab.transform.rotation) as GameObject;
-    }
-
-    public void FireFromChasing()
-    {
-        float firePadding = GetComponent<Renderer>().bounds.size.y / 2;
-        Vector3 firePos = new Vector3(transform.position.x, transform.position.y - firePadding, transform.position.z);
-        GameObject projectile = Instantiate(chasingProjectilePrefab,
-            firePos,
-            projectilePrefab.transform.rotation) as GameObject;
+        projectile.transform.SetParent(this.transform);
 
     }
+
     private void OnTriggerEnter(Collider other)
     {
         // trigger when player projectile hits the enemy (Layers)
-        ImpactController impactProcess = other.gameObject.GetComponent<ImpactController>();
+        PlayerProjectileImpact impactProcess = other.gameObject.GetComponent<PlayerProjectileImpact>();
         if (impactProcess == null) { return; }
         ProcessHit(impactProcess);
     }
 
-    private void ProcessHit(ImpactController impactProcess)
+    private void ProcessHit(PlayerProjectileImpact impactProcess)
     {
         health -= impactProcess.GetDamage();
-        impactProcess.Hit();
+        impactProcess.ImapctProcess();
         if (health <= 0)
         {
             Die();
             OnDieDropPower();
             OnDieDropGold();
-
-        }
-        else
-        {
-            impactProcess.ImapctProcess();
         }
     }
 
@@ -111,9 +86,9 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
 
         //Subtract enemies count
-        LevelSpawner.instance.noe--;
+        EnemyCount.instance.count--;
         SoundEffectController.instance.EnemyDeathSound();
-        GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
-        Destroy(explosion, 1f);
+        //  GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+        //  Destroy(explosion, 1f);
     }
 }

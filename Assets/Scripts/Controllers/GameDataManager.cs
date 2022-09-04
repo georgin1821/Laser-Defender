@@ -8,11 +8,14 @@ using UnityEngine.SceneManagement;
 
 public class GameDataManager : Singleton<GameDataManager>
 {
-
+    public int selectedShip;
     public int coins;
     public int gems;
     public bool isGameStartedFirstTime;
     public bool[] levels;
+    public bool[] ships;
+    public int[] shipsPower;
+    public int[] shipsRank;
 
     private GameData data;
 
@@ -48,6 +51,10 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.Gems = gems;
                 data.IsGameStartedFirstTime = isGameStartedFirstTime;
                 data.Levels = levels;
+                data.Ships = ships;
+                data.ShipsRank = shipsRank;
+                data.SelectedShip = selectedShip;
+
                 bf.Serialize(file, data);
             }
         }
@@ -75,7 +82,9 @@ public class GameDataManager : Singleton<GameDataManager>
             file = File.Open(Application.persistentDataPath + "/GameData.dat", FileMode.Open);
             data = (GameData)bf.Deserialize(file);
         }
+#pragma warning disable CS0168 // Variable is declared but never used
         catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
         {
 
         }
@@ -102,27 +111,46 @@ public class GameDataManager : Singleton<GameDataManager>
 
         if (isGameStartedFirstTime)
         {
-            coins = 100;
+            coins = 10000;
             gems = 0;
             levels = new bool[5];
+            ships = new bool[5];
+            shipsPower = new int[6];
 
+            for (int i = 0; i < shipsPower.Length; i++)
+            {
+                shipsPower[0] = 100;
+                shipsPower[1] = 200;
+            }
 
             isGameStartedFirstTime = false;
 
             levels[0] = true;
-
             for (int i = 1; i < levels.Length; i++)
             {
                 levels[i] = false;
             }
+
+            shipsRank = new int[5];
+            for (int i = 0; i < shipsRank.Length; i++)
+            {
+                shipsRank[i] = 0;
+            }
+
+            ships[0] = true;
+            ships[1] = true;
+
             data = new GameData();
 
             data.Coins = coins;
             data.IsGameStartedFirstTime = isGameStartedFirstTime;
             data.Levels = levels;
+            data.Ships = ships;
+            data.ShipsPower = shipsPower;
+            data.SelectedShip = selectedShip;
+            data.ShipsRank = shipsRank;
 
             Save();
-
             Load();
 
 
@@ -134,8 +162,12 @@ public class GameDataManager : Singleton<GameDataManager>
 [Serializable]
 class GameData
 {
+    public int SelectedShip { get; set; }
     public int Coins { get; set; }
+    public bool[] Ships { get; set; }
     public int Gems { get; set; }
     public bool IsGameStartedFirstTime { get; set; }
     public bool[] Levels { get; set; }
+    public int[] ShipsPower { get; set; }
+    public int[] ShipsRank { get; set; }
 }

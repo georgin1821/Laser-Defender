@@ -1,50 +1,16 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Enemy Wave Config Path")]
+[CreateAssetMenu(menuName = "Wave Config")]
+
 public class WaveConfig : ScriptableObject
 {
+    public List<GameObject> squads;
 
-    [SerializeField] float timeBetweenSpawns;
-    [SerializeField] float moveSpeed;
-    [SerializeField] float rotationSpeed;
-    public int numberOfEnemies;
-    public GameObject enemyPrefab;
-    public GameObject pathPrefab;
-
-
-    public List<Transform> GetWaypoints()
+    public List<GameObject> GetSquads()
     {
-        var waveWaypoints = new List<Transform>();
-        foreach (Transform child in pathPrefab.transform)
-        {
-            waveWaypoints.Add(child);
-        }
-        return waveWaypoints; ;
+        return squads;
     }
-
-
-    public int GetNumberOfEnemies()
-    {
-        return numberOfEnemies;
-    }
-
-    public float GetTimeBetweenSpawns()
-    {
-        return timeBetweenSpawns;
-    }
-    public float GetMoveSpeed()
-    {
-        return moveSpeed;
-    }
-    public float GetRotationSpeed()
-    {
-        return rotationSpeed;
-    }
-
-
-
 
 }

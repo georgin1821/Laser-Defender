@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
-    public WaveConfig waveConfig;
+    public WaveConfigPath waveConfig;
 
     float speed;
     float rotationSpeed;
@@ -16,6 +16,7 @@ public class WaveController : MonoBehaviour
 
     private void Start()
     {
+        EnemyCount.instance.CountEnemiesAtScene(waveConfig.GetNumberOfEnemies());
         InstatiateWave();
     }
     public void InstatiateWave()
@@ -33,28 +34,17 @@ public class WaveController : MonoBehaviour
             rotationSpeed = waveConfig.GetRotationSpeed();
             timeBetweenSpawns = waveConfig.GetTimeBetweenSpawns();
             newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypoints, speed, rotationSpeed);
-            newEnemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine();
-            newEnemy.SetActive(false);
             waveEnemies.Add(newEnemy);
         }
         StartCoroutine(WaveSpawner());
-        WaveControllerAbstract.CountEnemiesEvent(waveEnemies.Count);
 
-    }
-    private void OnWaveSpawnCompleteHandler(WaveConfig waveConfig)
-    {
-        // waveEnemies = LevelSpawner.instance.waveEnemies;
 
-        StartCoroutine(WaveSpawner());
     }
 
     IEnumerator WaveSpawner()
     {
         foreach (var enemy in waveEnemies)
         {
-            // enemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypoints, speed, rotationSpeed);
-            // enemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine();
-            enemy.SetActive(true);
             enemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine();
 
             yield return new WaitForSeconds(timeBetweenSpawns);

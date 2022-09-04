@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,16 +6,11 @@ public class LevelSpawner : MonoBehaviour
 {
     public static LevelSpawner instance;
 
-    public List<WaveScripts> waveScripts;
-    public int totalEnemiesPerWave;
+    List<GameObject> squadsInScene;
 
-    public List<Transform> waypoints;
-    public List<GameObject> waveEnemies;
-    public WaveConfig waveConfig;
-    int startingWave = 0;
-    public int noe;
-
-    public List<GameObject> waveObjects;
+    List<WaveConfig> waves;
+    List<GameObject> squads;
+    //public int Noe;
 
     private void Awake()
     {
@@ -29,51 +23,57 @@ public class LevelSpawner : MonoBehaviour
 
     public void SpawnTheLevel()
     {
-        StopAllCoroutines();
         StartCoroutine(SpawnLevel());
     }
     public IEnumerator SpawnLevel()
     {
-        for (int waveIndex = startingWave; waveIndex < waveScripts.Count; waveIndex++)
+
+        for (int waveIndex = 0; waveIndex < waves.Count; waveIndex++)
         {
-            var currentWave = waveScripts[waveIndex];
-            waveObjects = currentWave.GetWaveScripts();
-            List<GameObject> waves = new List<GameObject>();
-            for (int i = 0; i < waveObjects.Count; i++)
+            squads = waves[waveIndex].GetSquads();
+            // GameUIController.instance.ShowWaveInfoText(waveIndex, squads.Count);
+            // yield return new WaitForSeconds(2);
+
+            squadsInScene = new List<GameObject>();
+
+            for (int i = 0; i < squads.Count; i++)
             {
-               GameObject wave = Instantiate(waveObjects[i]);
-                waves.Add(wave);
+                GameObject squad = Instantiate(squads[i]);
+                squadsInScene.Add(squad);
             }
+
             yield return new WaitForSeconds(1);
+
             yield return StartCoroutine(NoEnemiesOnWave());
-            Debug.Log("END");
-            WaveControllerAbstract.count = 0;
-            foreach (var item in waves)
+            DestroyWaves();
+        }
+
+        GamePlayController.instance.UpdateState(GameState.LEVELCOMPLETE);
+    }
+    public void DestroyWaves()
+    {
+        if (squadsInScene != null)
+        {
+            foreach (var item in squadsInScene)
             {
                 Destroy(item.gameObject);
             }
-
         }
 
-        //End of level
-
     }
-
     IEnumerator NoEnemiesOnWave()
     {
-        noe = WaveControllerAbstract.count;
-        while (noe > 0)
+
+        while (EnemyCount.instance.count > 0)
         {
             yield return null;
         }
         // wait put 0 for speed running
         yield return new WaitForSeconds(1);
     }
-    public void SetWavesOfLevel(List<WaveScripts> _waves)
+    public void SetWaves(List<WaveConfig> _waves)
     {
-        waveScripts = _waves;
-
+        waves = _waves;
     }
-
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUIController : MonoBehaviour
 {
@@ -14,18 +15,17 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TMP_Text levelText;
     [SerializeField] TMP_Text healthText;
     [SerializeField] GameObject defeatPanel;
-    [SerializeField] Button retryBtn;
+    [SerializeField] Button retryBtn, pauseBtn;
     [SerializeField] TMP_Text waveText;
-    [SerializeField] TMP_Text startWaveText;
     [SerializeField] TMP_Text introText;
-
+    [SerializeField] TMP_Text gunRankText;
+    [SerializeField] GameObject pausePanel;
 
 
     [SerializeField] TMP_Text stageCompleteText;
     public GameObject stageCompletedPanel;
 
 
-    Player player;
     [HideInInspector] public int currentScore;
     [HideInInspector] public int currentCoins;
 
@@ -43,7 +43,6 @@ public class GameUIController : MonoBehaviour
             instance = this;
         }
         GamePlayController.OnGameStateChange += OnGameStateChangeMenuActivation;
-
     }
 
     private void OnDestroy()
@@ -52,7 +51,6 @@ public class GameUIController : MonoBehaviour
     }
     private void Start()
     {
-        player = FindObjectOfType<Player>();
         coinsText.text = GameDataManager.Instance.coins.ToString();
         //UpdateHealthText();
     }
@@ -61,12 +59,10 @@ public class GameUIController : MonoBehaviour
     {
         levelText.text = GameDataManager.Instance.CurrentLevel.ToString();
     }
-
     public void UpdateHealthText()
     {
-        healthText.text = player.GetHealth().ToString();
+        healthText.text = Player.instance.GetHealth().ToString();
     }
-
     public IEnumerator UpdateScore(int CurrentScore, int newScore)
     {
         while (CurrentScore < newScore)
@@ -76,38 +72,31 @@ public class GameUIController : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-
     public IEnumerator UpdateCoinsRoutine(int coins, int coinsToAdd)
     {
         while (coins < coinsToAdd)
         {
-
             coins = (int)Mathf.MoveTowards(coins, coinsToAdd, 4f);
 
             coinsText.text = coins.ToString();
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-
     public void UpdateCoins(int coins, int coinsToAdd)
     {
         StartCoroutine(UpdateCoinsRoutine(coins, coinsToAdd));
     }
-
-
     public void LoadNextStage()
     {
         //Debug.Log("Laod Next Level");
         GameDataManager.Instance.CurrentLevel++;
         GamePlayController.instance.UpdateState(GameState.LOADLEVEL);
     }
-
     void OnGameStateChangeMenuActivation(GameState state)
     {
 
         stageCompletedPanel.SetActive(state == GameState.LEVELCOMPLETEUI);
         defeatPanel.SetActive(state == GameState.DEFEAT);
-        introText.gameObject.SetActive(state == GameState.INIT);
 
         switch (state)
         {
@@ -122,6 +111,17 @@ public class GameUIController : MonoBehaviour
         GamePlayController.instance.UpdateState(GameState.INIT);
     }
 
+    public void ResumeGame()
+    {
+        pausePanel.SetActive(false);
+        GamePlayController.instance.UpdateState(GameState.PLAY);
+    }
+    public void BackToMapAfterDefeat()
+    {
+        // SceneManager.LoadScene("MainScene");
+        LoadingWithFadeScenes.Instance.setSceneName("LevelSelect");
+        LoadingWithFadeScenes.Instance.FadeOut();
+    }
     public void UpdateScore(int score)
     {
         scoreText.text = "" + score;
@@ -129,32 +129,46 @@ public class GameUIController : MonoBehaviour
 
     public void ShowWaveInfoText(int waveIndex, int wavesTotal)
     {
-        waveText.gameObject.SetActive(true);
-        startWaveText.gameObject.SetActive(true);
 
-        if (waveIndex == 1)
+        if (waveIndex == 0)
         {
-            anim1.Play("wavetextanim");
-            StartCoroutine(DelayAnimation());
+            introText.gameObject.SetActive(true);
+            waveText.gameObject.SetActive(true);
         }
         else
         {
-            anim.Play("wavetextanim");
+            waveText.gameObject.SetActive(true);
         }
-            waveText.text = "WAVE " + waveIndex + "/" + wavesTotal;
-        Invoke("WaveTextDisable", 6);
+        waveText.text = "WAVE " + (waveIndex + 1) + "/" + wavesTotal;
+        Invoke("WaveTextDisable", 4);
     }
 
-    IEnumerator DelayAnimation()
-    {
-        yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(2));
-        anim.Play("wavetextanim");
-
-    }
     void WaveTextDisable()
     {
         waveText.gameObject.SetActive(false);
-        startWaveText.gameObject.SetActive(false);
+        introText.gameObject.SetActive(false);
+
+    }
+
+    public void UpdateRankStatus()
+    {
+        if (Player.instance.UpgradeRank < 6)
+        {
+            gunRankText.text = Player.instance.UpgradeRank.ToString();
+        }
+        else
+        {
+            gunRankText.text = "MAX";
+        }
+    }
+
+    public void OpenPausePanel()
+    {
+        if (GamePlayController.instance.state == GameState.PLAY)
+        {
+            GamePlayController.instance.UpdateState(GameState.PAUSE);
+            pausePanel.SetActive(true);
+        }
 
     }
 }

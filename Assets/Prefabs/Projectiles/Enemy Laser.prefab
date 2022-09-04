@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 4002028515148844167}
   - component: {fileID: 8112014464179347589}
   - component: {fileID: -5540753303045881687}
-  - component: {fileID: 2049850349285995620}
-  - component: {fileID: 5533522353036504783}
+  - component: {fileID: 3460186554459731060}
   m_Layer: 8
   m_Name: Enemy Laser
   m_TagString: Projectile
@@ -117,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2049850349285995620
+--- !u!114 &3460186554459731060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,19 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
-  impactVFX: {fileID: 1240143500345380869, guid: da671e69d54f0dd4384576a2eea0c523, type: 3}
+  impactVFX: {fileID: 7184155248780615259, guid: 8e48df2e5417f47438c3b26b724e83ab, type: 3}
   impactClip: {fileID: 8300000, guid: 88bbe708e759cb74b9de1a7c003bac61, type: 3}
-  impactClipVolume: 1
---- !u!114 &5533522353036504783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3209645738409717074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 109f35945607be5498babcbb915d992e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
+  impactClipVolume: 0.4

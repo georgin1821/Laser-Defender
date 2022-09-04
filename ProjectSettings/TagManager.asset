@@ -9,10 +9,12 @@ TagManager:
   - waypoint
   - Projectile
   - Power
-  - powerUpgradeGun
   - lockIcon
   - levelText
   - levelBtn
+  - gunUpgrade
+  - gainRockets
+  - shield
   layers:
   - Default
   - TransparentFX

@@ -29,7 +29,11 @@ public class SoundEffectController : MonoBehaviour
     [SerializeField] AudioClip collectGold;
     [SerializeField] [Range(0, 1)] float collectGoldVolume;
 
+    [SerializeField] AudioClip shootRockets;
+    [SerializeField] [Range(0, 1)] float shootRocketsVolume;
 
+    [SerializeField] AudioClip shields;
+    [SerializeField] [Range(0, 1)] float shieldsVolume;
 
 
     private void Awake()
@@ -43,7 +47,7 @@ public class SoundEffectController : MonoBehaviour
 
     public void PlayAudioClip(AudioClip clip, float volume)
     {
-       // Debug.Log("play " + clip + " volume: " + volume);
+        // Debug.Log("play " + clip + " volume: " + volume);
         SFXSource.PlayOneShot(clip, volume);
     }
 
@@ -59,6 +63,11 @@ public class SoundEffectController : MonoBehaviour
         SFXSource.PlayOneShot(playerDeathClip);
     }
 
+    public void PlayerHasShields()
+    {
+        SFXSource.volume = shieldsVolume;
+        SFXSource.PlayOneShot(shields);
+    }
     public void PowerUpSFX()
     {
         SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
@@ -70,6 +79,11 @@ public class SoundEffectController : MonoBehaviour
     {
         shootSource.volume = playerShootClipVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         shootSource.PlayOneShot(playerShootClip);
+    }
+
+    public void PlayerShootRockets()
+    {
+        shootSource.PlayOneShot(shootRockets, shootRocketsVolume);
     }
 
 
