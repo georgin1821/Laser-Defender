@@ -7,7 +7,7 @@ public class Gun : MonoBehaviour
     public static Gun instance;
 
     [SerializeField] public Transform firePoint;
-    [SerializeField] Projectile projectile;
+    [SerializeField] PlayerProjectile projectile;
     [SerializeField] float msBetweenShots;
     [SerializeField] float projectileVelocity;
 
@@ -26,17 +26,11 @@ public class Gun : MonoBehaviour
         {
             nextShotTime = Time.time + msBetweenShots / 1000;
             firePoint.position = new Vector3(firePoint.position.x, firePoint.position.y, 0);
-            int projectiles = projectile.projectilesCount;
+           // int projectiles = projectile.projectilesCount;
 
-            if (projectiles == 1)
 
             {
                 InstatiateDoublePRojectiles(upgrades);
-            }
-            else
-            {
-                SpawnProjectileWithAngle(projectiles, 0);
-
             }
             //else
             //{
@@ -56,9 +50,9 @@ public class Gun : MonoBehaviour
         }
     }
 
-    private Projectile SpawnProjectileWithAngle(int projectiles, float angle)
+    private PlayerProjectile SpawnProjectileWithAngle(int projectiles, float angle)
     {
-        Projectile newProjectile = Instantiate(projectile, firePoint.position, Quaternion.Euler(0, 0, angle)) as Projectile;
+        PlayerProjectile newProjectile = Instantiate(projectile, firePoint.position, Quaternion.Euler(0, 0, angle)) as PlayerProjectile;
         return newProjectile;
     }
 

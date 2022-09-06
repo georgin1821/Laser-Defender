@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool isMovingWithMouse = true;
     [SerializeField] ParticleSystem engineFlames;
     [SerializeField] ParticleSystem shootingFlames;
-    [SerializeField] GameObject rocketPrefab;
+    [SerializeField] GameObject rocketPrefab, skill1;
     [SerializeField] Transform firePos;
     [SerializeField] GameObject shieldsVFX;
 
@@ -52,6 +52,11 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
 
         GamePlayController.OnGameStateChange += GameStateChangeHandle;
+    }
+
+    private void OnEnable()
+    {
+        GameUIController.instance.SetPlayerStatus();
     }
     private void OnDestroy()
     {
@@ -133,7 +138,7 @@ public class Player : MonoBehaviour
                         {
                             PlayerDeath();
                         }
-                    }
+                                            }
                     break;
                 case "shield":
                     if (co != null)
@@ -164,9 +169,10 @@ public class Player : MonoBehaviour
         if (!playerHasShield)
         {
             health -= impactController.GetDamage();
+
+            //Delegate
             GameUIController.instance.UpdateHealthText();
             impactController.ImapctProcess();
-
         }
 
         if (health <= 0)
@@ -221,6 +227,11 @@ public class Player : MonoBehaviour
             Targets = GameObject.FindGameObjectsWithTag("Enemy");
             SoundEffectController.instance.PlayerShootRockets();
         }
+    }
+
+    public void Skill1()
+    {
+        Instantiate(skill1, transform.position, Quaternion.identity);
     }
 
 }

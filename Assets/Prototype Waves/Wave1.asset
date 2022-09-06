@@ -15,3 +15,4 @@ MonoBehaviour:
   squads:
   - {fileID: 5049398550342009626, guid: c022b7eb7ea227b48b25161898ab6ae1, type: 3}
   - {fileID: 5049398550342009626, guid: 98d73bcb201c3df478398ef8c22a09e7, type: 3}
+  - {fileID: 5049398550342009626, guid: c022b7eb7ea227b48b25161898ab6ae1, type: 3}

@@ -20,31 +20,26 @@ public class Enemy : MonoBehaviour
     [SerializeField] int chanchToDropPower;
     [SerializeField] int chanceOfDropingGold;
 
-
-    [HideInInspector] public int placeAtWave;
-
-    void FireChance()
+    private void Start()
     {
-        if (Random.Range(1, 100) <= chanceToFire)
-        {
-            Fire();
-        }
-
+        SetLevelOfDifficulty();
+        InvokeRepeating("FireChance", 1f, 1f);
     }
 
     public void Fire()
     {
-        float firePadding = GetComponent<Renderer>().bounds.size.y / 2;
-        Vector3 firePos = new Vector3(transform.position.x, transform.position.y - firePadding, transform.position.z);
+        //float firePadding = GetComponent<Renderer>().bounds.size.y / 2;
+        Vector3 firePos = new Vector3(transform.position.x, transform.position.y - .5f, transform.position.z);
         GameObject projectile = Instantiate(projectilePrefab,
             firePos,
-            projectilePrefab.transform.rotation) as GameObject;
-        projectile.transform.SetParent(this.transform);
+            Quaternion.identity) as GameObject;
+        //projectile.transform.SetParent(this.transform);
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        
         // trigger when player projectile hits the enemy (Layers)
         PlayerProjectileImpact impactProcess = other.gameObject.GetComponent<PlayerProjectileImpact>();
         if (impactProcess == null) { return; }
@@ -91,4 +86,21 @@ public class Enemy : MonoBehaviour
         //  GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         //  Destroy(explosion, 1f);
     }
+
+    public void SetLevelOfDifficulty()
+    {
+        float diff = GamePlayController.instance.difficulty;
+        health += health * diff;
+        scoreValue += (int)(diff * .5f);
+    }
+
+    void FireChance()
+    {
+        if (Random.Range(1, 100) <= chanceToFire)
+        {
+            Fire();
+        }
+
+    }
+
 }

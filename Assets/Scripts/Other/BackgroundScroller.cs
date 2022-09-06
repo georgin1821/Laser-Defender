@@ -5,39 +5,48 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
     [SerializeField] float backgroundScrollSpeed = 0.5f;
-    Material myMaterial;
     Vector2 offset;
+    Vector3 startingPosition;
+
 
     public float speed;
 
     private void Awake()
     {
-        GamePlayController.OnGameStateChange += OnGameStateChangeHandler;
+        // GamePlayController.OnGameStateChange += OnGameStateChangeHandler;
+        startingPosition = transform.position;
     }
-
+    public Vector3 pos;
     private void OnDestroy()
     {
-        GamePlayController.OnGameStateChange -= OnGameStateChangeHandler;
+       // GamePlayController.OnGameStateChange -= OnGameStateChangeHandler;
     }
     void Start()
     {
-        myMaterial = GetComponent<Renderer>().material;
         
         offset = new Vector2(0, 0);
     }
 
     void Update()
     {
-        myMaterial.mainTextureOffset += offset * Time.deltaTime;
-    }
+       // offset = new Vector2(0, backgroundScrollSpeed);
 
-    public void OnGameStateChangeHandler(GameState state)
-    {
-        if (state == GameState.INIT)
+        // myMaterial.mainTextureOffset += offset * Time.deltaTime;
+        transform.Translate(Vector3.down * backgroundScrollSpeed * Time.deltaTime);
+
+        if(transform.position.y < -27)
         {
-            StartCoroutine(IntroScrollingRoutine());
+            transform.transform.position = startingPosition;
         }
     }
+
+    //public void OnGameStateChangeHandler(GameState state)
+    //{
+    //    if (state == GameState.INIT)
+    //    {
+    //        StartCoroutine(IntroScrollingRoutine());
+    //    }
+    //}
 
     IEnumerator IntroScrollingRoutine()
     {

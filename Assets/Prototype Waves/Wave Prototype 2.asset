@@ -16,6 +16,6 @@ MonoBehaviour:
   timeBetweenSpawns: 0.2
   moveSpeed: 4
   rotationSpeed: 500
-  numberOfEnemies: 7
+  numberOfEnemies: 9
   enemyPrefab: {fileID: 8321638869878801698, guid: 9d3f1474bcf9b3e47ab5688cffc2376e, type: 3}
   pathPrefab: {fileID: 7627659608494717292, guid: 9c4f7a8878842ee4aa1d46255498313f, type: 3}

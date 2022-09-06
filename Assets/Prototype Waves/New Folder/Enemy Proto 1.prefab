@@ -114,12 +114,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 200
   scoreValue: 100
-  projectilePrefab: {fileID: 3209645738409717074, guid: 37c6320dd62847f4ba5ca7fc90f9e08c, type: 3}
-  chanceToFire: 5
+  projectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
+  chanceToFire: 10
   deathVFX: {fileID: 7184155248780615259, guid: 8e48df2e5417f47438c3b26b724e83ab, type: 3}
-  chanchToDropPower: 2
-  chanceOfDropingGold: 2
-  placeAtWave: 0
+  chanchToDropPower: 3
+  chanceOfDropingGold: 3
 --- !u!114 &-6049598726395690737
 MonoBehaviour:
   m_ObjectHideFlags: 0

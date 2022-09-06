@@ -31,8 +31,8 @@ public class LevelSpawner : MonoBehaviour
         for (int waveIndex = 0; waveIndex < waves.Count; waveIndex++)
         {
             squads = waves[waveIndex].GetSquads();
-            // GameUIController.instance.ShowWaveInfoText(waveIndex, squads.Count);
-            // yield return new WaitForSeconds(2);
+             GameUIController.instance.ShowWaveInfoText(waveIndex, squads.Count);
+             yield return new WaitForSeconds(2);
 
             squadsInScene = new List<GameObject>();
 

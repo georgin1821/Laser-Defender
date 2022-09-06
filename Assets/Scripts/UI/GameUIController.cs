@@ -15,16 +15,15 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TMP_Text levelText;
     [SerializeField] TMP_Text healthText;
     [SerializeField] GameObject defeatPanel;
-    [SerializeField] Button retryBtn, pauseBtn;
+    [SerializeField] Button retryBtn, pauseBtn, skill1Btn;
     [SerializeField] TMP_Text waveText;
     [SerializeField] TMP_Text introText;
     [SerializeField] TMP_Text gunRankText;
     [SerializeField] GameObject pausePanel;
-
+    [SerializeField] Slider healthSlider;
 
     [SerializeField] TMP_Text stageCompleteText;
     public GameObject stageCompletedPanel;
-
 
     [HideInInspector] public int currentScore;
     [HideInInspector] public int currentCoins;
@@ -35,7 +34,6 @@ public class GameUIController : MonoBehaviour
 
     public AnimationClip clip;
 
-
     private void Awake()
     {
         if (instance == null)
@@ -44,7 +42,6 @@ public class GameUIController : MonoBehaviour
         }
         GamePlayController.OnGameStateChange += OnGameStateChangeMenuActivation;
     }
-
     private void OnDestroy()
     {
         GamePlayController.OnGameStateChange -= OnGameStateChangeMenuActivation;
@@ -52,7 +49,7 @@ public class GameUIController : MonoBehaviour
     private void Start()
     {
         coinsText.text = GameDataManager.Instance.coins.ToString();
-        //UpdateHealthText();
+        UpdateHealthText();
     }
 
     void Update()
@@ -61,7 +58,10 @@ public class GameUIController : MonoBehaviour
     }
     public void UpdateHealthText()
     {
-        healthText.text = Player.instance.GetHealth().ToString();
+        int health = Player.instance.GetHealth();
+        healthText.text = "" + health;
+        healthSlider.value = health;
+
     }
     public IEnumerator UpdateScore(int CurrentScore, int newScore)
     {
@@ -105,16 +105,15 @@ public class GameUIController : MonoBehaviour
                 break;
         }
     }
-
     public void RetryButton()
     {
         GamePlayController.instance.UpdateState(GameState.INIT);
     }
-
     public void ResumeGame()
     {
-        pausePanel.SetActive(false);
-        GamePlayController.instance.UpdateState(GameState.PLAY);
+        pausePanel.GetComponent<CoolDownCounter>().StartCountDown();
+       // pausePanel.SetActive(false);
+      //  GamePlayController.instance.UpdateState(GameState.PLAY);
     }
     public void BackToMapAfterDefeat()
     {
@@ -126,7 +125,6 @@ public class GameUIController : MonoBehaviour
     {
         scoreText.text = "" + score;
     }
-
     public void ShowWaveInfoText(int waveIndex, int wavesTotal)
     {
 
@@ -142,14 +140,12 @@ public class GameUIController : MonoBehaviour
         waveText.text = "WAVE " + (waveIndex + 1) + "/" + wavesTotal;
         Invoke("WaveTextDisable", 4);
     }
-
     void WaveTextDisable()
     {
         waveText.gameObject.SetActive(false);
         introText.gameObject.SetActive(false);
 
     }
-
     public void UpdateRankStatus()
     {
         if (Player.instance.UpgradeRank < 6)
@@ -161,7 +157,6 @@ public class GameUIController : MonoBehaviour
             gunRankText.text = "MAX";
         }
     }
-
     public void OpenPausePanel()
     {
         if (GamePlayController.instance.state == GameState.PLAY)
@@ -170,6 +165,16 @@ public class GameUIController : MonoBehaviour
             pausePanel.SetActive(true);
         }
 
+    }
+    public void SetPlayerStatus()
+    {
+        healthSlider.maxValue = Player.instance.GetHealth();
+        healthSlider.value = Player.instance.GetHealth();
+    }
+
+    public void Skill1()
+    {
+        Player.instance.Skill1();
     }
 }
 

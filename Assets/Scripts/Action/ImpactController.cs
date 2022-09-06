@@ -10,18 +10,20 @@ public class ImpactController : MonoBehaviour
     [SerializeField] AudioClip impactClip;
     [SerializeField] float impactClipVolume;
 
+    private void Start()
+    {
+        SetLevelOfDifficulty();
+    }
+
     public int Damage
     {
         get { return Damage; }
         set { }
     }
-
-
     public int GetDamage()
     {
         return damage;
     }
-
     public void ImapctProcess()
     {
         GameObject explotion = Instantiate(impactVFX, transform.position, Quaternion.identity);
@@ -34,4 +36,11 @@ public class ImpactController : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    public void SetLevelOfDifficulty()
+    {
+        float diff = GamePlayController.instance.difficulty;
+        damage += (int)(diff * .5f);
+    }
+
 }

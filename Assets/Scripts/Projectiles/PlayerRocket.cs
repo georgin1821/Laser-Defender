@@ -14,7 +14,7 @@ public class PlayerRocket : MonoBehaviour
     private void Start()
     {
         GameObject[] targets = Player.instance.Targets;
-        int index = Random.Range(0, targets.Length);
+        int index = Random.Range(0, targets.Length - 1);
         targetPos = targets[index].transform.position;
 
         StartCoroutine(SeekTargets());

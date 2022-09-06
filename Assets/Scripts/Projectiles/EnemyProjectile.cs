@@ -1,34 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    [SerializeField] float speed;
-    [SerializeField] GameObject cocoonPrefab;
-    [SerializeField] GameObject projectile;
-    bool isDroping;
-    private void Start()
-    {
 
-        StartCoroutine(FireProcess());
-    }
+    public float speed;
 
     void Update()
     {
-        if (isDroping)
-        {
-            transform.position += new Vector3(0, -1, 0) * speed * Time.deltaTime;
-
-        }
-
+        transform.Translate(-Vector3.up * Time.deltaTime * speed, Space.World);
     }
 
-    IEnumerator FireProcess()
-    {
-        yield return new WaitForSeconds(2);
-        isDroping = true;
-        cocoonPrefab.SetActive(false);
-        projectile.SetActive(true);
-    }
 }

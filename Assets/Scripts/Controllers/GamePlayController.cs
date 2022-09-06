@@ -10,15 +10,15 @@ public class GamePlayController : MonoBehaviour
     public static GamePlayController instance;
     public static event Action<GameState> OnGameStateChange;
 
-    public Event gevent;
+    [SerializeField] GameObject[] shipsPrefabs;
 
     public const int valuse = 10;
     public GameState state;
-    public int Score { get; set; }
 
-    [SerializeField] GameObject[] shipsPrefabs;
+    public GameDifficulty ganeDifficulty;
+    public float difficulty;
     GameObject playerPrefab;
-    //public int shipPower;
+    public int Score { get; set; }
     public int ShipPower { get; private set; }
 
     private void Awake()
@@ -32,8 +32,8 @@ public class GamePlayController : MonoBehaviour
     {
         SelectShip();
         UpdateState(GameState.INIT);
+        SetLevelDifficulty();
     }
-
     private void Update()
     {
         // testing
@@ -61,6 +61,22 @@ public class GamePlayController : MonoBehaviour
             case GameState.PAUSE:
                 break;
             case GameState.DEFEAT:
+                break;
+        }
+    }
+
+    public void SetLevelDifficulty()
+    {
+        switch (ganeDifficulty)
+        {
+            case GameDifficulty.EASY:
+                difficulty = 0;
+                break;
+            case GameDifficulty.MEDIUM:
+                difficulty = 1.5f;
+                break;
+            case GameDifficulty.HARD:
+                difficulty = 3f;
                 break;
         }
     }
@@ -101,7 +117,6 @@ public class GamePlayController : MonoBehaviour
                     GameDataManager.Instance.levels[unlockedLevel] = true;
                     GameDataManager.Instance.Save();
                 }
-                GameDataManager.Instance.Save();
                 StartCoroutine(DelayRoutine());
 
                 break;
@@ -132,7 +147,6 @@ public class GamePlayController : MonoBehaviour
         Player player = FindObjectOfType<Player>();
         if (player == null)
         {
-
             GameObject p = Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
             p.SetActive(false);
         }
@@ -185,6 +199,7 @@ public class GamePlayController : MonoBehaviour
         playerPrefab = shipsPrefabs[index];
         ShipPower = GameDataManager.Instance.shipsPower[index];
     }
+
 }
 
 public enum GameState
@@ -199,4 +214,11 @@ public enum GameState
     PAUSE,
     DEFEAT,
     LEVELCOMPLETEUI
+}
+
+public enum GameDifficulty
+{
+    EASY,
+    MEDIUM,
+    HARD
 }
