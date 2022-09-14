@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoadingManager : Singleton<SceneLoadingManager>
 {
     public static SceneLoadingManager instance;
+public bool IsLoadingFromGame { get; set; }
 
 
     public void LoadStartMenu()
@@ -17,11 +18,6 @@ public class SceneLoadingManager : Singleton<SceneLoadingManager>
     {
         GamePlayController.instance.ResetGame();
         UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
-    }
-
-    public void LoadGameOver()
-    {
-        SceneManager.LoadScene("GameOver");
     }
 
     public void QuitGame()

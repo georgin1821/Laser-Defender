@@ -7,8 +7,7 @@ public class SoundEffectController : MonoBehaviour
     public static SoundEffectController instance = null;
 
     [SerializeField] AudioSource SFXSource;
-    [SerializeField] AudioSource shootSource;
-    [SerializeField] AudioSource mousicSource;
+    [SerializeField] AudioSource UISource;
 
 
     [Header("Audio")]
@@ -35,6 +34,12 @@ public class SoundEffectController : MonoBehaviour
     [SerializeField] AudioClip shields;
     [SerializeField] [Range(0, 1)] float shieldsVolume;
 
+    [SerializeField] AudioClip skillUIClick;
+    [SerializeField] [Range(0, 1)] float skillUIClickVolume;
+
+    [SerializeField] AudioClip defeatClip;
+    [SerializeField] [Range(0, 1)] float defeatClipVolume;
+
 
     private void Awake()
     {
@@ -44,49 +49,50 @@ public class SoundEffectController : MonoBehaviour
         }
     }
 
-
     public void PlayAudioClip(AudioClip clip, float volume)
     {
-        // Debug.Log("play " + clip + " volume: " + volume);
-        SFXSource.PlayOneShot(clip, volume);
+        UISource.PlayOneShot(clip, volume);
     }
 
+    public void StopSFXAudio()
+    {
+        SFXSource.Stop();
+        UISource.Stop(); 
+    }
     public void EnemyDeathSound()
     {
         SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         SFXSource.PlayOneShot(enemyDeathClip);
     }
-
+    public void PlayDefeatClip()
+    {
+        SFXSource.volume = defeatClipVolume;
+        SFXSource.PlayOneShot(defeatClip);
+    }
     public void PlayerDeathSound()
     {
         SFXSource.volume = playerDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         SFXSource.PlayOneShot(playerDeathClip);
     }
-
     public void PlayerHasShields()
     {
         SFXSource.volume = shieldsVolume;
         SFXSource.PlayOneShot(shields);
+    }
+    public void SkillUIPress()
+    {
+        UISource.volume = skillUIClickVolume;
+        UISource.PlayOneShot(skillUIClick);
     }
     public void PowerUpSFX()
     {
         SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         SFXSource.PlayOneShot(powerUp);
     }
-
-
-    public void PlayerShootClip()
-    {
-        shootSource.volume = playerShootClipVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
-        shootSource.PlayOneShot(playerShootClip);
-    }
-
     public void PlayerShootRockets()
     {
-        shootSource.PlayOneShot(shootRockets, shootRocketsVolume);
+        SFXSource.PlayOneShot(shootRockets, shootRocketsVolume);
     }
-
-
     public void CollectGoldSound()
     {
         SFXSource.volume = collectGoldVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));

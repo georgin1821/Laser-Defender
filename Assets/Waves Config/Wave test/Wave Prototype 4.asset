@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cb1e8e2a9b3fc44acea0fe3d862e7d, type: 3}
+  m_Name: Wave Prototype 4
+  m_EditorClassIdentifier: 
+  timeBetweenSpawns: 0.18
+  moveSpeed: 10
+  rotationSpeed: 500
+  numberOfEnemies: 24
+  enemyPrefabs:
+  - {fileID: 8321638869878801698, guid: 447e511ddf34f82408480ded04522946, type: 3}
+  - {fileID: 7359555184694253403, guid: 1b455b2a233ea5949b7ec19644a278e2, type: 3}
+  pathPrefab: {fileID: 1757285545161044320, guid: cc167eb2dbe77e4489168b17fa2724bb, type: 3}
+  formationPrefab: {fileID: 489135881576404033, guid: 223d5b785ba96fa488bfd7a7d47d1952, type: 3}
+  isRotatingToForm: 0

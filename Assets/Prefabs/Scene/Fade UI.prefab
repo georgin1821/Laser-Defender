@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4463449417384337345}
   - component: {fileID: 4463449417384337346}
   - component: {fileID: 4463449417384337347}
+  - component: {fileID: 231251498}
   m_Layer: 5
   m_Name: Fade UI
   m_TagString: Untagged
@@ -116,6 +117,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 4463449417953792886}
   fadePanel: {fileID: 4463449417953792883}
+  loadingScreen: {fileID: 4463449417384337356}
+  canvasGroup: {fileID: 231251498}
+--- !u!225 &231251498
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463449417384337356}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4463449417953792883
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -202,7 +217,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4463449417953792883}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f013958916a4f9b4cba41cff316c1dd5, type: 2}
   m_CullingMode: 0

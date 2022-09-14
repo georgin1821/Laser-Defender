@@ -7,18 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class GamePlayController : MonoBehaviour
 {
-    public static GamePlayController instance;
-    public static event Action<GameState> OnGameStateChange;
-
+    [SerializeField] GameObject scrollingBg1, scrollingBg2;
     [SerializeField] GameObject[] shipsPrefabs;
 
+    public static GamePlayController instance;
+    public static event Action<GameState> OnGameStateChange;
     public const int valuse = 10;
     public GameState state;
-
     public GameDifficulty ganeDifficulty;
     public float difficulty;
     GameObject playerPrefab;
+    GameObject sc1, sc2;
     public int Score { get; set; }
+    int levelScore;
+    public int levelCoins { get; set; }
     public int ShipPower { get; private set; }
 
     private void Awake()
@@ -36,18 +38,8 @@ public class GamePlayController : MonoBehaviour
     }
     private void Update()
     {
-        // testing
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelMenu");
-        }
-        //
         switch (state)
         {
-            case GameState.WAVESTART:
-                break;
-            case GameState.MENU:
-                break;
             case GameState.LOADLEVEL:
                 break;
             case GameState.LEVELCOMPLETE:
@@ -63,6 +55,71 @@ public class GamePlayController : MonoBehaviour
             case GameState.DEFEAT:
                 break;
         }
+    }
+
+    public void UpdateState(GameState newState)
+    {
+        state = newState;
+        switch (newState)
+        {
+            case GameState.INIT:
+                Time.timeScale = 1;
+                WaveSpawner.instance.DestroyWaves();
+                DestroyLevel();
+                InitializeScrollingBackrounds();
+                InitializePlayer();
+                BeginIntroSequence();
+                Score = 0;
+                levelScore = 0;
+                levelCoins = 0;
+                GameUIController.instance.UpdateScore(Score);
+                ganeDifficulty = (GameDifficulty)GameDataManager.Instance.currentDifficulty;
+
+                break;
+            case GameState.LOADLEVEL:
+                // Debug.Log("LOADLEVEL");
+
+                StageSpawner.instance.SpawnLevelWithIndex(GameDataManager.Instance.CurrentLevel);
+                UpdateState(GameState.PLAY);
+                break;
+            case GameState.PLAY:
+                Time.timeScale = 1;
+                break;
+            case GameState.LEVELCOMPLETE:
+                // Time.timeScale = 0;
+                Player.instance.StopShootingClip();
+                int unlockedLevel = GameDataManager.Instance.CurrentLevel;
+                if (!(unlockedLevel >= GameDataManager.Instance.levels.Length))
+                {
+                    GameDataManager.Instance.levels[unlockedLevel] = true;
+                    GameDataManager.Instance.Save();
+                }
+
+                GameDataManager.Instance.LevelCoins = levelCoins;
+                GameDataManager.Instance.LevelScore = levelScore;
+                GameDataManager.Instance.LevelIndex = StageSpawner.instance.LevelIndex;
+                GameDataManager.Instance.currentDifficulty = (CurrentGameDifficulty)ganeDifficulty;
+
+                StartCoroutine(DelayRoutine());
+
+                break;
+            case GameState.DEFEAT:
+                Time.timeScale = 0;
+                Player.instance.StopShootingClip();
+                break;
+
+            case GameState.LEVELCOMPLETE_UI:
+                break;
+            case GameState.RETRY:
+                break;
+            case GameState.PAUSE:
+                Time.timeScale = 0;
+                Player.instance.StopShootingClip();
+                break;
+        }
+
+        OnGameStateChange?.Invoke(state);
+        //StartCoroutine(DelayRoutine(newState));
     }
 
     public void SetLevelDifficulty()
@@ -80,89 +137,41 @@ public class GamePlayController : MonoBehaviour
                 break;
         }
     }
-
-    public void UpdateState(GameState newState)
+    private void InitializeScrollingBackrounds()
     {
-        state = newState;
-        switch (newState)
-        {
-            case GameState.WAVESTART:
-                break;
-            case GameState.MENU:
-                break;
-            case GameState.INIT:
-                Time.timeScale = 1;
-                LevelSpawner.instance.DestroyWaves();
-                DestroyLevel();
-                Score = 0;
-                InitializePlayer();
-                BeginIntroSequence();
-                GameUIController.instance.UpdateScore(Score);
-                break;
-            case GameState.LOADLEVEL:
-                // Debug.Log("LOADLEVEL");
-
-                StageSpawner.instance.SpawnLevelWithIndex(GameDataManager.Instance.CurrentLevel);
-                UpdateState(GameState.PLAY);
-                break;
-            case GameState.PLAY:
-                Time.timeScale = 1;
-                break;
-            case GameState.LEVELCOMPLETE:
-                // Time.timeScale = 0;
-
-                int unlockedLevel = GameDataManager.Instance.CurrentLevel;
-                if (!(unlockedLevel >= GameDataManager.Instance.levels.Length))
-                {
-                    GameDataManager.Instance.levels[unlockedLevel] = true;
-                    GameDataManager.Instance.Save();
-                }
-                StartCoroutine(DelayRoutine());
-
-                break;
-            case GameState.DEFEAT:
-                Time.timeScale = 0;
-                break;
-
-            case GameState.LEVELCOMPLETEUI:
-                Time.timeScale = 1;
-                break;
-            case GameState.RETRY:
-                break;
-            case GameState.PAUSE:
-                Time.timeScale = 0;
-                break;
-        }
-
-        OnGameStateChange?.Invoke(state);
-        //StartCoroutine(DelayRoutine(newState));
+        sc1 = Instantiate(scrollingBg1);
+        sc2 = Instantiate(scrollingBg2);
     }
     IEnumerator DelayRoutine()
     {
-        yield return new WaitForSecondsRealtime(2);
-        UpdateState(GameState.LEVELCOMPLETEUI);
+        yield return new WaitForSecondsRealtime(3);
+        UpdateState(GameState.LEVELCOMPLETE_UI);
     }
     private void InitializePlayer()
     {
         Player player = FindObjectOfType<Player>();
         if (player == null)
         {
-            GameObject p = Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
-            p.SetActive(false);
+           Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
+        }
+    }
+    IEnumerator PlayerStartingAnim()
+    {
+        float t1, t2;
+        if (GameManager.Instance.isSpeedLevel)
+        {
+             t1 = 0;
+             t2 = 1;
         }
         else
         {
-            player.transform.position = new Vector3(0, -6, 0);
-            player.gameObject.SetActive(false);
+            t1 = 0.5f; t2 = 4f;
         }
-    }
 
-    IEnumerator PlayerStartingAnim()
-    {
-        yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(.5f));
+        yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(t1));
         Player.instance.gameObject.SetActive(true);
         Player.instance.PlayerAnimation();
-        yield return new WaitForSecondsRealtime(4f);
+        yield return new WaitForSecondsRealtime(t2);
 
         UpdateState(GameState.LOADLEVEL);
     }
@@ -172,9 +181,10 @@ public class GamePlayController : MonoBehaviour
     }
     public void AddToScore(int scoreValue)
     {
-        int currentScore = Score;
+        int startScore = Score;
         Score += scoreValue;
-        StartCoroutine(GameUIController.instance.UpdateScore(currentScore, Score));
+        levelScore += scoreValue;
+        StartCoroutine(GameUIController.instance.UpdateScore(startScore, Score));
     }
     public void ResetGame()
     {
@@ -191,8 +201,9 @@ public class GamePlayController : MonoBehaviour
                 Destroy(enemy.gameObject);
             }
         }
+        Destroy(sc1);
+        Destroy(sc2);
     }
-
     void SelectShip()
     {
         int index = GameDataManager.Instance.selectedShip;
@@ -204,8 +215,6 @@ public class GamePlayController : MonoBehaviour
 
 public enum GameState
 {
-    WAVESTART,
-    MENU,
     INIT,
     LOADLEVEL,
     PLAY,
@@ -213,7 +222,7 @@ public enum GameState
     RETRY,
     PAUSE,
     DEFEAT,
-    LEVELCOMPLETEUI
+    LEVELCOMPLETE_UI
 }
 
 public enum GameDifficulty

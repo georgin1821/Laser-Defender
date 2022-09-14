@@ -11,80 +11,70 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float speed;
 
     Vector3 startingPosition;
-    float distance;
+    public float distance;
     bool hasFired;
-    bool isGoingToPlayer = true;
-    bool isChasing = true;
-    public void AgentReacting(Transform trans)
+    public bool isGoingToPlayer = true;
+    public Vector3 dir;
+    public bool isReacting;
+    public void AgentReacting(Vector3 startingPosition)
     {
-
-        if (Random.Range(1, 100) <= chanceToReact)
-        {
-            EnemyPathfinding.AiReacted = true;
-            startingPosition = trans.position;
-            StartCoroutine(AgentCycle());
-        }
+        this.startingPosition = startingPosition;
+        InvokeRepeating("AgentChanceToReact", Random.Range(2, 8), Random.Range(4, 8));
     }
 
+    void AgentChanceToReact()
+    {
+        if (Random.Range(1, 100) <= chanceToReact && !isReacting)
+        {
+            StartCoroutine(AgentCycle());
+            gameObject.GetComponent<EnemyPathfinding>().isMovingAtFormation = false;
+        }
 
+    }
     IEnumerator AgentCycle()
     {
-        Quaternion rot;
-        Vector3 dir;
 
-        while (isChasing)
+        isReacting = true;
+        distance = Vector3.Distance(Player.instance.gameObject.transform.position, transform.position);
+        while (distance >= 2 && isGoingToPlayer)
         {
-            distance = Vector3.Distance(Player.instance.gameObject.transform.position, transform.position);
+            distance = Vector2.Distance(Player.instance.gameObject.transform.position, transform.position);
 
-            while (distance >= 2 && isGoingToPlayer)
-            {
-                distance = Vector3.Distance(Player.instance.gameObject.transform.position, transform.position);
-
-                //Randomization of speed
-                speed = speed * (1 + Random.Range(-speedRF / 2f, speedRF / 2f));
-                dir = (Player.instance.gameObject.transform.position - transform.position).normalized;
-                rot = Quaternion.LookRotation(Vector3.forward, dir);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, 600 * Time.deltaTime);
-
-                // transform.Translate(Vector3.up * speed * Time.deltaTime);
-
-                transform.position = Vector3.MoveTowards(transform.position,
-                    Player.instance.gameObject.transform.position,
-                    speed * Time.deltaTime);
-                yield return null;
-
-            }
-            isGoingToPlayer = false;
-            if (!hasFired)
-            {
-                GetComponent<Enemy>().Fire();
-                hasFired = true;
-            }
-
-
+            //Randomization of speed
             speed = speed * (1 + Random.Range(-speedRF / 2f, speedRF / 2f));
-            while (Vector3.Distance(transform.position, startingPosition) > .5f)
-            {
-                dir = (startingPosition - transform.position).normalized;
-                rot = Quaternion.LookRotation(Vector3.forward, dir);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, 300 * Time.deltaTime);
-                transform.position = Vector3.MoveTowards(transform.position,
-                    startingPosition,
-                    speed * Time.deltaTime);
-                yield return null;
 
-            }
-            float time = Time.time;
-            while (Time.time < time + 1)
-            {
-                Quaternion rotation = Quaternion.Euler(0, 0, 180);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 450 * Time.deltaTime);
-                yield return null;
-            }
-
+            transform.position = Vector3.MoveTowards(transform.position,
+                Player.instance.gameObject.transform.position,
+                speed * Time.deltaTime);
+            // dir = (Player.instance.gameObject.transform.position.normalized - transform.position).normalized;
+            //  transform.Translate(dir * speed * Time.deltaTime, Space.World);
             yield return null;
 
         }
+
+        isGoingToPlayer = false;
+
+        if (!hasFired)
+        {
+            GetComponent<Enemy>().Fire();
+            hasFired = true;
+        }
+
+        while (Vector3.Distance(transform.position, startingPosition) > .1f)
+        {
+            speed = speed * (1 + Random.Range(-speedRF / 2f, speedRF / 2f));
+            transform.position = Vector3.MoveTowards(transform.position,
+                startingPosition,
+                speed * Time.deltaTime);
+            yield return null;
+        }
+
+
+        isGoingToPlayer = true;
+        isReacting = false;
+        gameObject.GetComponent<EnemyPathfinding>().isMovingAtFormation = true;
+        StartCoroutine(GetComponent<EnemyPathfinding>().FormationMove());
+
     }
 }
 

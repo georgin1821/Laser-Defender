@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8319627799226995511
+--- !u!1 &9025272162233380950
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8319627799226995496}
-  - component: {fileID: 3959178621127542738}
+  - component: {fileID: 9025272162233380948}
+  - component: {fileID: 9025272162233380949}
+  - component: {fileID: 3776361749122958984}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -17,34 +18,50 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8319627799226995496
+--- !u!4 &9025272162233380948
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8319627799226995511}
+  m_GameObject: {fileID: 9025272162233380950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.88, y: -5.07, z: 19.493612}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3959178621127542738
+--- !u!114 &9025272162233380949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8319627799226995511}
+  m_GameObject: {fileID: 9025272162233380950}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1dffe3086ba1ba40a22f4863a005611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedShip: 0
   coins: 0
   gems: 0
   isGameStartedFirstTime: 0
   levels: 
+  ships: 
+  shipsPower: 
+  shipsRank: 
+--- !u!114 &3776361749122958984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9025272162233380950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ac1e17baac50a408907cca36715f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

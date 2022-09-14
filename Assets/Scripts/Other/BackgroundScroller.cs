@@ -5,62 +5,53 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
     [SerializeField] float backgroundScrollSpeed = 0.5f;
-    Vector2 offset;
-    Vector3 startingPosition;
 
+    [SerializeField] float introSpeed;
 
-    public float speed;
+    bool isStatring;
 
     private void Awake()
     {
-        // GamePlayController.OnGameStateChange += OnGameStateChangeHandler;
-        startingPosition = transform.position;
+         GamePlayController.OnGameStateChange += OnGameStateChangeHandler;
     }
     public Vector3 pos;
     private void OnDestroy()
     {
-       // GamePlayController.OnGameStateChange -= OnGameStateChangeHandler;
+         GamePlayController.OnGameStateChange -= OnGameStateChangeHandler;
     }
-    void Start()
-    {
-        
-        offset = new Vector2(0, 0);
-    }
-
     void Update()
     {
-       // offset = new Vector2(0, backgroundScrollSpeed);
 
-        // myMaterial.mainTextureOffset += offset * Time.deltaTime;
-        transform.Translate(Vector3.down * backgroundScrollSpeed * Time.deltaTime);
-
-        if(transform.position.y < -27)
+        if (transform.position.y < -14.66)
         {
-            transform.transform.position = startingPosition;
+            transform.transform.position = new Vector3(transform.position.x, 14.66f, transform.position.z);
         }
+
+        if (isStatring) return;
+        transform.Translate(Vector3.down * backgroundScrollSpeed * Time.deltaTime);
     }
 
-    //public void OnGameStateChangeHandler(GameState state)
-    //{
-    //    if (state == GameState.INIT)
-    //    {
-    //        StartCoroutine(IntroScrollingRoutine());
-    //    }
-    //}
+    public void OnGameStateChangeHandler(GameState state)
+    {
+        if (state == GameState.INIT)
+        {
+            StartCoroutine(IntroScrollingRoutine());
+        }
+    }
 
     IEnumerator IntroScrollingRoutine()
     {
+        isStatring = true;
         float time = 3;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
         while (time > 0)
         {
 
-            speed -= Time.deltaTime * 6f;
-            offset = new Vector2(0, speed);
+            introSpeed -= Time.deltaTime * 7f;
+            transform.Translate(Vector3.down * introSpeed * Time.deltaTime);
             time -= Time.deltaTime;
             yield return null;
         }
-        offset = new Vector2(0, backgroundScrollSpeed);
-
+        isStatring = false;
     }
 }

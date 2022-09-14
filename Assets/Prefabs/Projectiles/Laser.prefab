@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
-  impactVFX: {fileID: 7184155248780615259, guid: 8e48df2e5417f47438c3b26b724e83ab, type: 3}
+  impactVFX: {fileID: 6841480198944092306, guid: da671e69d54f0dd4384576a2eea0c523, type: 3}
   impactClip: {fileID: 8300000, guid: 88bbe708e759cb74b9de1a7c003bac61, type: 3}
   impactClipVolume: 0
 --- !u!114 &5966629802417868796
@@ -145,4 +145,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b53f9857c2bd14098a1f3fd7ad403a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 10

@@ -24,7 +24,7 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void ShowProfilePanel()
     {
-        AudioManager.Instance.PlayOneShotClip(click1, 1);
+       AudioManager.Instance.PlayOneShotClip(click1, 1);
         if (profilePanel.activeInHierarchy)
         {
             profilePanel.SetActive(false);
@@ -39,7 +39,7 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void ShowShopPanel()
     {
-        AudioManager.Instance.PlayOneShotClip(click1, 1);
+       AudioManager.Instance.PlayOneShotClip(click1, 1);
 
         if (shopPanel.activeInHierarchy)
         {
@@ -64,7 +64,7 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void ShowSquadPanel()
     {
-        AudioManager.Instance.PlayOneShotClip(click2, 1);
+       AudioManager.Instance.PlayOneShotClip(click2, 1);
         powerText.text = GameDataManager.Instance.shipsPower[selectedShip].ToString();
 
         squapPanel.SetActive(true);
@@ -73,9 +73,9 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void LoadLevelScene()
     {
-        AudioManager.Instance.PlayOneShotClip(click2, 1);
-        LoadingWithFadeScenes.Instance.setSceneName("LevelSelect");
-        LoadingWithFadeScenes.Instance.FadeOut();
+       AudioManager.Instance.PlayOneShotClip(click2, 1);
+        LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
+
     }
 
     public void SelectShip()

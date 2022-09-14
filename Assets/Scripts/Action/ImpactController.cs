@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImpactController : MonoBehaviour
+public class ImpactController : GameElement
 {
 
     [SerializeField] int damage = 100;

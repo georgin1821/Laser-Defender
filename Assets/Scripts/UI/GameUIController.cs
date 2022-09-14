@@ -3,35 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameUIController : MonoBehaviour
 {
 
     public static GameUIController instance;
 
-    [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text scoreText, lostTxt;
     [SerializeField] TMP_Text coinsText;
     [SerializeField] TMP_Text levelText;
     [SerializeField] TMP_Text healthText;
-    [SerializeField] GameObject defeatPanel;
-    [SerializeField] Button retryBtn, pauseBtn, skill1Btn;
-    [SerializeField] TMP_Text waveText;
+    [SerializeField] TMP_Text waveText, victoryTxt;
     [SerializeField] TMP_Text introText;
     [SerializeField] TMP_Text gunRankText;
+    [SerializeField] Button retryBtn, pauseBtn, skill1Btn;
+    [SerializeField] Button defeatScreenBtn;
+    [SerializeField] Image semiTransperantImage;
+
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject defeatPanel;
     [SerializeField] Slider healthSlider;
 
-    [SerializeField] TMP_Text stageCompleteText;
-    public GameObject stageCompletedPanel;
+    [Header("Sound")]
+    [SerializeField] AudioClip click1;
+    [SerializeField] AudioClip click2;
 
-    [HideInInspector] public int currentScore;
-    [HideInInspector] public int currentCoins;
-
-    public int score;
     public Animator anim;
-    public Animator anim1;
-
     public AnimationClip clip;
 
     private void Awake()
@@ -45,24 +42,39 @@ public class GameUIController : MonoBehaviour
     private void OnDestroy()
     {
         GamePlayController.OnGameStateChange -= OnGameStateChangeMenuActivation;
+        defeatScreenBtn.onClick.RemoveListener(DefeatScreen);
     }
     private void Start()
     {
         coinsText.text = GameDataManager.Instance.coins.ToString();
+        defeatScreenBtn.onClick.AddListener(DefeatScreen);
         UpdateHealthText();
     }
-
     void Update()
     {
         levelText.text = GameDataManager.Instance.CurrentLevel.ToString();
     }
-    public void UpdateHealthText()
-    {
-        int health = Player.instance.GetHealth();
-        healthText.text = "" + health;
-        healthSlider.value = health;
 
+    void OnGameStateChangeMenuActivation(GameState state)
+    {
+
+        defeatPanel.SetActive(state == GameState.DEFEAT);
+        semiTransperantImage.gameObject.SetActive(state == GameState.DEFEAT);
+        victoryTxt.gameObject.SetActive(state == GameState.LEVELCOMPLETE);
+        switch (state)
+        {
+            case GameState.LEVELCOMPLETE_UI:
+                GameManager.Instance.IsLoadingFromLevelComplete = true;
+                LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
+                break;
+            case GameState.DEFEAT:
+
+
+                break;
+
+        }
     }
+
     public IEnumerator UpdateScore(int CurrentScore, int newScore)
     {
         while (CurrentScore < newScore)
@@ -82,44 +94,30 @@ public class GameUIController : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
+    public void UpdateHealthText()
+    {
+        int health = Player.instance.GameHealth;
+        healthText.text = "" + health;
+        healthSlider.value = health;
+
+    }
     public void UpdateCoins(int coins, int coinsToAdd)
     {
         StartCoroutine(UpdateCoinsRoutine(coins, coinsToAdd));
     }
-    public void LoadNextStage()
-    {
-        //Debug.Log("Laod Next Level");
-        GameDataManager.Instance.CurrentLevel++;
-        GamePlayController.instance.UpdateState(GameState.LOADLEVEL);
-    }
-    void OnGameStateChangeMenuActivation(GameState state)
-    {
-
-        stageCompletedPanel.SetActive(state == GameState.LEVELCOMPLETEUI);
-        defeatPanel.SetActive(state == GameState.DEFEAT);
-
-        switch (state)
-        {
-            case GameState.LEVELCOMPLETEUI:
-                stageCompleteText.text = "Stage " + GameDataManager.Instance.CurrentLevel + " Completed!";
-                break;
-        }
-    }
     public void RetryButton()
     {
+        SoundEffectController.instance.PlayAudioClip(click1, 1f);
         GamePlayController.instance.UpdateState(GameState.INIT);
     }
     public void ResumeGame()
     {
         pausePanel.GetComponent<CoolDownCounter>().StartCountDown();
-       // pausePanel.SetActive(false);
-      //  GamePlayController.instance.UpdateState(GameState.PLAY);
     }
-    public void BackToMapAfterDefeat()
+    public void BackToMap()
     {
-        // SceneManager.LoadScene("MainScene");
-        LoadingWithFadeScenes.Instance.setSceneName("LevelSelect");
-        LoadingWithFadeScenes.Instance.FadeOut();
+        Time.timeScale = 1;
+        LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }
     public void UpdateScore(int score)
     {
@@ -148,7 +146,7 @@ public class GameUIController : MonoBehaviour
     }
     public void UpdateRankStatus()
     {
-        if (Player.instance.UpgradeRank < 6)
+        if (Player.instance.UpgradeRank < 9)
         {
             gunRankText.text = Player.instance.UpgradeRank.ToString();
         }
@@ -168,13 +166,26 @@ public class GameUIController : MonoBehaviour
     }
     public void SetPlayerStatus()
     {
-        healthSlider.maxValue = Player.instance.GetHealth();
-        healthSlider.value = Player.instance.GetHealth();
+        healthSlider.maxValue = Player.instance.GameHealth;
+        healthSlider.value = Player.instance.GameHealth;
+    }
+    void DefeatScreen()
+    {
+        StartCoroutine(DefeatScreenRoutine());
+    }
+    public IEnumerator DefeatScreenRoutine()
+    {
+        Time.timeScale = 1;
+        defeatPanel.SetActive(false);
+        semiTransperantImage.gameObject.SetActive(false);
+        Player.instance.gameObject.SetActive(false);
+        SoundEffectController.instance.PlayDefeatClip();
+        lostTxt.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        Time.timeScale = 1;
+        GameManager.Instance.IsLoadingFromGameDefeat = true;
+        LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }
 
-    public void Skill1()
-    {
-        Player.instance.Skill1();
-    }
 }
 

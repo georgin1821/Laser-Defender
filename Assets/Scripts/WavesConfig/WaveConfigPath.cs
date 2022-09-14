@@ -6,14 +6,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemy Wave Config Path")]
 public class WaveConfigPath : ScriptableObject
 {
-    public WaveConfigFormation waveConfigFormation;
     [SerializeField] float timeBetweenSpawns;
     [SerializeField] float moveSpeed;
     [SerializeField] float rotationSpeed;
     public int numberOfEnemies;
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
     public GameObject pathPrefab;
+    [SerializeField] GameObject formationPrefab;
+    [SerializeField] bool isRotatingToForm;
 
+    public List<Transform> GetFormWaypoints()
+    {
+        var waveWaypoints = new List<Transform>();
+        foreach (Transform child in formationPrefab.transform)
+        {
+            waveWaypoints.Add(child);
+        }
+        return waveWaypoints; ;
+
+    }
 
     public List<Transform> GetWaypoints()
     {
@@ -30,8 +41,12 @@ public class WaveConfigPath : ScriptableObject
     {
         return numberOfEnemies;
     }
+    public bool GetisRotatingToForm()
+    {
+        return isRotatingToForm;
+    }
 
-    public float GetTimeBetweenSpawns()
+        public float GetTimeBetweenSpawns()
     {
         return timeBetweenSpawns;
     }

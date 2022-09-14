@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class GameDataManager : Singleton<GameDataManager>
 {
+    public int LevelScore { get; set; }
+    public int LevelCoins { get; set; }
+    public int LevelIndex { get; set; }
+
+    //Data
     public int selectedShip;
     public int coins;
     public int gems;
@@ -16,6 +21,7 @@ public class GameDataManager : Singleton<GameDataManager>
     public bool[] ships;
     public int[] shipsPower;
     public int[] shipsRank;
+    public CurrentGameDifficulty currentDifficulty;
 
     private GameData data;
 
@@ -54,6 +60,7 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.Ships = ships;
                 data.ShipsRank = shipsRank;
                 data.SelectedShip = selectedShip;
+                data.CurrentDifficulty = currentDifficulty;
 
                 bf.Serialize(file, data);
             }
@@ -116,6 +123,7 @@ public class GameDataManager : Singleton<GameDataManager>
             levels = new bool[5];
             ships = new bool[5];
             shipsPower = new int[6];
+            currentDifficulty = CurrentGameDifficulty.EASY;
 
             for (int i = 0; i < shipsPower.Length; i++)
             {
@@ -149,6 +157,7 @@ public class GameDataManager : Singleton<GameDataManager>
             data.ShipsPower = shipsPower;
             data.SelectedShip = selectedShip;
             data.ShipsRank = shipsRank;
+            data.CurrentDifficulty = currentDifficulty;
 
             Save();
             Load();
@@ -157,6 +166,13 @@ public class GameDataManager : Singleton<GameDataManager>
         }
     }
 
+}
+
+public enum CurrentGameDifficulty
+{
+    EASY,
+    MEDIUM,
+    HARD
 }
 
 [Serializable]
@@ -170,4 +186,6 @@ class GameData
     public bool[] Levels { get; set; }
     public int[] ShipsPower { get; set; }
     public int[] ShipsRank { get; set; }
+    public CurrentGameDifficulty CurrentDifficulty { get; set; }
+
 }

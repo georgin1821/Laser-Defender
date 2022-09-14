@@ -83,8 +83,8 @@ public class Enemy : MonoBehaviour
         //Subtract enemies count
         EnemyCount.instance.count--;
         SoundEffectController.instance.EnemyDeathSound();
-        //  GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
-        //  Destroy(explosion, 1f);
+          GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+         Destroy(explosion, 1f);
     }
 
     public void SetLevelOfDifficulty()

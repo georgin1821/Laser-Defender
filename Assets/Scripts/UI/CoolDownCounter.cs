@@ -8,6 +8,7 @@ public class CoolDownCounter : MonoBehaviour
     [SerializeField] TMP_Text cooldownText;
     [SerializeField] GameObject cdPanel;
     [SerializeField] GameObject pausePanel;
+    [SerializeField] AudioClip cdClip;
 
     public void StartCountDown()
     {
@@ -18,7 +19,7 @@ public class CoolDownCounter : MonoBehaviour
     {
         pausePanel.SetActive(false);
         cdPanel.SetActive(true);
-
+        SoundEffectController.instance.PlayAudioClip(cdClip, 1);
         float time = 3;
         while (time > 0)
         {
