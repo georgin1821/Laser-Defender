@@ -6,8 +6,6 @@ public class PlayerProjectileImpact : MonoBehaviour
 {
     [SerializeField] int damage = 100;
     [SerializeField] protected GameObject impactVFX;
-    [SerializeField] protected AudioClip impactClip;
-    [SerializeField][Range(0, 1)] protected float impactClipVolume;
 
     public int Damage
     {
@@ -25,10 +23,6 @@ public class PlayerProjectileImpact : MonoBehaviour
     public virtual void ImapctProcess()
     {
         GameObject explotion = Instantiate(impactVFX, transform.position, Quaternion.identity);
-        if (impactClip != null)
-        {
-            SoundEffectController.instance.PlayAudioClip(impactClip, impactClipVolume);
-        }
 
         Destroy(explotion, 1f);
 

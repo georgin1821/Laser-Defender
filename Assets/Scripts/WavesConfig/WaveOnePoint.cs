@@ -60,7 +60,7 @@ public class WaveOnePoint : MonoBehaviour
 
             GameObject newEnemy = Instantiate(waveConfig.enemyPrefabs[i],
             waypointStart[index].position,
-            Quaternion.identity) as GameObject;
+            waveConfig.enemyPrefabs[i].transform.rotation) as GameObject;
             newEnemy.transform.SetParent(obj.transform);
 
             speed = waveConfig.GetMoveSpeed();

@@ -17,7 +17,7 @@ MonoBehaviour:
   rotationSpeed: 500
   numberOfEnemies: 5
   enemyPrefabs:
-  - {fileID: 2779007729274634122, guid: 04c0203070282d248b42f51208b2bb64, type: 3}
+  - {fileID: 3289241283706960629, guid: 769762818decfa7428503f43cf79074b, type: 3}
   pathPrefab: {fileID: 1757285545161044320, guid: cc167eb2dbe77e4489168b17fa2724bb, type: 3}
   formationPrefab: {fileID: 489135881576404033, guid: 223d5b785ba96fa488bfd7a7d47d1952, type: 3}
   isRotatingToForm: 0

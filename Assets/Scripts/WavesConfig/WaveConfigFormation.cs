@@ -33,7 +33,8 @@ public class WaveConfigFormation : MonoBehaviour
         {
             GameObject newEnemy = Instantiate(waveConfig.enemyPrefabs[0],
     waypoints[0].position,
-    Quaternion.identity) as GameObject;
+    waveConfig.enemyPrefabs[0].transform.rotation) as GameObject;
+           
 
             speed = waveConfig.GetMoveSpeed();
             rotationSpeed = waveConfig.GetRotationSpeed();
@@ -57,7 +58,8 @@ public class WaveConfigFormation : MonoBehaviour
             }
             else
             {
-                StartCoroutine(enemy.GetComponent<EnemyPathfinding>().DeploymentRoutineFormnNoRotation());
+                enemy.GetComponent<EnemyPathfinding>().DeplymentFormNoRotation();
+ ;
             }
 
             yield return new WaitForSeconds(timeBetweenSpawns);

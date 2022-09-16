@@ -11,7 +11,6 @@ public class EnemyPathfindingVertical : MonoBehaviour
 
     float yMax;
     float randFactor = 0.4f;
-
     IEnumerator co1, co2;
     private void Start()
     {
@@ -53,14 +52,14 @@ public class EnemyPathfindingVertical : MonoBehaviour
 
     IEnumerator LaserSkill()
     {
-        float range = Random.Range(-4f, 2f);
+        float range = Random.Range(-1f, 4.5f);
         while (transform.position.y > range)
         {
             yield return null;
         }
 
         line.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
 
         line.SetActive(false);
         laser.SetActive(true);

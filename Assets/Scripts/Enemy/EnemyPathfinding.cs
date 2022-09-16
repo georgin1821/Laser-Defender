@@ -63,7 +63,10 @@ public class EnemyPathfinding : MonoBehaviour
         yield return new WaitForSeconds(3);
         StartCoroutine(FormationMove());
     }
-
+    public void DeplymentFormNoRotation()
+    {
+        StartCoroutine(DeploymentRoutineFormnNoRotation());
+    }
     public IEnumerator DeploymentRoutineFormnNoRotation()
     {
         while (index < waypoints.Count - 1)

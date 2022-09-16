@@ -5227,7 +5227,7 @@ MonoBehaviour:
   shootingFlames: {fileID: 1059050182630161250}
   rocketPrefab: {fileID: 165506286884226736, guid: bc7b3756f256764498dcb582d293fd7b, type: 3}
   firePos: {fileID: 1416074892558850024}
-  shieldsVFX: {fileID: 6381356175843215295, guid: ccb475ff84bc29e469781ac578354364, type: 3}
+  shieldsVFX: {fileID: 7985708669133102854, guid: 87285c6c60ed88d4191a5ff977012c19, type: 3}
   collideWithEnemy: 1
 --- !u!114 &8296172668688822993
 MonoBehaviour:
@@ -5256,7 +5256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1416074892558850024}
-  projectile: {fileID: 5966629802417868796, guid: 369bbd1176bb1a84788040303430eb7d, type: 3}
+  projectile: {fileID: 2170107135518169224, guid: d7c77eada7d044d4b8f13274c0aae667, type: 3}
   msBetweenShots: 150
   isAlwaysShooting: 0
   projectileVelocity: 15
