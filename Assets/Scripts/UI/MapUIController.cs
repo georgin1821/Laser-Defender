@@ -22,6 +22,7 @@ public class MapUIController : MonoBehaviour
 
     string level;
     string difficulty;
+    Loading load;
 
 
     private void Awake()
@@ -35,8 +36,29 @@ public class MapUIController : MonoBehaviour
     {
         InitializeLevelMenu();
 
-        defeatPanel.SetActive(GameManager.Instance.IsLoadingFromGameDefeat);
-        lvlCompletePanel.SetActive(GameManager.Instance.IsLoadingFromLevelComplete);
+        if (GameManager.Instance.IsLoadingFromGameDefeat)
+        {
+        }
+
+        switch (load)
+        {
+            case Loading.MAIN:
+                lvlCompletePanel.SetActive(false);
+        defeatPanel.SetActive(false);
+            lvlStartPanel.SetActive(false);
+                break;
+            case Loading.LVLCOMP:
+                lvlCompletePanel.SetActive(true);
+                defeatPanel.SetActive(false);
+                lvlStartPanel.SetActive(false);
+                break;
+            case Loading.DEFEAT:
+                lvlCompletePanel.SetActive(false);
+                defeatPanel.SetActive(true);
+                lvlStartPanel.SetActive(false);
+                break;
+
+        }
     }
 
     void InitializeLevelMenu()

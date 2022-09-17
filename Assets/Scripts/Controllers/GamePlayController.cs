@@ -20,6 +20,7 @@ public class GamePlayController : MonoBehaviour
     GameObject sc1, sc2;
     public int Score { get; set; }
     int levelScore;
+    int batterySpend;
     public int levelCoins { get; set; }
     public int ShipPower { get; private set; }
 
@@ -72,13 +73,12 @@ public class GamePlayController : MonoBehaviour
                 Score = 0;
                 levelScore = 0;
                 levelCoins = 0;
+                batterySpend = 0;
                 GameUIController.instance.UpdateScore(Score);
                 ganeDifficulty = (GameDifficulty)GameDataManager.Instance.currentDifficulty;
 
                 break;
             case GameState.LOADLEVEL:
-                // Debug.Log("LOADLEVEL");
-
                 StageSpawner.instance.SpawnLevelWithIndex(GameDataManager.Instance.CurrentLevel);
                 UpdateState(GameState.PLAY);
                 break;
@@ -86,19 +86,20 @@ public class GamePlayController : MonoBehaviour
                 Time.timeScale = 1;
                 break;
             case GameState.LEVELCOMPLETE:
-                // Time.timeScale = 0;
                 Player.instance.StopShootingClip();
+
                 int unlockedLevel = GameDataManager.Instance.CurrentLevel;
                 if (!(unlockedLevel >= GameDataManager.Instance.levels.Length))
                 {
                     GameDataManager.Instance.levels[unlockedLevel] = true;
-                    GameDataManager.Instance.Save();
                 }
 
                 GameDataManager.Instance.LevelCoins = levelCoins;
                 GameDataManager.Instance.LevelScore = levelScore;
+                GameDataManager.Instance.batteryLife -= 10;
                 GameDataManager.Instance.LevelIndex = StageSpawner.instance.LevelIndex;
                 GameDataManager.Instance.currentDifficulty = (CurrentGameDifficulty)ganeDifficulty;
+                GameDataManager.Instance.Save();
 
                 StartCoroutine(DelayRoutine());
 
@@ -119,7 +120,6 @@ public class GamePlayController : MonoBehaviour
         }
 
         OnGameStateChange?.Invoke(state);
-        //StartCoroutine(DelayRoutine(newState));
     }
 
     public void SetLevelDifficulty()
@@ -152,7 +152,7 @@ public class GamePlayController : MonoBehaviour
         Player player = FindObjectOfType<Player>();
         if (player == null)
         {
-           Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
+            Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
         }
     }
     IEnumerator PlayerStartingAnim()
@@ -160,8 +160,8 @@ public class GamePlayController : MonoBehaviour
         float t1, t2;
         if (GameManager.Instance.isSpeedLevel)
         {
-             t1 = 0;
-             t2 = 1;
+            t1 = 0;
+            t2 = 1;
         }
         else
         {

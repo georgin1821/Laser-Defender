@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3765477918462803095}
   - component: {fileID: 1415640455799736413}
   - component: {fileID: 9203388414961151385}
+  - component: {fileID: -5747424431477787392}
   m_Layer: 0
   m_Name: Diamond
   m_TagString: Untagged
@@ -97,3 +98,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedOfSpeen: 45
+--- !u!114 &-5747424431477787392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623081208035813768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2f59cf8c9870240a45eac8e0cbaa4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.5
+  playerRange: 1.5
+  smoothTime: 0.2
+  forwardSpeed: 1.5
+  gainPowerVFX: {fileID: 3267442988761078042, guid: b701ee9841dd410479dcb07b25d084cc, type: 3}

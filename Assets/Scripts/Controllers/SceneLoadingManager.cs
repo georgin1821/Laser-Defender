@@ -23,6 +23,7 @@ public bool IsLoadingFromGame { get; set; }
     public void QuitGame()
     {
         Application.Quit();
+        GameDataManager.Instance.Save();
     }
 
     

@@ -16,9 +16,6 @@ public class SoundEffectController : MonoBehaviour
     [SerializeField] AudioClip playerDeathClip;
     [SerializeField] [Range(0, 1)] float playerDeathVolume;
 
-    [SerializeField] AudioClip playerShootClip;
-    [SerializeField] [Range(0, 1)] float playerShootClipVolume;
-
     [SerializeField] AudioClip enemyDeathClip;
     [SerializeField] [Range(0, 1)] float enemyDeathVolume;
 
@@ -33,9 +30,6 @@ public class SoundEffectController : MonoBehaviour
 
     [SerializeField] AudioClip shields;
     [SerializeField] [Range(0, 1)] float shieldsVolume;
-
-    [SerializeField] AudioClip skillUIClick;
-    [SerializeField] [Range(0, 1)] float skillUIClickVolume;
 
     [SerializeField] AudioClip defeatClip;
     [SerializeField] [Range(0, 1)] float defeatClipVolume;
@@ -61,8 +55,9 @@ public class SoundEffectController : MonoBehaviour
     }
     public void EnemyDeathSound()
     {
-        SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
-        SFXSource.PlayOneShot(enemyDeathClip);
+        AudioComtroller.Instance.PlayAudio(AudioType.EnemyDeathSound, true);
+      //  SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
+      //  SFXSource.PlayOneShot(enemyDeathClip);
     }
     public void PlayDefeatClip()
     {
@@ -79,15 +74,11 @@ public class SoundEffectController : MonoBehaviour
         SFXSource.volume = shieldsVolume;
         SFXSource.PlayOneShot(shields);
     }
-    public void SkillUIPress()
-    {
-        UISource.volume = skillUIClickVolume;
-        UISource.PlayOneShot(skillUIClick);
-    }
     public void PowerUpSFX()
     {
-        SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
-        SFXSource.PlayOneShot(powerUp);
+        AudioComtroller.Instance.PlayAudio(AudioType.PowerUp, true);
+       // SFXSource.volume = enemyDeathVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
+       // SFXSource.PlayOneShot(powerUp);
     }
     public void PlayerShootRockets()
     {

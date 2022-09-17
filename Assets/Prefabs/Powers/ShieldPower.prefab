@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2f59cf8c9870240a45eac8e0cbaa4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1.5
+  playerRange: 1.5
+  smoothTime: 1
+  forwardSpeed: 2
   gainPowerVFX: {fileID: 0}
 --- !u!65 &874009916108282556
 BoxCollider:

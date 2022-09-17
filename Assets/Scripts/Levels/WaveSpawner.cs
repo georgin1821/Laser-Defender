@@ -30,10 +30,11 @@ public class WaveSpawner : MonoBehaviour
         for (int waveIndex = 0; waveIndex < waves.Count; waveIndex++)
         {
             squads = waves[waveIndex].GetSquads();
-             GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
+            GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
+
             if (GameManager.Instance.isSpeedLevel)
             {
-             yield return null;
+                yield return null;
             }
             else
             {

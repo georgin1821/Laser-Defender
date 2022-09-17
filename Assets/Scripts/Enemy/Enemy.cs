@@ -19,27 +19,26 @@ public class Enemy : MonoBehaviour
     [Header("PowerUps")]
     [SerializeField] int chanchToDropPower;
     [SerializeField] int chanceOfDropingGold;
+    [SerializeField] int chanseOfDropGems;
+
 
     private void Start()
     {
         SetLevelOfDifficulty();
-        InvokeRepeating("FireChance", 1f, 1f);
+        InvokeRepeating("FireChance", 3f, 3f);
     }
 
     public void Fire()
     {
-        //float firePadding = GetComponent<Renderer>().bounds.size.y / 2;
         Vector3 firePos = new Vector3(transform.position.x, transform.position.y - .5f, transform.position.z);
-        GameObject projectile = Instantiate(projectilePrefab,
-            firePos,
-            Quaternion.identity) as GameObject;
-        //projectile.transform.SetParent(this.transform);
-
+        Instantiate(projectilePrefab,
+             firePos,
+             Quaternion.identity);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
         // trigger when player projectile hits the enemy (Layers)
         PlayerProjectileImpact impactProcess = other.gameObject.GetComponent<PlayerProjectileImpact>();
         if (impactProcess == null) { return; }
@@ -55,6 +54,7 @@ public class Enemy : MonoBehaviour
             Die();
             OnDieDropPower();
             OnDieDropGold();
+            OnDiewDropGems();
         }
     }
 
@@ -74,17 +74,23 @@ public class Enemy : MonoBehaviour
             PowerUpController.instance.InstatiateRandomPower(this.transform);
         }
     }
+    private void OnDiewDropGems()
+    {
+        if (Random.Range(1, 100) <= chanchToDropPower)
+        {
+            PowerUpController.instance.InstatiateRandomPower(this.transform);
+        }
+    }
 
     private void Die()
     {
         GamePlayController.instance.AddToScore(scoreValue);
         Destroy(gameObject);
 
-        //Subtract enemies count
         EnemyCount.instance.count--;
         SoundEffectController.instance.EnemyDeathSound();
-          GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
-         Destroy(explosion, 1f);
+       // GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+        VFXController.instance.EnemyDeath(transform);
     }
 
     public void SetLevelOfDifficulty()

@@ -16,12 +16,16 @@ public class GameDataManager : Singleton<GameDataManager>
     public int selectedShip;
     public int coins;
     public int gems;
+    public int batteryLife;
     public bool isGameStartedFirstTime;
     public bool[] levels;
     public bool[] ships;
     public int[] shipsPower;
     public int[] shipsRank;
     public CurrentGameDifficulty currentDifficulty;
+
+    DateTime appFirstLauchTime;
+    DateTime appStartTime;
 
     private GameData data;
 
@@ -35,6 +39,8 @@ public class GameDataManager : Singleton<GameDataManager>
     void Start()
     {
         CurrentLevel = 0;
+        appStartTime = DateTime.Now;
+        TimeSpan difTime = appFirstLauchTime - appStartTime;
     }
 
 
@@ -61,6 +67,7 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.ShipsRank = shipsRank;
                 data.SelectedShip = selectedShip;
                 data.CurrentDifficulty = currentDifficulty;
+                data.BatteryLife = batteryLife;
 
                 bf.Serialize(file, data);
             }
@@ -118,8 +125,11 @@ public class GameDataManager : Singleton<GameDataManager>
 
         if (isGameStartedFirstTime)
         {
-            coins = 10000;
-            gems = 0;
+            appFirstLauchTime = DateTime.Now;
+
+            coins = 200;
+            gems = 10;
+            batteryLife = 90;
             levels = new bool[5];
             ships = new bool[5];
             shipsPower = new int[6];
@@ -186,6 +196,7 @@ class GameData
     public bool[] Levels { get; set; }
     public int[] ShipsPower { get; set; }
     public int[] ShipsRank { get; set; }
+    public int BatteryLife { get; set; }
     public CurrentGameDifficulty CurrentDifficulty { get; set; }
 
 }

@@ -97,7 +97,6 @@ public class Player : MonoBehaviour
         {
             GameHealth -= impactController.GetDamage();
 
-            //Delegate
             GameUIController.instance.UpdateHealthText();
             impactController.ImapctProcess();
         }

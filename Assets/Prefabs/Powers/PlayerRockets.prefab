@@ -113,6 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  playerRange: 1.5
+  smoothTime: 0.2
+  forwardSpeed: 1.5
   gainPowerVFX: {fileID: 724315266695426265, guid: 39a1022ea26c80b4ab2249497dd7ad98, type: 3}
 --- !u!1 &7764766530710035181
 GameObject:

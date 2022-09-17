@@ -17,7 +17,6 @@ public class SkillVortex : MonoBehaviour
         coolDownTimeer = coolDownTime;
         Image image = button.GetComponent<Image>();
         image.gameObject.SetActive(true);
-        SoundEffectController.instance.SkillUIPress();
 
         Instantiate(skill, transform.position, Quaternion.identity);
         if (isCooldown)

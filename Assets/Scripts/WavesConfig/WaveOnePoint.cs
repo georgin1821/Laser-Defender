@@ -66,7 +66,7 @@ public class WaveOnePoint : MonoBehaviour
             speed = waveConfig.GetMoveSpeed();
             newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypointStart, speed, 0);
 
-            StartCoroutine(newEnemy.GetComponent<EnemyPathfinding>().DeploymentRoutineSinglePoint(waypointEnd[index]));
+           newEnemy.GetComponent<EnemyPathfinding>().DeploymentSinglePoint(waypointEnd[index]);
             yield return new WaitForSeconds(.1f);
         }
 

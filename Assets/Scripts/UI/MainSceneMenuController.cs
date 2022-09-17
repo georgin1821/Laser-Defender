@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class MainSceneMenuController : MonoBehaviour
 {
@@ -10,21 +11,40 @@ public class MainSceneMenuController : MonoBehaviour
     [SerializeField] AudioClip click1, click2;
     [SerializeField] Button shipBtn, upgradeBtn;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] TMP_Text powerText, upgradeInfo, coinsText;
+    [SerializeField] TMP_Text powerText, upgradeInfo, coinsText, batteryTxt, gemsTxt, timeTxt;
 
     int selectedShip;
     public float amountUpgrade = 100;
     string shipName;
+    DateTime theTime = DateTime.Now;
 
     private void Start()
     {
         coinsText.text = GameDataManager.Instance.coins.ToString();
-        UpdateUpgradeInfo();
+        gemsTxt.text = GameDataManager.Instance.gems.ToString();
+        batteryTxt.text = GameDataManager.Instance.batteryLife + "%";
+        UpdateTextTime();
+        StartCoroutine(UpdateTimeRoutine());
+    }
+    IEnumerator UpdateTimeRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(60);
+            UpdateTextTime();
+        }
+    }
+
+    private void UpdateTextTime()
+    {
+        theTime = DateTime.Now;
+        string time = theTime.ToString("HH:mm");
+        timeTxt.text = time;
     }
 
     public void ShowProfilePanel()
     {
-       AudioManager.Instance.PlayOneShotClip(click1, 1);
+        AudioManager.Instance.PlayOneShotClip(click1, 1);
         if (profilePanel.activeInHierarchy)
         {
             profilePanel.SetActive(false);
@@ -39,7 +59,7 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void ShowShopPanel()
     {
-       AudioManager.Instance.PlayOneShotClip(click1, 1);
+        AudioManager.Instance.PlayOneShotClip(click1, 1);
 
         if (shopPanel.activeInHierarchy)
         {
@@ -64,7 +84,7 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void ShowSquadPanel()
     {
-       AudioManager.Instance.PlayOneShotClip(click2, 1);
+        AudioManager.Instance.PlayOneShotClip(click2, 1);
         powerText.text = GameDataManager.Instance.shipsPower[selectedShip].ToString();
 
         squapPanel.SetActive(true);
@@ -73,9 +93,9 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void LoadLevelScene()
     {
-       AudioManager.Instance.PlayOneShotClip(click2, 1);
+        AudioManager.Instance.PlayOneShotClip(click2, 1);
+        GameManager.Instance.loading = Loading.MAIN;
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
-
     }
 
     public void SelectShip()

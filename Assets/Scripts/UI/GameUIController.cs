@@ -16,7 +16,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TMP_Text waveText, victoryTxt;
     [SerializeField] TMP_Text introText;
     [SerializeField] TMP_Text gunRankText;
-    [SerializeField] Button retryBtn, pauseBtn, skill1Btn;
+    [SerializeField] Button retryBtn, skill1Btn;
     [SerializeField] Button defeatScreenBtn;
     [SerializeField] Image semiTransperantImage;
 
@@ -31,6 +31,7 @@ public class GameUIController : MonoBehaviour
     public Animator anim;
     public AnimationClip clip;
 
+    #region Unity Functions
     private void Awake()
     {
         if (instance == null)
@@ -54,6 +55,7 @@ public class GameUIController : MonoBehaviour
     {
         levelText.text = GameDataManager.Instance.CurrentLevel.ToString();
     }
+    #endregion
 
     void OnGameStateChangeMenuActivation(GameState state)
     {
@@ -75,6 +77,7 @@ public class GameUIController : MonoBehaviour
         }
     }
 
+    #region Unity Public
     public IEnumerator UpdateScore(int CurrentScore, int newScore)
     {
         while (CurrentScore < newScore)
@@ -173,7 +176,7 @@ public class GameUIController : MonoBehaviour
     {
         StartCoroutine(DefeatScreenRoutine());
     }
-    public IEnumerator DefeatScreenRoutine()
+     IEnumerator DefeatScreenRoutine()
     {
         Time.timeScale = 1;
         defeatPanel.SetActive(false);
@@ -186,6 +189,8 @@ public class GameUIController : MonoBehaviour
         GameManager.Instance.IsLoadingFromGameDefeat = true;
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }
+    #endregion
+
 
 }
 

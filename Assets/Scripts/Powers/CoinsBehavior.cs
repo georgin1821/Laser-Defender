@@ -19,13 +19,9 @@ public class CoinsBehavior : MonoBehaviour
 
     void Update()
     {
-
-        //if (GamePlayController.instance.state == GameState.PLAY)
         {
-            //if near player range stops aniamtion and moves towards player
             if (Vector3.Distance(Player.instance.transform.position, this.transform.position) > playerRange)
             {
-               // Debug.Log("Coins forward movement");
                 transform.Translate(-Vector3.up * forwardSpeed * Time.deltaTime);
             }
             else
@@ -35,24 +31,23 @@ public class CoinsBehavior : MonoBehaviour
 
                 transform.position = Vector3.SmoothDamp(transform.position, target, ref velocity, smoothTime, Mathf.Infinity, Time.deltaTime);
             }
-
         }
     }
 
 
-        private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
         {
-            if (other.tag == "Player")
-            {
-                //Debug.Log("Coins collides Player");
-                Destroy(gameObject);
-                SoundEffectController.instance.CollectGoldSound();
+            //Debug.Log("Coins collides Player");
+            Destroy(gameObject);
+            SoundEffectController.instance.CollectGoldSound();
 
-                int currentCoins = GameDataManager.Instance.coins;
-                GameDataManager.Instance.coins += 100;
+            int currentCoins = GameDataManager.Instance.coins;
+            GameDataManager.Instance.coins += 100;
             GamePlayController.instance.levelCoins += 100;
-                GameUIController.instance.UpdateCoins(currentCoins, GameDataManager.Instance.coins);
-            }
+            GameUIController.instance.UpdateCoins(currentCoins, GameDataManager.Instance.coins);
         }
-
     }
+
+}

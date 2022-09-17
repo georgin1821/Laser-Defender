@@ -6,7 +6,6 @@ public class ImpactController : GameElement
 {
 
     [SerializeField] int damage = 100;
-    [SerializeField] GameObject impactVFX;
     [SerializeField] AudioClip impactClip;
     [SerializeField] float impactClipVolume;
 
@@ -26,15 +25,12 @@ public class ImpactController : GameElement
     }
     public void ImapctProcess()
     {
-        GameObject explotion = Instantiate(impactVFX, transform.position, Quaternion.identity);
+        VFXController.instance.EnemyLaserImpact(transform);
         if (impactClip != null)
         {
             SoundEffectController.instance.PlayAudioClip(impactClip, impactClipVolume);
         }
-
-        Destroy(explotion, 1f);
-
-        Destroy(gameObject);
+                Destroy(gameObject);
     }
 
     public void SetLevelOfDifficulty()

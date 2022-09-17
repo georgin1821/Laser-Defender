@@ -48,7 +48,13 @@ public class EnemyPathfinding : MonoBehaviour
             }
         }
     }
-    public IEnumerator DeploymentRoutineSinglePoint(Transform end)
+
+    public void DeploymentSinglePoint(Transform end)
+    {
+        StartCoroutine(DeploymentRoutineSinglePoint(end));
+    }
+
+    IEnumerator DeploymentRoutineSinglePoint(Transform end)
     {
 
         while (Vector3.Distance(transform.position, end.position) > .2f)
@@ -67,7 +73,7 @@ public class EnemyPathfinding : MonoBehaviour
     {
         StartCoroutine(DeploymentRoutineFormnNoRotation());
     }
-    public IEnumerator DeploymentRoutineFormnNoRotation()
+    IEnumerator DeploymentRoutineFormnNoRotation()
     {
         while (index < waypoints.Count - 1)
         {
