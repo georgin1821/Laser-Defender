@@ -22,7 +22,7 @@ public class MapUIController : MonoBehaviour
 
     string level;
     string difficulty;
-    Loading load;
+    LoadingFrom load;
 
 
     private void Awake()
@@ -36,23 +36,19 @@ public class MapUIController : MonoBehaviour
     {
         InitializeLevelMenu();
 
-        if (GameManager.Instance.IsLoadingFromGameDefeat)
-        {
-        }
-
         switch (load)
         {
-            case Loading.MAIN:
+            case LoadingFrom.MAIN:
                 lvlCompletePanel.SetActive(false);
         defeatPanel.SetActive(false);
             lvlStartPanel.SetActive(false);
                 break;
-            case Loading.LVLCOMP:
+            case LoadingFrom.LVLCOMP:
                 lvlCompletePanel.SetActive(true);
                 defeatPanel.SetActive(false);
                 lvlStartPanel.SetActive(false);
                 break;
-            case Loading.DEFEAT:
+            case LoadingFrom.DEFEAT:
                 lvlCompletePanel.SetActive(false);
                 defeatPanel.SetActive(true);
                 lvlStartPanel.SetActive(false);
@@ -119,7 +115,7 @@ public class MapUIController : MonoBehaviour
     }
     public void LoadLevel()
     {
-        AudioManager.Instance.PlayOneShotClip(startClip, 1);
+        AudioManagerOld.Instance.PlayOneShotClip(startClip, 1);
         LoadingWithFadeScenes.Instance.LoadScene("Game");
     }
     public void HidePanels()

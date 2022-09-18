@@ -66,7 +66,7 @@ public class GameUIController : MonoBehaviour
         switch (state)
         {
             case GameState.LEVELCOMPLETE_UI:
-                GameManager.Instance.IsLoadingFromLevelComplete = true;
+                GameManager.Instance.loadingFrom = LoadingFrom.LVLCOMP;
                 LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
                 break;
             case GameState.DEFEAT:
@@ -186,7 +186,7 @@ public class GameUIController : MonoBehaviour
         lostTxt.gameObject.SetActive(true);
         yield return new WaitForSeconds(4f);
         Time.timeScale = 1;
-        GameManager.Instance.IsLoadingFromGameDefeat = true;
+        GameManager.Instance.loadingFrom = LoadingFrom.DEFEAT;
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }
     #endregion

@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int chanceOfDropingGold;
     [SerializeField] int chanseOfDropGems;
 
+    bool isDead;
 
     private void Start()
     {
@@ -38,8 +39,6 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        // trigger when player projectile hits the enemy (Layers)
         PlayerProjectileImpact impactProcess = other.gameObject.GetComponent<PlayerProjectileImpact>();
         if (impactProcess == null) { return; }
         ProcessHit(impactProcess);
@@ -49,8 +48,10 @@ public class Enemy : MonoBehaviour
     {
         health -= impactProcess.GetDamage();
         impactProcess.ImapctProcess();
-        if (health <= 0)
+
+        if (health <= 0 && !isDead)
         {
+            isDead = true;
             Die();
             OnDieDropPower();
             OnDieDropGold();
@@ -66,7 +67,6 @@ public class Enemy : MonoBehaviour
             CoinsController.instance.DropGold(this.transform);
         }
     }
-
     private void OnDieDropPower()
     {
         if (Random.Range(1, 100) <= chanchToDropPower)
@@ -81,25 +81,20 @@ public class Enemy : MonoBehaviour
             PowerUpController.instance.InstatiateRandomPower(this.transform);
         }
     }
-
     private void Die()
     {
-        GamePlayController.instance.AddToScore(scoreValue);
-        Destroy(gameObject);
-
         EnemyCount.instance.count--;
+        GamePlayController.instance.AddToScore(scoreValue);
         SoundEffectController.instance.EnemyDeathSound();
-       // GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         VFXController.instance.EnemyDeath(transform);
+        Destroy(gameObject);
     }
-
     public void SetLevelOfDifficulty()
     {
         float diff = GamePlayController.instance.difficulty;
         health += health * diff;
         scoreValue += (int)(diff * .5f);
     }
-
     void FireChance()
     {
         if (Random.Range(1, 100) <= chanceToFire)

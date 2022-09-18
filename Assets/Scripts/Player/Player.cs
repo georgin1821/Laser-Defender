@@ -149,8 +149,8 @@ public class Player : MonoBehaviour
         {
             GameObject rocket = Instantiate(rocketPrefab, firePos.position, transform.rotation);
             rocket.transform.Rotate(0, 0, arcAngle - i * 15);
-            Targets = GameObject.FindGameObjectsWithTag("Enemy");
             SoundEffectController.instance.PlayerShootRockets();
+            Targets = GameObject.FindGameObjectsWithTag("Enemy");
         }
     }
 

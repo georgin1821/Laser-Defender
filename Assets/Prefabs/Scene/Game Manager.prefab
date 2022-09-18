@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9025272162233380948}
   - component: {fileID: 9025272162233380949}
   - component: {fileID: 3776361749122958984}
+  - component: {fileID: 2130982570}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -48,11 +49,13 @@ MonoBehaviour:
   selectedShip: 0
   coins: 0
   gems: 0
+  batteryLife: 0
   isGameStartedFirstTime: 0
   levels: 
   ships: 
   shipsPower: 
   shipsRank: 
+  currentDifficulty: 0
 --- !u!114 &3776361749122958984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,3 +68,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ac1e17baac50a408907cca36715f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSpeedLevel: 1
+  loading: 0
+--- !u!114 &2130982570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9025272162233380950}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64a9edc3a667634ab2a11249f53f103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SessionStartTime: 0

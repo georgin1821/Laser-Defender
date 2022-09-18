@@ -243,6 +243,6 @@ MonoBehaviour:
   - source: {fileID: 9033226239901789970}
     audio:
     - type: 1
-      clip: {fileID: 8300000, guid: 316c5a9072961a64696482a64fdbae8d, type: 3}
+      clip: {fileID: 8300000, guid: 40a849af09636e9448ffe1c6a2be5a5d, type: 3}
     - type: 2
       clip: {fileID: 8300000, guid: f47c62d7939be2c4da36a56906f8f6db, type: 3}

@@ -7,18 +7,20 @@ public class PlayerRocket : MonoBehaviour
 
     [SerializeField] float rotationSpeed;
     [SerializeField] float speed;
-    //movment
-    Vector3 targetPos;
 
+    Vector3 targetPos;
      GameObject[] targets;
+
     private void Start()
     {
-        GameObject[] targets = Player.instance.Targets;
-        int index = Random.Range(0, targets.Length - 1);
-        targetPos = targets[index].transform.position;
-
-        StartCoroutine(SeekTargets());
         Destroy(gameObject, 3f);
+        GameObject[] targets = Player.instance.Targets;        
+        int index = Random.Range(0, targets.Length - 1);
+        if(index < targets.Length)
+        {
+        targetPos = targets[index].transform.position;
+        StartCoroutine(SeekTargets());
+        }
     }
 
     private void Update()
@@ -27,7 +29,7 @@ public class PlayerRocket : MonoBehaviour
     }
     IEnumerator SeekTargets()
     {
-        yield return new WaitForSeconds(.5f);
+       // yield return new WaitForSeconds(.5f);
 
         while (true)
         {

@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class WaveEndleesMove : MonoBehaviour
 {
-    public WaveConfigPath waveConfig;
+    [SerializeField] WaveConfigPath waveConfig;
 
     float speed;
     float rotationSpeed;
 
-    public List<Transform> waypoints;
-    public List<GameObject> waveEnemies;
-    public float timeBetweenSpawns;
+    List<Transform> waypoints;
+    List<GameObject> waveEnemies;
+    float timeBetweenSpawns;
 
     private void Start()
     {
@@ -24,14 +24,23 @@ public class WaveEndleesMove : MonoBehaviour
         waveEnemies = new List<GameObject>();
 
         waypoints = waveConfig.GetWaypoints();
-            speed = waveConfig.GetMoveSpeed();
-            rotationSpeed = waveConfig.GetRotationSpeed();
-            timeBetweenSpawns = waveConfig.GetTimeBetweenSpawns();
+        speed = waveConfig.GetMoveSpeed();
+        rotationSpeed = waveConfig.GetRotationSpeed();
+        timeBetweenSpawns = waveConfig.GetTimeBetweenSpawns();
 
         for (int index = 0; index < waveConfig.GetNumberOfEnemies(); index++)
         {
-            
-            GameObject newEnemy = Instantiate(waveConfig.enemyPrefabs[0],
+            int i;
+            if (index % 2 == 0)
+            {
+                i = 0;
+            }
+            else
+            {
+                i = 1;
+            }
+
+            GameObject newEnemy = Instantiate(waveConfig.enemyPrefabs[i],
     waypoints[0].position,
     Quaternion.identity) as GameObject;
             newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypoints, speed, rotationSpeed);

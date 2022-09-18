@@ -15,7 +15,6 @@ public class EnemyPathfinding : MonoBehaviour
     float rotationSpeed;
 
     public bool isMovingAtFormation = true;
-    IEnumerator myRoutine;
 
     public void SetWaypoints(List<Transform> waypoints, float speed, float rotSpeed)
     {
@@ -23,6 +22,10 @@ public class EnemyPathfinding : MonoBehaviour
         this.speed = speed;
         this.rotationSpeed = rotSpeed;
 
+    }
+    public void StartDeploymentRoutine()
+    {
+        StartCoroutine(DeploymentRoutine());
     }
     IEnumerator DeploymentRoutine()
     {
@@ -53,7 +56,6 @@ public class EnemyPathfinding : MonoBehaviour
     {
         StartCoroutine(DeploymentRoutineSinglePoint(end));
     }
-
     IEnumerator DeploymentRoutineSinglePoint(Transform end)
     {
 
@@ -116,7 +118,6 @@ public class EnemyPathfinding : MonoBehaviour
         gameObject.GetComponent<Enemy>().InvokeRepeating("FireChance", 1, 2);
         StartCoroutine(FormationMove());
     }
-
     public IEnumerator DeploymentRoutineForm()
     {
         while (index < waypoints.Count - 1)
@@ -165,7 +166,6 @@ public class EnemyPathfinding : MonoBehaviour
         gameObject.GetComponent<Enemy>().InvokeRepeating("FireChance", 1, 2);
         StartCoroutine(FormationMove());
     }
-
     public IEnumerator FormationMove()
     {
         // Vector3 startPos = gameObject.transform.position;
@@ -178,20 +178,6 @@ public class EnemyPathfinding : MonoBehaviour
         }
     }
 
-    public void StartDeploymentRoutine()
-    {
-        StopRoutine();
-        myRoutine = DeploymentRoutine();
-        StartCoroutine(myRoutine);
-    }
-
-    void StopRoutine()
-    {
-        if (myRoutine != null)
-        {
-            StopCoroutine("DeploymentRoutine");
-        }
-    }
 
 }
 
