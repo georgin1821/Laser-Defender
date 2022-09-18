@@ -9,11 +9,10 @@ public class SessionController : MonoBehaviour
     public static SessionController instance;
 
     public long m_SessionStartTime;
-    public DateTimeOffset offset;
     private bool m_IsPaused;
-    // private GameController m_Game;
     private float m_FPS;
 
+    public DateTime UTCTime;
     public long sessionStartTime
     {
         get
@@ -96,7 +95,7 @@ public class SessionController : MonoBehaviour
     private long EpochSeconds()
     {
         var _epoch = new System.DateTimeOffset(System.DateTime.UtcNow);
-        offset = new System.DateTimeOffset(System.DateTime.UtcNow);
+        UTCTime = DateTime.UtcNow;
         return _epoch.ToUnixTimeSeconds();
     }
     #endregion
