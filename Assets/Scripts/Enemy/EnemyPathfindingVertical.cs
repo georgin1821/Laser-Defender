@@ -63,7 +63,7 @@ public class EnemyPathfindingVertical : MonoBehaviour
 
         line.SetActive(false);
         laser.SetActive(true);
-        SoundEffectController.instance.PlayAudioClip(laserClip, 1);
+        AudioController.Instance.PlayAudio(AudioType.EnemyLaserSkill);
 
         float time = 3;
         while (time > 0)
@@ -73,7 +73,8 @@ public class EnemyPathfindingVertical : MonoBehaviour
         }
 
         laser.SetActive(false);
-        SoundEffectController.instance.StopSFXAudio();
+       // SoundEffectController.instance.StopSFXAudio();
+        AudioController.Instance.StopAudio(AudioType.EnemyLaserSkill);
     }
 
 }

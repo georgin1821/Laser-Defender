@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
         playerHasShield = true;
         shields = Instantiate(shieldsVFX, transform.position, Quaternion.identity);
         shields.transform.SetParent(gameObject.transform);
-        SoundEffectController.instance.PlayerHasShields();
+        AudioController.Instance.PlayAudio(AudioType.PlayerShields);
         yield return new WaitForSeconds(4);
         playerHasShield = false;
         Destroy(shields);
@@ -108,8 +108,8 @@ public class Player : MonoBehaviour
     }
     private void PlayerDeath()
     {
-        SoundEffectController.instance.PlayerDeathSound();
         //Destroy(gameObject);
+        AudioController.Instance.PlayAudio(AudioType.PlayerDeath);
         GamePlayController.instance.UpdateState(GameState.DEFEAT);
     }
     void GameStateChangeHandle(GameState state)
@@ -149,7 +149,8 @@ public class Player : MonoBehaviour
         {
             GameObject rocket = Instantiate(rocketPrefab, firePos.position, transform.rotation);
             rocket.transform.Rotate(0, 0, arcAngle - i * 15);
-            SoundEffectController.instance.PlayerShootRockets();
+           // SoundEffectController.instance.PlayerShootRockets();
+            AudioController.Instance.PlayAudio(AudioType.PalyerShootRockets);
             Targets = GameObject.FindGameObjectsWithTag("Enemy");
         }
     }

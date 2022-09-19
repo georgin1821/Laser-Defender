@@ -7,8 +7,8 @@ using System;
 
 public class MainSceneMenuController : MonoBehaviour
 {
-    [SerializeField] GameObject profilePanel, shopPanel, squapPanel;
-    [SerializeField] AudioClip click1, click2;
+    public static MainSceneMenuController instance;
+    [SerializeField] GameObject profilePanel, shopPanel, squapPanel, rewardsPanel, settingsPanel;
     [SerializeField] Button shipBtn, upgradeBtn;
     [SerializeField] Sprite[] sprites;
     [SerializeField] TMP_Text powerText, upgradeInfo, coinsText, batteryTxt, gemsTxt, timeTxt;
@@ -16,35 +16,33 @@ public class MainSceneMenuController : MonoBehaviour
     int selectedShip;
     public float amountUpgrade = 100;
     string shipName;
-    DateTime theTime = DateTime.Now;
-
-    private void Start()
+    private void Awake()
     {
-        coinsText.text = GameDataManager.Instance.coins.ToString();
-        gemsTxt.text = GameDataManager.Instance.gems.ToString();
-        batteryTxt.text = GameDataManager.Instance.batteryLife + "%";
-        UpdateTextTime();
-        StartCoroutine(UpdateTimeRoutine());
-    }
-    IEnumerator UpdateTimeRoutine()
-    {
-        while (true)
+        if(instance == null)
         {
-            yield return new WaitForSecondsRealtime(60);
-            UpdateTextTime();
+            instance = this;
         }
     }
 
-    private void UpdateTextTime()
+    private void OnDestroy()
     {
-        theTime = DateTime.Now;
-        string time = theTime.ToString("HH:mm");
-        timeTxt.text = time;
+        SessionController.instance.OnDailyReawardReady -= OnDailyRewardsReadyHandlere;
+    }
+    private void OnDailyRewardsReadyHandlere(int obj)
+    {
+        rewardsPanel.SetActive(true);
+    }
+
+    private void Start()
+    {
+        SessionController.instance.OnDailyReawardReady += OnDailyRewardsReadyHandlere;
+        coinsText.text = GameDataManager.Instance.coins.ToString();
+        gemsTxt.text = GameDataManager.Instance.gems.ToString();
+        batteryTxt.text = GameDataManager.Instance.batteryLife + "%";
     }
 
     public void ShowProfilePanel()
     {
-        AudioManagerOld.Instance.PlayOneShotClip(click1, 1);
         if (profilePanel.activeInHierarchy)
         {
             profilePanel.SetActive(false);
@@ -54,12 +52,13 @@ public class MainSceneMenuController : MonoBehaviour
             profilePanel.SetActive(true);
             shopPanel.SetActive(false);
             squapPanel.SetActive(false);
+            settingsPanel.SetActive(false);
+
         }
     }
 
     public void ShowShopPanel()
     {
-        AudioManagerOld.Instance.PlayOneShotClip(click1, 1);
 
         if (shopPanel.activeInHierarchy)
         {
@@ -67,24 +66,41 @@ public class MainSceneMenuController : MonoBehaviour
         }
         else
         {
-            AudioSource.PlayClipAtPoint(click1, transform.position);
             shopPanel.SetActive(true);
             profilePanel.SetActive(false);
             squapPanel.SetActive(false);
+            settingsPanel.SetActive(false);
+
+        }
+    }
+    public void ShowSettingsPanel()
+    {
+
+        if (settingsPanel.activeInHierarchy)
+        {
+            shopPanel.SetActive(false);
+        }
+        else
+        {
+            settingsPanel.SetActive(true);
+            profilePanel.SetActive(false);
+            squapPanel.SetActive(false);
+            shopPanel.SetActive(false);
         }
     }
 
+
     public void ShowHomeScreen()
     {
-        AudioManagerOld.Instance.PlayOneShotClip(click2, 1);
+        AudioController.Instance.PlayAudio(AudioType.UI_click_simple);
         profilePanel.SetActive(false);
         shopPanel.SetActive(false);
         squapPanel.SetActive(false);
+        settingsPanel.SetActive(false);
     }
 
     public void ShowSquadPanel()
     {
-        AudioManagerOld.Instance.PlayOneShotClip(click2, 1);
         powerText.text = GameDataManager.Instance.shipsPower[selectedShip].ToString();
 
         squapPanel.SetActive(true);
@@ -93,7 +109,6 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void LoadLevelScene()
     {
-        AudioManagerOld.Instance.PlayOneShotClip(click2, 1);
         GameManager.Instance.loadingFrom = LoadingFrom.MAIN;
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }

@@ -18,9 +18,10 @@ public class GamePlayController : MonoBehaviour
     public float difficulty;
     GameObject playerPrefab;
     GameObject sc1, sc2;
+    public AudioType soundtrack;
     public int Score { get; set; }
     int levelScore;
-    int batterySpend;
+    //int batterySpend;
     public int levelCoins { get; set; }
     public int ShipPower { get; private set; }
 
@@ -30,12 +31,15 @@ public class GamePlayController : MonoBehaviour
         {
             instance = this;
         }
+        GameDataManager.Instance.Save();
     }
+
     private void Start()
     {
         SelectShip();
         UpdateState(GameState.INIT);
         SetLevelDifficulty();
+        AudioController.Instance.PlayAudio(AudioType.Soundtrack_1);
     }
     private void Update()
     {
@@ -62,7 +66,7 @@ public class GamePlayController : MonoBehaviour
     {
         state = newState;
         switch (newState)
-        {
+        {            
             case GameState.INIT:
                 Time.timeScale = 1;
                 WaveSpawner.instance.DestroyWaves();
@@ -73,7 +77,7 @@ public class GamePlayController : MonoBehaviour
                 Score = 0;
                 levelScore = 0;
                 levelCoins = 0;
-                batterySpend = 0;
+               // batterySpend = 0;
                 GameUIController.instance.UpdateScore(Score);
                 ganeDifficulty = (GameDifficulty)GameDataManager.Instance.currentDifficulty;
 

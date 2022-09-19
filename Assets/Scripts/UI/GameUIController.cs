@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class GameUIController : MonoBehaviour
 {
@@ -40,11 +41,13 @@ public class GameUIController : MonoBehaviour
         }
         GamePlayController.OnGameStateChange += OnGameStateChangeMenuActivation;
     }
+
     private void OnDestroy()
     {
         GamePlayController.OnGameStateChange -= OnGameStateChangeMenuActivation;
         defeatScreenBtn.onClick.RemoveListener(DefeatScreen);
     }
+
     private void Start()
     {
         coinsText.text = GameDataManager.Instance.coins.ToString();
@@ -56,7 +59,10 @@ public class GameUIController : MonoBehaviour
         levelText.text = GameDataManager.Instance.CurrentLevel.ToString();
     }
     #endregion
-
+    private void OnApplicationPause(bool pause)
+    {
+       // Debug.Log("pause");        
+    }
     void OnGameStateChangeMenuActivation(GameState state)
     {
 
@@ -110,7 +116,7 @@ public class GameUIController : MonoBehaviour
     }
     public void RetryButton()
     {
-        SoundEffectController.instance.PlayAudioClip(click1, 1f);
+        AudioController.Instance.PlayAudio(AudioType.UI_click_advanced);
         GamePlayController.instance.UpdateState(GameState.INIT);
     }
     public void ResumeGame()
@@ -182,7 +188,7 @@ public class GameUIController : MonoBehaviour
         defeatPanel.SetActive(false);
         semiTransperantImage.gameObject.SetActive(false);
         Player.instance.gameObject.SetActive(false);
-        SoundEffectController.instance.PlayDefeatClip();
+        AudioController.Instance.PlayAudio(AudioType.DefatClip);
         lostTxt.gameObject.SetActive(true);
         yield return new WaitForSeconds(4f);
         Time.timeScale = 1;

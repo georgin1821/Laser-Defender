@@ -125,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4449836998517179999, guid: 3666d5cf30447d44dbfa1a3c98692fbd, type: 3}
+  - {fileID: 2100000, guid: 5b1e8f8d40be278439e28754ff27690a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -305,7 +305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4449836998517179999, guid: 3666d5cf30447d44dbfa1a3c98692fbd, type: 3}
+  - {fileID: 2100000, guid: 5b1e8f8d40be278439e28754ff27690a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -393,7 +393,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4449836998517179999, guid: 3666d5cf30447d44dbfa1a3c98692fbd, type: 3}
+  - {fileID: 2100000, guid: 5b1e8f8d40be278439e28754ff27690a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -465,8 +465,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
   chanceToFire: 4
   deathVFX: {fileID: 6617642959616773722, guid: 2cf4d65aab4c3b04ea5370f64f723fc4, type: 3}
-  chanchToDropPower: 7
-  chanceOfDropingGold: 5
+  chanchToDropPower: 8
+  chanceOfDropingGold: 30
   chanseOfDropGems: 0
 --- !u!114 &5164001442636253451
 MonoBehaviour:

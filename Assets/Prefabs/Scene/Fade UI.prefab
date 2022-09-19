@@ -115,8 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d27f3a9ec5c814fb9dc90e9538d612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 4463449417953792886}
-  fadePanel: {fileID: 4463449417953792883}
   loadingScreen: {fileID: 4463449417384337356}
   canvasGroup: {fileID: 231251498}
 --- !u!225 &231251498

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerSkillImpact : PlayerProjectileImpact
 {
-    [SerializeField] AudioClip impactClip;
-    [SerializeField] float impactClipVolume;
+    public AudioType impactClip;
+
     override public void ImapctProcess()
     {
         GameObject explotion = Instantiate(impactVFX, transform.position, Quaternion.identity);
-        if (impactClip != null)
-        {
-            SoundEffectController.instance.PlayAudioClip(impactClip, impactClipVolume);
-        }
+            if (impactClip != AudioType.None)
+            {
+                AudioController.Instance.PlayAudio(impactClip);
+            }
 
         Destroy(explotion, 1f);
 

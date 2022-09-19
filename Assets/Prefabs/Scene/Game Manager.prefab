@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9025272162233380949}
   - component: {fileID: 3776361749122958984}
   - component: {fileID: 2130982570}
+  - component: {fileID: 1140825770610722692}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9025272162233380950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: -5, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSpeedLevel: 1
-  loading: 0
+  loadingFrom: 0
 --- !u!114 &2130982570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,9 +78,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9025272162233380950}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e64a9edc3a667634ab2a11249f53f103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SessionStartTime: 0
+  t1: {fileID: 0}
+  t2: {fileID: 0}
+  rewardsChecked: 
+  dailyRewardsReady: 0
+--- !u!114 &1140825770610722692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9025272162233380950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 664bbc0c99ae8f44aaf7a118366227ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

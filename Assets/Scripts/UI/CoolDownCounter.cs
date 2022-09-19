@@ -19,7 +19,7 @@ public class CoolDownCounter : MonoBehaviour
     {
         pausePanel.SetActive(false);
         cdPanel.SetActive(true);
-        SoundEffectController.instance.PlayAudioClip(cdClip, 1);
+        AudioController.Instance.PlayAudio(AudioType.countDown);
         float time = 3;
         while (time > 0)
         {

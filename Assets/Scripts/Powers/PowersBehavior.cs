@@ -35,9 +35,8 @@ public class PowersBehavior : MonoBehaviour
         if (other.tag == "Player")
         {
             Destroy(gameObject);
-            SoundEffectController.instance.PowerUpSFX();
-            // SoundEffectController.instance.PlayAudioClip(gainPowerClip, 1);
-            if(gainPowerVFX != null)
+            AudioController.Instance.PlayAudio(AudioType.PowerUp);
+            if (gainPowerVFX != null)
             {
             GameObject vfx = Instantiate(gainPowerVFX, Player.instance.transform.position, Quaternion.identity);
             Destroy(vfx, 1.5f);

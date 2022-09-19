@@ -18,7 +18,6 @@ public class MapUIController : MonoBehaviour
 
     [SerializeField] GameObject defeatPanel, lvlStartPanel, lvlCompletePanel;
     [SerializeField] GameObject easy, medium, hard;
-    [SerializeField] AudioClip startClip;
 
     string level;
     string difficulty;
@@ -115,7 +114,6 @@ public class MapUIController : MonoBehaviour
     }
     public void LoadLevel()
     {
-        AudioManagerOld.Instance.PlayOneShotClip(startClip, 1);
         LoadingWithFadeScenes.Instance.LoadScene("Game");
     }
     public void HidePanels()

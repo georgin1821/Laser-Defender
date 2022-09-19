@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: 2055883163808823399
     second: Armature.001Action.001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pallete Basic
+    second: {fileID: 2100000, guid: d97517fc3c3023b4289071bbb796240d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

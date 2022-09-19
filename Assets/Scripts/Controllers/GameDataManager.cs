@@ -11,7 +11,8 @@ public class GameDataManager : Singleton<GameDataManager>
     public int LevelScore { get; set; }
     public int LevelCoins { get; set; }
     public int LevelIndex { get; set; }
-
+    public DateTime currentTime { get; set; }
+    public DateTime nextSessionTime;
     //Data
     public int selectedShip;
     public int coins;
@@ -22,10 +23,10 @@ public class GameDataManager : Singleton<GameDataManager>
     public bool[] ships;
     public int[] shipsPower;
     public int[] shipsRank;
+    public DateTime sessionTime;
+
     public CurrentGameDifficulty currentDifficulty;
 
-    DateTime appFirstLauchTime;
-    DateTime appStartTime;
 
     private GameData data;
 
@@ -39,8 +40,6 @@ public class GameDataManager : Singleton<GameDataManager>
     void Start()
     {
         CurrentLevel = 0;
-        appStartTime = DateTime.Now;
-        TimeSpan difTime = appFirstLauchTime - appStartTime;
     }
 
 
@@ -68,6 +67,7 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.SelectedShip = selectedShip;
                 data.CurrentDifficulty = currentDifficulty;
                 data.BatteryLife = batteryLife;
+                data.SessionTime = sessionTime;
 
                 bf.Serialize(file, data);
             }
@@ -113,10 +113,15 @@ public class GameDataManager : Singleton<GameDataManager>
 
     void InitializeGameDate()
     {
+        currentTime = DateTime.UtcNow;
+
         Load();
         if (data != null)
         {
             isGameStartedFirstTime = data.IsGameStartedFirstTime;
+            nextSessionTime = DateTime.UtcNow;
+            SessionController.instance.RewardCheckOnStart(sessionTime, nextSessionTime);
+            sessionTime = nextSessionTime;
         }
         else
         {
@@ -125,8 +130,7 @@ public class GameDataManager : Singleton<GameDataManager>
 
         if (isGameStartedFirstTime)
         {
-            appFirstLauchTime = DateTime.Now;
-
+            sessionTime = DateTime.UtcNow;
             coins = 200;
             gems = 10;
             batteryLife = 90;
@@ -168,6 +172,7 @@ public class GameDataManager : Singleton<GameDataManager>
             data.SelectedShip = selectedShip;
             data.ShipsRank = shipsRank;
             data.CurrentDifficulty = currentDifficulty;
+            data.SessionTime = sessionTime;
 
             Save();
             Load();
@@ -197,6 +202,7 @@ class GameData
     public int[] ShipsPower { get; set; }
     public int[] ShipsRank { get; set; }
     public int BatteryLife { get; set; }
+    public DateTime SessionTime { get; set; }
     public CurrentGameDifficulty CurrentDifficulty { get; set; }
 
 }

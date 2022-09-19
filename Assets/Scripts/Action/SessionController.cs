@@ -1,38 +1,24 @@
 ﻿
 using UnityEngine;
 using System;
-
-
+using TMPro;
+using System.Collections;
 
 public class SessionController : MonoBehaviour
 {
     public static SessionController instance;
 
-    public long m_SessionStartTime;
-    private bool m_IsPaused;
-    private float m_FPS;
 
-    public DateTime UTCTime;
-    public long sessionStartTime
-    {
-        get
-        {
-            return m_SessionStartTime;
-        }
-    }
+    [SerializeField] TMP_Text t1, t2;
+    public bool[] rewardsChecked;
 
-    public float fps
-    {
-        get
-        {
-            return m_FPS;
-        }
-    }
-
+    public bool dailyRewardsReady = false;
+    public event Action<int> OnDailyReawardReady;
     #region Unity Functions
     private void Awake()
     {
         Configure();
+        rewardsChecked = new bool[30];        
     }
 
     private void OnApplicationFocus(bool _focus)
@@ -45,18 +31,30 @@ public class SessionController : MonoBehaviour
         else
         {
             // Flag the game paused
-            m_IsPaused = true;
+           // m_IsPaused = true;
         }
     }
 
+#pragma warning disable UNT0001 // Empty Unity message
     private void Update()
+#pragma warning restore UNT0001 // Empty Unity message
     {
-        if (m_IsPaused) return;
-        // m_Game.OnUpdate();
-        m_FPS = Time.frameCount / Time.time;
+        // if (m_IsPaused) return;
     }
     #endregion
+    public void RewardCheckOnStart(DateTime sessionTimne, DateTime nextSessionTime)
+    {
+        t1.text = sessionTimne.ToString("HH:mm");
+        t2.text = nextSessionTime.ToString("d:H:mm");
+        int i = 0;
+            if (nextSessionTime.Minute != sessionTimne.Minute)
+            {
+                dailyRewardsReady = true;
+                rewardsChecked[i] = true;
+                OnDailyReawardReady?.Invoke(i);
+            }
 
+        }    
     #region Public Functions
     // public void InitializeGame(GameController _game) {
     //     m_Game = _game;
@@ -65,20 +63,16 @@ public class SessionController : MonoBehaviour
 
     public void UnPause()
     {
-        m_IsPaused = false;
+       // m_IsPaused = false;
     }
     #endregion
 
     #region Private Functions
-    /// <summary>
-    /// Initialize the singleton pattern!
-    /// </summary>
     private void Configure()
     {
         if (!instance)
         {
             instance = this;
-            StartSession();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -87,18 +81,10 @@ public class SessionController : MonoBehaviour
         }
     }
 
-    private void StartSession()
-    {
-        m_SessionStartTime = EpochSeconds();
     }
 
-    private long EpochSeconds()
-    {
-        var _epoch = new System.DateTimeOffset(System.DateTime.UtcNow);
-        UTCTime = DateTime.UtcNow;
-        return _epoch.ToUnixTimeSeconds();
-    }
+
     #endregion
-}
+
 
 

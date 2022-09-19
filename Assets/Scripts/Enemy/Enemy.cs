@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
     {
         EnemyCount.instance.count--;
         GamePlayController.instance.AddToScore(scoreValue);
-        SoundEffectController.instance.EnemyDeathSound();
+        AudioController.Instance.PlayAudio(AudioType.EnemyDeathSound);
         VFXController.instance.EnemyDeath(transform);
         Destroy(gameObject);
     }
