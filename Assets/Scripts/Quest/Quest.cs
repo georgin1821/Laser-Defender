@@ -9,15 +9,20 @@ public class Quest
     {
         NOT_AVAILABLE,
         AVAILABLE,
-        COMPLETE
+        COMPLETE,
+        DONE
     }
-    public string title;
-    public int id;
+
     public QuestProgress progress; // state of current quest
+
+    public string title;
+    public string itemReward;
     public string questObjective;
+
+    public int id;
+    public int questObjectiveCount;
+    public int questObjectiveRequirement;
     public int nextQuest;
     public int goldReward;
-    public int gemReward;
-    public string itemReward;
 
 }

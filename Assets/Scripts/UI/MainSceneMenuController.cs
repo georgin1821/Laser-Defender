@@ -8,17 +8,20 @@ using System;
 public class MainSceneMenuController : MonoBehaviour
 {
     public static MainSceneMenuController instance;
-    [SerializeField] GameObject profilePanel, shopPanel, squapPanel, rewardsPanel, settingsPanel;
+
+    public float amountUpgrade = 100;
+
+    [SerializeField] GameObject profilePanel, shopPanel, squapPanel, rewardsPanel, settingsPanel, questPanel;
     [SerializeField] Button shipBtn, upgradeBtn;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] TMP_Text powerText, upgradeInfo, coinsText, batteryTxt, gemsTxt, timeTxt;
+    [SerializeField] TMP_Text powerText, upgradeInfo, coinsText, batteryTxt, gemsTxt;
 
     int selectedShip;
-    public float amountUpgrade = 100;
+    public string panelName;
     string shipName;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -41,54 +44,41 @@ public class MainSceneMenuController : MonoBehaviour
         batteryTxt.text = GameDataManager.Instance.batteryLife + "%";
     }
 
-    public void ShowProfilePanel()
+    public void ActivatePanels()
     {
-        if (profilePanel.activeInHierarchy)
+        panelName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
+        switch (panelName)
         {
-            profilePanel.SetActive(false);
+            case "Shop":
+                shopPanel.SetActive(!shopPanel.activeInHierarchy);
+                profilePanel.SetActive(false);
+                settingsPanel.SetActive(false);
+                questPanel.SetActive(false);
+                break;
+            case "Profile":
+                profilePanel.SetActive(!profilePanel.activeInHierarchy);
+                shopPanel.SetActive(false);
+                settingsPanel.SetActive(false);
+                questPanel.SetActive(false);
+                break;
+            case "Settings":
+                settingsPanel.SetActive(!settingsPanel.activeInHierarchy);
+                profilePanel.SetActive(false);
+                shopPanel.SetActive(false);
+                questPanel.SetActive(false);
+                break;
+            case "Quest":
+                questPanel.SetActive(!questPanel.activeInHierarchy);
+                settingsPanel.SetActive(false);
+                profilePanel.SetActive(false);
+                shopPanel.SetActive(false);
+                break;
+            case "Home":
+                ClosePanels();
+                break;
         }
-        else
-        {
-            profilePanel.SetActive(true);
-            shopPanel.SetActive(false);
-            squapPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-
-        }
+        AudioController.Instance.PlayAudio(AudioType.UI_click_advanced);
     }
-
-    public void ShowShopPanel()
-    {
-
-        if (shopPanel.activeInHierarchy)
-        {
-            shopPanel.SetActive(false);
-        }
-        else
-        {
-            shopPanel.SetActive(true);
-            profilePanel.SetActive(false);
-            squapPanel.SetActive(false);
-            settingsPanel.SetActive(false);
-
-        }
-    }
-    public void ShowSettingsPanel()
-    {
-
-        if (settingsPanel.activeInHierarchy)
-        {
-            shopPanel.SetActive(false);
-        }
-        else
-        {
-            settingsPanel.SetActive(true);
-            profilePanel.SetActive(false);
-            squapPanel.SetActive(false);
-            shopPanel.SetActive(false);
-        }
-    }
-
 
     public void ShowHomeScreen()
     {
@@ -97,6 +87,7 @@ public class MainSceneMenuController : MonoBehaviour
         shopPanel.SetActive(false);
         squapPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        questPanel.SetActive(false);
     }
 
     public void ShowSquadPanel()
@@ -162,6 +153,14 @@ public class MainSceneMenuController : MonoBehaviour
         }
     }
 
+    private void ClosePanels()
+    {
+        profilePanel.SetActive(false);
+        shopPanel.SetActive(false);
+        squapPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        questPanel.SetActive(false);
+    }
     private void Upgrade()
     {
 

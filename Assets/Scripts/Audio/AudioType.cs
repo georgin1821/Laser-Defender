@@ -9,6 +9,7 @@ public enum AudioType
     PowerUp,
     UI_click_advanced,
     UI_click_simple,
+    UI_click_magic,
     Soundtrack_1,
     Soundtrack_2,
     PalyerShootRockets,
