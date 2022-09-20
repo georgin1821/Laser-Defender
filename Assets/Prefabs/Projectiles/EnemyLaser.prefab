@@ -131,9 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
-  impactClip: {fileID: 8300000, guid: b71c1f9e87ab1b4419c2c8bdb1ceb78c, type: 3}
-  impactClipVolume: 0.6
-  audioType: 13
+  audioType: 15
 --- !u!114 &-2323542838102585394
 MonoBehaviour:
   m_ObjectHideFlags: 0

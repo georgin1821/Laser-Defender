@@ -77,12 +77,12 @@ public class MainSceneMenuController : MonoBehaviour
                 ClosePanels();
                 break;
         }
-        AudioController.Instance.PlayAudio(AudioType.UI_click_advanced);
+        AudioController.Instance.PlayAudio(AudioType.UI_click_switch);
     }
 
     public void ShowHomeScreen()
     {
-        AudioController.Instance.PlayAudio(AudioType.UI_click_simple);
+        AudioController.Instance.PlayAudio(AudioType.UI_click_magic);
         profilePanel.SetActive(false);
         shopPanel.SetActive(false);
         squapPanel.SetActive(false);
@@ -100,6 +100,7 @@ public class MainSceneMenuController : MonoBehaviour
 
     public void LoadLevelScene()
     {
+        AudioController.Instance.PlayAudio(AudioType.UI_click_magic_2);
         GameManager.Instance.loadingFrom = LoadingFrom.MAIN;
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }

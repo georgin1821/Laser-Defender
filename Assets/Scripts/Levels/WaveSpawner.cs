@@ -6,11 +6,13 @@ public class WaveSpawner : MonoBehaviour
 {
     public static WaveSpawner instance;
 
+    public static event System.Action<int> OnEnemiesDieCount;
     List<GameObject> squadsInScene;
 
     List<WaveConfig> waves;
     List<GameObject> squads;
 
+    int enemiesCount;
     private void Awake()
     {
         if (instance == null)
@@ -70,12 +72,12 @@ public class WaveSpawner : MonoBehaviour
     }
     IEnumerator NoEnemiesOnWave()
     {
-
+        enemiesCount = EnemyCount.instance.count;
         while (EnemyCount.instance.count > 0)
         {
             yield return null;
         }
-        // wait put 0 for speed running
+      //  OnEnemiesDieCount(enemiesCount);
         yield return new WaitForSeconds(1);
     }
     public void SetWaves(List<WaveConfig> _waves)

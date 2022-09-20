@@ -61,7 +61,7 @@ public class GameUIController : MonoBehaviour
     #endregion
     private void OnApplicationPause(bool pause)
     {
-       // Debug.Log("pause");        
+        // Debug.Log("pause");        
     }
     void OnGameStateChangeMenuActivation(GameState state)
     {
@@ -116,7 +116,7 @@ public class GameUIController : MonoBehaviour
     }
     public void RetryButton()
     {
-        AudioController.Instance.PlayAudio(AudioType.UI_click_advanced);
+        AudioController.Instance.PlayAudio(AudioType.UI_click_switch);
         GamePlayController.instance.UpdateState(GameState.INIT);
     }
     public void ResumeGame()
@@ -126,6 +126,7 @@ public class GameUIController : MonoBehaviour
     public void BackToMap()
     {
         Time.timeScale = 1;
+        GamePlayController.instance.UpdateState(GameState.EXIT);
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }
     public void UpdateScore(int score)
@@ -166,11 +167,8 @@ public class GameUIController : MonoBehaviour
     }
     public void OpenPausePanel()
     {
-        if (GamePlayController.instance.state == GameState.PLAY)
-        {
-            GamePlayController.instance.UpdateState(GameState.PAUSE);
-            pausePanel.SetActive(true);
-        }
+        GamePlayController.instance.UpdateState(GameState.PAUSE);
+        pausePanel.SetActive(true);
 
     }
     public void SetPlayerStatus()
@@ -182,13 +180,13 @@ public class GameUIController : MonoBehaviour
     {
         StartCoroutine(DefeatScreenRoutine());
     }
-     IEnumerator DefeatScreenRoutine()
+    IEnumerator DefeatScreenRoutine()
     {
         Time.timeScale = 1;
         defeatPanel.SetActive(false);
         semiTransperantImage.gameObject.SetActive(false);
         Player.instance.gameObject.SetActive(false);
-        AudioController.Instance.PlayAudio(AudioType.DefatClip);
+        AudioController.Instance.PlayAudio(AudioType.DefeatClip);
         lostTxt.gameObject.SetActive(true);
         yield return new WaitForSeconds(4f);
         Time.timeScale = 1;

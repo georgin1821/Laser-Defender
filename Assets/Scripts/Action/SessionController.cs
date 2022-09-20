@@ -8,28 +8,15 @@ public class SessionController : MonoBehaviour
 {
     public static SessionController instance;
 
-    [SerializeField] TMP_Text timeText;
 
     public bool[] rewardsChecked;
     public bool dailyRewardsReady = false;
     public event Action<int> OnDailyReawardReady;
 
-    private DateTime localTime;
     private void Awake()
     {
         Configure();
         rewardsChecked = new bool[30];
-        StartCoroutine(UpdateTimePanel());
-    }
-    IEnumerator UpdateTimePanel()
-    {
-        while (true)
-        {
-        localTime = DateTime.Now;
-        string time = localTime.ToString("d/M H:mm");
-        timeText.text = time;
-        yield return new WaitForSeconds(60);
-        }
     }
     private void OnApplicationFocus(bool _focus)
     {
@@ -54,7 +41,7 @@ public class SessionController : MonoBehaviour
     public void RewardCheckOnStart(DateTime sessionTimne, DateTime nextSessionTime)
     {
         //t1.text = sessionTimne.ToString("HH:mm");
-       // t2.text = nextSessionTime.ToString("d:H:mm");
+        // t2.text = nextSessionTime.ToString("d:H:mm");
         int i = 0;
         if (nextSessionTime.Minute != sessionTimne.Minute)
         {
@@ -87,7 +74,7 @@ public class SessionController : MonoBehaviour
 }
 
 
-    #endregion
+#endregion
 
 
 

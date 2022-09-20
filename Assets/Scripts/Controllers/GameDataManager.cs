@@ -13,6 +13,7 @@ public class GameDataManager : Singleton<GameDataManager>
     public int LevelIndex { get; set; }
     public DateTime currentTime { get; set; }
     public DateTime nextSessionTime;
+
     //Data
     public int selectedShip;
     public int coins;
@@ -24,12 +25,11 @@ public class GameDataManager : Singleton<GameDataManager>
     public int[] shipsPower;
     public int[] shipsRank;
     public DateTime sessionTime;
-
+    public int enemiesKilled;
+    public float musicVolume;
     public CurrentGameDifficulty currentDifficulty;
 
-
     private GameData data;
-
     public int CurrentLevel { get; set; }
 
     protected override void Awake()
@@ -41,13 +41,14 @@ public class GameDataManager : Singleton<GameDataManager>
     {
         CurrentLevel = 0;
     }
-
-
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
     public void LoadLevel(int index)
     {
         CurrentLevel = index;
     }
-
     public void Save()
     {
         FileStream file = null;
@@ -68,6 +69,8 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.CurrentDifficulty = currentDifficulty;
                 data.BatteryLife = batteryLife;
                 data.SessionTime = sessionTime;
+                data.EnemiesKilled = enemiesKilled;
+                data.MusicVolume = musicVolume;
 
                 bf.Serialize(file, data);
             }
@@ -86,7 +89,6 @@ public class GameDataManager : Singleton<GameDataManager>
             }
         }
     }
-
     private void Load()
     {
         FileStream file = null;
@@ -110,7 +112,6 @@ public class GameDataManager : Singleton<GameDataManager>
             }
         }
     }
-
     void InitializeGameDate()
     {
         currentTime = DateTime.UtcNow;
@@ -134,10 +135,12 @@ public class GameDataManager : Singleton<GameDataManager>
             coins = 200;
             gems = 10;
             batteryLife = 90;
+            enemiesKilled = 0;
             levels = new bool[5];
             ships = new bool[5];
             shipsPower = new int[6];
             currentDifficulty = CurrentGameDifficulty.EASY;
+            musicVolume = 0.5f;
 
             for (int i = 0; i < shipsPower.Length; i++)
             {
@@ -173,15 +176,15 @@ public class GameDataManager : Singleton<GameDataManager>
             data.ShipsRank = shipsRank;
             data.CurrentDifficulty = currentDifficulty;
             data.SessionTime = sessionTime;
+            data.EnemiesKilled = enemiesKilled;
+            data.MusicVolume = musicVolume;
 
             Save();
             Load();
 
 
         }
-    }
-
-}
+    }}
 
 public enum CurrentGameDifficulty
 {
@@ -204,5 +207,7 @@ class GameData
     public int BatteryLife { get; set; }
     public DateTime SessionTime { get; set; }
     public CurrentGameDifficulty CurrentDifficulty { get; set; }
+    public int EnemiesKilled { get; set; }
+    public float MusicVolume { get; set; }
 
 }

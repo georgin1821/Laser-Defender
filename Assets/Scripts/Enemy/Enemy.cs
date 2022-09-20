@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+
     [Header("Enemy Stats")]
     [SerializeField] float health = 100;
     [SerializeField] int scoreValue = 150;

@@ -56,6 +56,8 @@ MonoBehaviour:
   ships: 
   shipsPower: 
   shipsRank: 
+  enemiesKilled: 0
+  musicVolume: 0
   currentDifficulty: 0
 --- !u!114 &3776361749122958984
 MonoBehaviour:
@@ -83,8 +85,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64a9edc3a667634ab2a11249f53f103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  t1: {fileID: 0}
-  t2: {fileID: 0}
   rewardsChecked: 
   dailyRewardsReady: 0
 --- !u!114 &1140825770610722692
@@ -99,3 +99,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664bbc0c99ae8f44aaf7a118366227ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questList:
+  - progress: 1
+    title: Enemies Killed
+    itemReward: gols
+    questObjective: Kill 1000 enemies
+    id: 1
+    questObjectiveCount: 1000
+    questObjectiveRequirement: 0
+    nextQuest: 0
+    goldReward: 100
+  currentQuestList:
+  - progress: 1
+    title: 
+    itemReward: iii
+    questObjective: 
+    id: 0
+    questObjectiveCount: 0
+    questObjectiveRequirement: 0
+    nextQuest: 0
+    goldReward: 0

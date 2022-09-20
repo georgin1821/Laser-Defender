@@ -33,13 +33,12 @@ public class GamePlayController : MonoBehaviour
         }
         GameDataManager.Instance.Save();
     }
-
     private void Start()
     {
         SelectShip();
-        UpdateState(GameState.INIT);
         SetLevelDifficulty();
         AudioController.Instance.PlayAudio(AudioType.Soundtrack_1);
+        UpdateState(GameState.INIT);
     }
     private void Update()
     {
@@ -61,7 +60,6 @@ public class GamePlayController : MonoBehaviour
                 break;
         }
     }
-
     public void UpdateState(GameState newState)
     {
         state = newState;
@@ -104,7 +102,7 @@ public class GamePlayController : MonoBehaviour
                 GameDataManager.Instance.LevelIndex = StageSpawner.instance.LevelIndex;
                 GameDataManager.Instance.currentDifficulty = (CurrentGameDifficulty)ganeDifficulty;
                 GameDataManager.Instance.Save();
-
+                AudioController.Instance.StopAudio(soundtrack, true);
                 StartCoroutine(DelayRoutine());
 
                 break;
@@ -120,6 +118,9 @@ public class GamePlayController : MonoBehaviour
             case GameState.PAUSE:
                 Time.timeScale = 0;
                 Player.instance.StopShootingClip();
+                break;
+            case GameState.EXIT:
+                AudioController.Instance.StopAudio(soundtrack, true);
                 break;
         }
 
@@ -226,7 +227,8 @@ public enum GameState
     RETRY,
     PAUSE,
     DEFEAT,
-    LEVELCOMPLETE_UI
+    LEVELCOMPLETE_UI,
+    EXIT
 }
 
 public enum GameDifficulty

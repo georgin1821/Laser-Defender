@@ -56,7 +56,10 @@ public class AudioController : Singleton<AudioController>
         m_JobTable = new Hashtable();
         GenerateAudioTable();
     }
-
+    private void Start()
+    {
+        SetAudioVolumes();
+    }
     protected void OnDisable()
     {
         if (Instance == this)
@@ -79,6 +82,11 @@ public class AudioController : Singleton<AudioController>
     public void RestartAudio(AudioType _type, bool _fade = false, float _delay = 0.0F)
     {
         AddJob(new AudioJob(AudioAction.RESTART, _type, _fade, _delay));
+    }
+
+    public void ChangeMusicVolume(float _volume)
+    {
+        GetSoundtrackSource().volume = _volume;
     }
     #endregion
 
@@ -159,9 +167,11 @@ public class AudioController : Singleton<AudioController>
                                                       // _track.source.clip = GetAudioClipFromAudioTrack(_job.type, _track);
         AudioClip clip = GetAudioClipFromAudioTrack(_job.type, _track);
         float vol = GetVolumeFromAudioTrack(_job.type, _track);
-
+        
+        float sourceVolume = _track.source.volume;
         float _initial = 0f;
-        float _target = 1f;
+        float _target = _track.source.volume;
+
         switch (_job.action)
         {
             case AudioAction.START:
@@ -172,7 +182,7 @@ public class AudioController : Singleton<AudioController>
                 _track.source.Stop();
                 break;
             case AudioAction.STOP:
-                _initial = 1f;
+                _initial = _track.source.volume;
                 _target = 0f;
                 break;
             case AudioAction.RESTART:
@@ -198,11 +208,13 @@ public class AudioController : Singleton<AudioController>
             // make sure the volume is set to the value we want
             _track.source.volume = _target;
 
+
             if (_job.action == AudioAction.STOP)
             {
                 _track.source.Stop();
             }
         }
+            _track.source.volume = sourceVolume;
 
         m_JobTable.Remove(_job.type);
         Log("Job count: " + m_JobTable.Count);
@@ -261,6 +273,15 @@ public class AudioController : Singleton<AudioController>
         return 1;
     }
 
+    private AudioSource GetSoundtrackSource()
+    {
+        return transform.GetChild(1).GetComponent<AudioSource>();
+    }
+
+    private void SetAudioVolumes()
+    {
+        GetSoundtrackSource().volume = GameDataManager.Instance.musicVolume;
+    }
     private void Log(string _msg)
     {
         if (!debug) return;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,15 @@ public class QuestManager : Singleton<QuestManager>
     public List<Quest> questList = new List<Quest>(); //Master Quest List
     public List<Quest> currentQuestList = new List<Quest>();
 
+    protected override void Awake()
+    {
+        base.Awake();
+        InitializeCurrentQuestList();
+    }
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
     public bool RequestAvailableQuest(int questID)
     {
         for (int i = 0; i < questList.Count; i++)
@@ -79,6 +89,16 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
+    public void InitializeCurrentQuestList()
+    {
+        for (int i = 0; i < questList.Count; i++)
+        {
+            if (questList[i].progress == Quest.QuestProgress.AVAILABLE)
+            {
+                currentQuestList[i] = questList[i];
+            }
+        }
+    }
     public void QusetRequest(QuestObject questObject)
     {
     }

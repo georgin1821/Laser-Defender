@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         {
             GameObject rocket = Instantiate(rocketPrefab, firePos.position, transform.rotation);
             rocket.transform.Rotate(0, 0, arcAngle - i * 15);
-           // SoundEffectController.instance.PlayerShootRockets();
+            // SoundEffectController.instance.PlayerShootRockets();
             AudioController.Instance.PlayAudio(AudioType.PalyerShootRockets);
             Targets = GameObject.FindGameObjectsWithTag("Enemy");
         }
@@ -179,11 +179,14 @@ public class Player : MonoBehaviour
                     FireRockets();
                     break;
                 case "Enemy":
-                    if (collideWithEnemy)
+                    if (GamePlayController.instance.state == GameState.PLAY)
                     {
-                        if (!playerHasShield)
+                        if (collideWithEnemy)
                         {
-                            PlayerDeath();
+                            if (!playerHasShield)
+                            {
+                                PlayerDeath();
+                            }
                         }
                     }
                     break;
