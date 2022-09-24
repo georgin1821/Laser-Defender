@@ -14,7 +14,8 @@ public class AudioController : Singleton<AudioController>
     {
         START,
         STOP,
-        RESTART
+        RESTART,
+        LOOP
     }
 
     [System.Serializable]
@@ -83,6 +84,11 @@ public class AudioController : Singleton<AudioController>
     {
         AddJob(new AudioJob(AudioAction.RESTART, _type, _fade, _delay));
     }
+    public void LoopAudio(AudioType _type, bool _fade = false, float _delay = 0.0F)
+    {
+        AddJob(new AudioJob(AudioAction.LOOP, _type, _fade, _delay));
+    }
+
 
     public void ChangeMusicVolume(float _volume)
     {
@@ -176,6 +182,10 @@ public class AudioController : Singleton<AudioController>
         {
             case AudioAction.START:
                 _track.source.PlayOneShot(clip, vol);
+                break;
+            case AudioAction.LOOP:
+                _track.source.loop = true;
+                _track.source.PlayOneShot(clip, vol);
 
                 break;
             case AudioAction.STOP when !_job.fade:
@@ -203,11 +213,7 @@ public class AudioController : Singleton<AudioController>
                 _timer += Time.deltaTime;
                 yield return null;
             }
-
-            // if _timer was 0.9999 and Time.deltaTime was 0.01 we would not have reached the target
-            // make sure the volume is set to the value we want
             _track.source.volume = _target;
-
 
             if (_job.action == AudioAction.STOP)
             {
@@ -215,6 +221,7 @@ public class AudioController : Singleton<AudioController>
             }
         }
             _track.source.volume = sourceVolume;
+        _track.source.loop = false;
 
         m_JobTable.Remove(_job.type);
         Log("Job count: " + m_JobTable.Count);

@@ -443,7 +443,7 @@ MonoBehaviour:
       volume: 0.3
     - type: 9
       clip: {fileID: 8300000, guid: df2fcab0cf2ed8d4d9138e23bda3d0e5, type: 3}
-      volume: 0.2
+      volume: 0.1
     - type: 10
       clip: {fileID: 8300000, guid: f2dcbd80ab2e83d47ad470fe5a928070, type: 3}
       volume: 0.4
@@ -468,6 +468,9 @@ MonoBehaviour:
     - type: 17
       clip: {fileID: 8300000, guid: 27731f2e019695349b62e5496ea32a5c, type: 3}
       volume: 0.7
+    - type: 18
+      clip: {fileID: 8300000, guid: ed5e2404ec47d954e943650d188981dc, type: 3}
+      volume: 0.2
   - source: {fileID: 4063994826276571740}
     audio:
     - type: 7

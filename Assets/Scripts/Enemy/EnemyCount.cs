@@ -7,7 +7,7 @@ public class EnemyCount : MonoBehaviour
 {
 
     public static EnemyCount instance;
-    public  int count = 0;
+    public int Count { get; set; }
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class EnemyCount : MonoBehaviour
     }
     public  void CountEnemiesAtScene(int number)
     {
-        count += number;
+        Count += number;
     }
 
 

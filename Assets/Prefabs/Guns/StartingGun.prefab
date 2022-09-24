@@ -99,6 +99,7 @@ MonoBehaviour:
   firePoint: {fileID: 5954409456616382599}
   projectile: {fileID: 8881646053843649493, guid: 369bbd1176bb1a84788040303430eb7d, type: 3}
   msBetweenShots: 150
+  isAlwaysShooting: 0
   projectileVelocity: 30
 --- !u!1 &1362502534206769740
 GameObject:
@@ -149,7 +150,8 @@ MonoBehaviour:
   firePoint: {fileID: 5954409456616382599}
   projectile: {fileID: 5966629802417868796, guid: 369bbd1176bb1a84788040303430eb7d, type: 3}
   msBetweenShots: 400
-  projectileVelocity: 30
+  isAlwaysShooting: 0
+  projectileVelocity: 4
 --- !u!1 &5908303228380686027
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,4 +199,5 @@ MonoBehaviour:
   firePoint: {fileID: 5954409456616382599}
   projectile: {fileID: 2848274487653868688, guid: 0cc5af771e1eede42a6e603fb3129db5, type: 3}
   msBetweenShots: 100
+  isAlwaysShooting: 0
   projectileVelocity: 35

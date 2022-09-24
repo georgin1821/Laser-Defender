@@ -24,6 +24,8 @@ public class GameUIController : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject defeatPanel;
     [SerializeField] Slider healthSlider;
+    [SerializeField] Slider enemyHealthSlider;
+
 
     [Header("Sound")]
     [SerializeField] AudioClip click1;
@@ -76,10 +78,7 @@ public class GameUIController : MonoBehaviour
                 LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
                 break;
             case GameState.DEFEAT:
-
-
                 break;
-
         }
     }
 
@@ -179,6 +178,17 @@ public class GameUIController : MonoBehaviour
     void DefeatScreen()
     {
         StartCoroutine(DefeatScreenRoutine());
+    }
+    public void EnemyHealthSliderConfigure(int health)
+    {
+        enemyHealthSlider.gameObject.SetActive(true);
+        enemyHealthSlider.maxValue = health;
+        enemyHealthSlider.minValue = 0;
+        enemyHealthSlider.value = health;
+    }
+    public void EnemyHealthSliderUpdate(int value)
+    {
+        enemyHealthSlider.value = value;
     }
     IEnumerator DefeatScreenRoutine()
     {

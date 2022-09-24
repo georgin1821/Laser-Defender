@@ -14,8 +14,7 @@ public class MainSceneMenuController : MonoBehaviour
     [SerializeField] GameObject profilePanel, shopPanel, squapPanel, rewardsPanel, settingsPanel, questPanel;
     [SerializeField] Button shipBtn, upgradeBtn;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] TMP_Text powerText, upgradeInfo, coinsText, batteryTxt, gemsTxt;
-
+    [SerializeField] TMP_Text powerText, upgradeInfo, coinsText;
     int selectedShip;
     public string panelName;
     string shipName;
@@ -39,9 +38,6 @@ public class MainSceneMenuController : MonoBehaviour
     private void Start()
     {
         SessionController.instance.OnDailyReawardReady += OnDailyRewardsReadyHandlere;
-        coinsText.text = GameDataManager.Instance.coins.ToString();
-        gemsTxt.text = GameDataManager.Instance.gems.ToString();
-        batteryTxt.text = GameDataManager.Instance.batteryLife + "%";
     }
 
     public void ActivatePanels()

@@ -7,10 +7,10 @@ public class WaveSpawner : MonoBehaviour
     public static WaveSpawner instance;
 
     public static event System.Action<int> OnEnemiesDieCount;
-    List<GameObject> squadsInScene;
 
     List<WaveConfig> waves;
-    List<GameObject> squads;
+    List<GameObject> divisionInScene;
+    List<GameObject> divisions;
 
     int enemiesCount;
     private void Awake()
@@ -28,10 +28,10 @@ public class WaveSpawner : MonoBehaviour
     }
     public IEnumerator SpawnLevel()
     {
-
         for (int waveIndex = 0; waveIndex < waves.Count; waveIndex++)
         {
-            squads = waves[waveIndex].GetSquads();
+            //instantiate all the waves in the current level (waves)
+            divisions = waves[waveIndex].GetDivisions();
             GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
 
             if (GameManager.Instance.isSpeedLevel)
@@ -43,12 +43,13 @@ public class WaveSpawner : MonoBehaviour
                 yield return new WaitForSeconds(2);
             }
 
-            squadsInScene = new List<GameObject>();
+            divisionInScene = new List<GameObject>();
 
-            for (int i = 0; i < squads.Count; i++)
+            // spawn squad by squad
+            for (int i = 0; i < divisions.Count; i++)
             {
-                GameObject squad = Instantiate(squads[i]);
-                squadsInScene.Add(squad);
+                GameObject division = Instantiate(divisions[i]);
+                divisionInScene.Add(division);
             }
 
             yield return new WaitForSeconds(1);
@@ -61,9 +62,9 @@ public class WaveSpawner : MonoBehaviour
     }
     public void DestroyWaves()
     {
-        if (squadsInScene != null)
+        if (divisionInScene != null)
         {
-            foreach (var item in squadsInScene)
+            foreach (var item in divisionInScene)
             {
                 Destroy(item.gameObject);
             }
@@ -72,8 +73,8 @@ public class WaveSpawner : MonoBehaviour
     }
     IEnumerator NoEnemiesOnWave()
     {
-        enemiesCount = EnemyCount.instance.count;
-        while (EnemyCount.instance.count > 0)
+        enemiesCount = EnemyCount.instance.Count;
+        while (EnemyCount.instance.Count > 0)
         {
             yield return null;
         }

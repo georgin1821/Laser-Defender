@@ -4,14 +4,8 @@ ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: 1513118109836171513
-    second: Romulian  Gun Station.002|Romulian  Gun Station.002Action
-  - first:
-      74: 4781951162920444690
-    second: Armature|ArmatureAction
-  - first:
-      74: -1422011007694221501
-    second: Armature|ArmatureAction.001
+      74: -9125698303822428630
+    second: Armature.007Action
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -42,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|ArmatureAction
-      takeName: Armature|ArmatureAction
+      name: Armature.007Action
+      takeName: Armature.007Action
       internalID: 0
       firstFrame: 0
-      lastFrame: 50
+      lastFrame: 31
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -85,7 +79,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

@@ -21,5 +21,6 @@ public enum AudioType
     EnemyLaserSkill,
     impact1,
     impact2,
-    countDown
+    countDown,
+    bossMoving
 }

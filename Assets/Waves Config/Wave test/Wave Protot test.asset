@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Wave Protot test
   m_EditorClassIdentifier: 
   timeBetweenSpawns: 0.18
-  moveSpeed: 10
+  moveSpeed: 5
   rotationSpeed: 500
-  numberOfEnemies: 24
+  numberOfEnemies: 6
   enemyPrefabs:
-  - {fileID: 5908782684963334939, guid: 7c47305c7bbaa83428ecf42034104bb4, type: 3}
-  - {fileID: 5908782684963334939, guid: a7013bebce0c26b4b94e74053282dcec, type: 3}
-  pathPrefab: {fileID: 1757285545161044320, guid: cc167eb2dbe77e4489168b17fa2724bb, type: 3}
-  formationPrefab: {fileID: 0}
+  - {fileID: 3994527224813682958, guid: d6e4f9f25f2759d4f90ee8b39a09463d, type: 3}
+  - {fileID: 3994527224813682958, guid: d6e4f9f25f2759d4f90ee8b39a09463d, type: 3}
+  pathPrefab: {fileID: 6651778975470948023, guid: b2cc86cd87bf6af47adc220ba62ada8c, type: 3}
+  formationPrefab: {fileID: 489135881576404033, guid: 223d5b785ba96fa488bfd7a7d47d1952, type: 3}
   isRotatingToForm: 0

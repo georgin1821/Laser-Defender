@@ -22,7 +22,7 @@ public class EnemyPathfindingVertical : MonoBehaviour
         {
             StopRoutine();
             Destroy(this.gameObject);
-            EnemyCount.instance.count--;
+            EnemyCount.instance.Count--;
         }
     }
 

@@ -14,7 +14,6 @@ public class MapUIController : MonoBehaviour
     [SerializeField] List<TMP_Text> levelText;
 
     [SerializeField] TMP_Text lvlCompleteInfo, scoreTxt, coinsRewardTxt, levelStartTxt;
-    [SerializeField] TMP_Text coinText;
 
     [SerializeField] GameObject defeatPanel, lvlStartPanel, lvlCompletePanel;
     [SerializeField] GameObject easy, medium, hard;
@@ -62,7 +61,6 @@ public class MapUIController : MonoBehaviour
         medium.GetComponent<Animator>().enabled = (GameDataManager.Instance.currentDifficulty == CurrentGameDifficulty.MEDIUM);
         hard.GetComponent<Animator>().enabled = (GameDataManager.Instance.currentDifficulty == CurrentGameDifficulty.HARD);
 
-        coinText.text = "" + GameDataManager.Instance.coins;
 
         levels = GameDataManager.Instance.levels;
 

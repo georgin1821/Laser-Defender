@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IEnemy
 {
 
     [Header("Enemy Stats")]
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int chanceOfDropingGold;
     [SerializeField] int chanseOfDropGems;
 
-    bool isDead;
+    bool isNotAlive;
 
     private void Start()
     {
@@ -50,9 +50,9 @@ public class Enemy : MonoBehaviour
         health -= impactProcess.GetDamage();
         impactProcess.ImapctProcess();
 
-        if (health <= 0 && !isDead)
+        if (health <= 0 && !isNotAlive)
         {
-            isDead = true;
+            isNotAlive = true;
             Die();
             OnDieDropPower();
             OnDieDropGold();
@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
     }
     private void Die()
     {
-        EnemyCount.instance.count--;
+        EnemyCount.instance.Count--;
         GamePlayController.instance.AddToScore(scoreValue);
         AudioController.Instance.PlayAudio(AudioType.EnemyDeathSound);
         VFXController.instance.EnemyDeath(transform);

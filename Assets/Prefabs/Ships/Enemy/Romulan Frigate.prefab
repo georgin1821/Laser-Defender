@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8296172668079004567}
   - component: {fileID: 6297788516384175224}
   - component: {fileID: 1097884271864149263}
+  - component: {fileID: -6946126375910101589}
   m_Layer: 3
   m_Name: Romulan Frigate
   m_TagString: Enemy
@@ -119,6 +120,7 @@ MonoBehaviour:
   deathVFX: {fileID: 4575250567042862182, guid: 6034dbf74d69f7941b3ac17ca1057817, type: 3}
   chanchToDropPower: 2
   chanceOfDropingGold: 2
+  chanseOfDropGems: 0
 --- !u!114 &1097884271864149263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,8 +133,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 0.4
-  linearSpeed: 0.2
-  randomValue: 0
-  formationPosition: {x: 0, y: 0, z: 0}
   isMovingAtFormation: 1
+  formationPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &-6946126375910101589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321638869878801698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b44e6392e65e1b4da8fa751030cd372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceToReact: 0
+  speedRF: 0
+  speed: 0
+  distance: 0
+  isGoingToPlayer: 1
+  dir: {x: 0, y: 0, z: 0}
+  isReacting: 0
