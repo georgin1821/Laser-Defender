@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
     {
         if (!playerHasShield)
         {
-            GameHealth -= impactController.GetDamage();
+            GameHealth -= impactController.Damage;
 
             GameUIController.instance.UpdateHealthText();
             impactController.ImapctProcess();

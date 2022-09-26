@@ -267,7 +267,7 @@ MonoBehaviour:
   chanceToFire: 2
   deathVFX: {fileID: 4575250567042862182, guid: 6034dbf74d69f7941b3ac17ca1057817, type: 3}
   chanchToDropPower: 2
-  chanceOfDropingGold: 2
+  chanceOfDropingGold: 10
   chanseOfDropGems: 0
 --- !u!114 &-1411354579435888148
 MonoBehaviour:
@@ -282,7 +282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMovingAtFormation: 1
-  formationPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &3140822642176132211
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,29 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImpactController : GameElement
+public class ImpactController : MonoBehaviour
 {
 
     [SerializeField] int damage = 100;
-    public AudioType audioType;
+    [SerializeField] AudioType audioType;
+    public int Damage { get; set; }
 
     private void Start()
     {
         SetLevelOfDifficulty();
     }
 
-    public int Damage
-    {
-        get { return Damage; }
-        set { }
-    }
-    public int GetDamage()
-    {
-        return damage;
-    }
+       
     public void ImapctProcess()
     {
         VFXController.instance.EnemyLaserImpact(transform);
+
         if (audioType != AudioType.None)
         {
             AudioController.Instance.PlayAudio(audioType);

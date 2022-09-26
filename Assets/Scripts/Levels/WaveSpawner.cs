@@ -24,6 +24,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void SpawnTheLevel()
     {
+        StopAllCoroutines();
         StartCoroutine(SpawnLevel());
     }
     public IEnumerator SpawnLevel()
@@ -44,7 +45,6 @@ public class WaveSpawner : MonoBehaviour
             }
 
             divisionInScene = new List<GameObject>();
-
             // spawn squad by squad
             for (int i = 0; i < divisions.Count; i++)
             {

@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class PowersBehavior : MonoBehaviour
 {
-    [SerializeField] float speed;
-    private Vector3 velocity = Vector3.zero;
     [SerializeField] float playerRange;
     [SerializeField] float smoothTime;
     [SerializeField] float forwardSpeed;
-
-
     [SerializeField] GameObject gainPowerVFX;
-    // [SerializeField] AudioClip gainPowerClip;
+
+    private Vector3 velocity = Vector3.zero;
 
     void Update()
     {
-       // transform.Translate(-Vector3.up * speed * Time.deltaTime);
                 if (Vector3.Distance(Player.instance.transform.position, this.transform.position) > playerRange)
                 {
                     transform.Translate(-Vector3.up * forwardSpeed * Time.deltaTime);
@@ -28,7 +24,6 @@ public class PowersBehavior : MonoBehaviour
                     transform.position = Vector3.SmoothDamp(transform.position, target, ref velocity, smoothTime, Mathf.Infinity, Time.deltaTime);
                 }
             }
-
 
     private void OnTriggerEnter(Collider other)
     {

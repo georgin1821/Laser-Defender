@@ -112,10 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2f59cf8c9870240a45eac8e0cbaa4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
   playerRange: 1.5
-  smoothTime: 0.2
-  forwardSpeed: 1.5
+  smoothTime: 0.1
+  forwardSpeed: 1.3
   gainPowerVFX: {fileID: 724315266695426265, guid: 39a1022ea26c80b4ab2249497dd7ad98, type: 3}
 --- !u!1 &7764766530710035181
 GameObject:

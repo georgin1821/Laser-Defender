@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GamePlayController : MonoBehaviour
 {
-    // [SerializeField] GameObject scrollingBg1, scrollingBg2;
     [SerializeField] GameObject[] shipsPrefabs;
     [SerializeField] GameObject[] sbgs;
 
@@ -76,6 +75,8 @@ public class GamePlayController : MonoBehaviour
                 InitializeScrollingBackrounds();
                 InitializePlayer();
                 BeginIntroSequence();
+                EnemyCount.instance.Count = 0;
+
                 Score = 0;
                 levelScore = 0;
                 levelCoins = 0;

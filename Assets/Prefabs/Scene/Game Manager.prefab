@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9025272162233380948}
   - component: {fileID: 9025272162233380949}
   - component: {fileID: 3776361749122958984}
-  - component: {fileID: 2130982570}
   - component: {fileID: 1140825770610722692}
+  - component: {fileID: 3837460776482167722}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -58,6 +58,7 @@ MonoBehaviour:
   shipsRank: 
   enemiesKilled: 0
   musicVolume: 0
+  soundVolume: 0
   currentDifficulty: 0
 --- !u!114 &3776361749122958984
 MonoBehaviour:
@@ -73,20 +74,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpeedLevel: 1
   loadingFrom: 0
---- !u!114 &2130982570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9025272162233380950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e64a9edc3a667634ab2a11249f53f103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rewardsChecked: 
-  dailyRewardsReady: 0
 --- !u!114 &1140825770610722692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,3 +106,17 @@ MonoBehaviour:
     questObjectiveRequirement: 0
     nextQuest: 0
     goldReward: 0
+--- !u!114 &3837460776482167722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9025272162233380950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64a9edc3a667634ab2a11249f53f103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewardsChecked: 
+  dailyRewardsReady: 0

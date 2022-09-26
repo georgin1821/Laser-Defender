@@ -173,10 +173,10 @@ TextureImporter:
       name: Sprite Atlas_2
       rect:
         serializedVersion: 2
-        x: 227
-        y: 1946
-        width: 61
-        height: 101
+        x: 209
+        y: 1968
+        width: 98
+        height: 59
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

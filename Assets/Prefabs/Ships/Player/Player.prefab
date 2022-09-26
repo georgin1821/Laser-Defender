@@ -5256,10 +5256,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1416074892558850024}
-  projectile: {fileID: 536904706114895421, guid: 97b95b3980064c34ebff5f57aaeeff0e, type: 3}
-  msBetweenShots: 200
+  projectile: {fileID: 2170107135518169224, guid: d7c77eada7d044d4b8f13274c0aae667, type: 3}
+  msBetweenShots: 190
   isAlwaysShooting: 0
-  projectileVelocity: 6
+  projectileVelocity: 8
 --- !u!1 &8406044671327542908
 GameObject:
   m_ObjectHideFlags: 0

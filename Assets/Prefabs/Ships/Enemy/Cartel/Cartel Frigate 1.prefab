@@ -466,9 +466,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
   chanceToFire: 4
   deathVFX: {fileID: 6617642959616773722, guid: 2cf4d65aab4c3b04ea5370f64f723fc4, type: 3}
-  chanchToDropPower: 3
-  chanceOfDropingGold: 10
-  chanseOfDropGems: 0
+  chanchToDropPower: 4
+  chanceOfDropingGold: 15
+  chanseOfDropGems: 15
 --- !u!114 &5164001442636253451
 MonoBehaviour:
   m_ObjectHideFlags: 0

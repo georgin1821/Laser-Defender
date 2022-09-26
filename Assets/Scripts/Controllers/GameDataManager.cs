@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameDataManager : Singleton<GameDataManager>
 {
@@ -27,7 +26,9 @@ public class GameDataManager : Singleton<GameDataManager>
     public DateTime sessionTime;
     public int enemiesKilled;
     public float musicVolume;
+    public float soundVolume;
     public CurrentGameDifficulty currentDifficulty;
+    public bool[][] shipsSkills;
 
     private GameData data;
     public int CurrentLevel { get; set; }
@@ -71,6 +72,8 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.SessionTime = sessionTime;
                 data.EnemiesKilled = enemiesKilled;
                 data.MusicVolume = musicVolume;
+                data.SoundVolume = soundVolume;
+                data.Skills = shipsSkills;
 
                 bf.Serialize(file, data);
             }
@@ -140,7 +143,8 @@ public class GameDataManager : Singleton<GameDataManager>
             ships = new bool[5];
             shipsPower = new int[6];
             currentDifficulty = CurrentGameDifficulty.EASY;
-            musicVolume = 0.5f;
+            musicVolume = 0.7f;
+            soundVolume = 0.5f;
 
             for (int i = 0; i < shipsPower.Length; i++)
             {
@@ -178,13 +182,14 @@ public class GameDataManager : Singleton<GameDataManager>
             data.SessionTime = sessionTime;
             data.EnemiesKilled = enemiesKilled;
             data.MusicVolume = musicVolume;
-
+            data.SoundVolume = soundVolume;
             Save();
             Load();
 
 
         }
-    }}
+    }
+}
 
 public enum CurrentGameDifficulty
 {
@@ -209,5 +214,8 @@ class GameData
     public CurrentGameDifficulty CurrentDifficulty { get; set; }
     public int EnemiesKilled { get; set; }
     public float MusicVolume { get; set; }
+    public float SoundVolume { get; set; }
+
+    public bool[][] Skills { get; set; }
 
 }

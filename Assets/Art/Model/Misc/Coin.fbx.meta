@@ -3,7 +3,17 @@ guid: 29692c2596954724d9e158101d2fc75c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pallete Basic
+    second: {fileID: 2100000, guid: 514fd9c3ef5761b4595ecf2f637befdb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: coin
+    second: {fileID: 2100000, guid: 314a33f146385d44097d74f689275aa7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -39,9 +39,7 @@ public class CoinsBehavior : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            //Debug.Log("Coins collides Player");
             Destroy(gameObject);
-           // SoundEffectController.instance.CollectGoldSound();
             AudioController.Instance.PlayAudio(AudioType.CollectGold);
             int currentCoins = GameDataManager.Instance.coins;
             GameDataManager.Instance.coins += 100;

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SettingsController : MonoBehaviour
 {
     [SerializeField] Slider musicSlider;
+    [SerializeField] Slider soundVolumeSlider;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class SettingsController : MonoBehaviour
     private void InitializeSettings()
     {
         musicSlider.value = GameDataManager.Instance.musicVolume;
+        soundVolumeSlider.value = GameDataManager.Instance.soundVolume;
     }
 
     public void OnMusicSliderChange()
@@ -25,5 +27,9 @@ public class SettingsController : MonoBehaviour
         GameDataManager.Instance.musicVolume = musicSlider.value;
     }
 
-    
+    public void OnSoundSliderChange()
+    {
+        float volume = soundVolumeSlider.value;
+        AudioListener.volume = volume;
+    }
 }
