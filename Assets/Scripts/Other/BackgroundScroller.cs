@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,15 +11,23 @@ public class BackgroundScroller : MonoBehaviour
 
     bool isStatring;
 
+    public Vector3 pos;
+
     private void Awake()
     {
-         GamePlayController.OnGameStateChange += OnGameStateChangeHandler;
+        GamePlayController.OnScrollingBGEnabled += OnScrollingBGEnabledHandler;
     }
-    public Vector3 pos;
+
     private void OnDestroy()
     {
-         GamePlayController.OnGameStateChange -= OnGameStateChangeHandler;
+        GamePlayController.OnScrollingBGEnabled -= OnScrollingBGEnabledHandler;
     }
+
+    private void OnScrollingBGEnabledHandler()
+    {
+        IntroScrollingBG();
+    }
+
     void Update()
     {
 
@@ -31,19 +40,15 @@ public class BackgroundScroller : MonoBehaviour
         transform.Translate(Vector3.down * backgroundScrollSpeed * Time.deltaTime);
     }
 
-    public void OnGameStateChangeHandler(GameState state)
+     void IntroScrollingBG()
     {
-        if (state == GameState.INIT)
-        {
-            StartCoroutine(IntroScrollingRoutine());
-        }
+        StopAllCoroutines();
+        StartCoroutine(IntroScrollingRoutine());
     }
-
     IEnumerator IntroScrollingRoutine()
     {
         isStatring = true;
         float time = 3;
-        yield return new WaitForSeconds(1f);
         while (time > 0)
         {
 

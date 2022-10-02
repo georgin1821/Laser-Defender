@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acba9e8e3bd6bad48a87383286decde6, type: 3}
   m_Name: WPtP 1
   m_EditorClassIdentifier: 
-  squads:
+  divisions:
   - {fileID: 5049398550342009626, guid: cd156cbbccd2d3745990310ad375a72a, type: 3}
   - {fileID: 5049398550342009626, guid: 09b97e7bfc17b1f499858eea68188643, type: 3}
+  spawnDelay: 0

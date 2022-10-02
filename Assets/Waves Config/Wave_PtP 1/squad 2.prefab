@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671dae3805a0eb945b466a0ff824923c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 4314d727a7c169e4b9ea887b2ee2d1f9, type: 2}
+  waveConfig: {fileID: 11400000, guid: a372e18b3913eb24bbdbf3c8cdc1c3f6, type: 2}
   path1: {fileID: 650817895309562468, guid: 6cdc95d271b63b545b0d8563b71b8297, type: 3}
-  path2: {fileID: 466631576740833440, guid: 86d022369af2ae749824f5a3bb44dd5a, type: 3}
+  path2: {fileID: 1888121897689164408, guid: 86d022369af2ae749824f5a3bb44dd5a, type: 3}

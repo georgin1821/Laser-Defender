@@ -64,22 +64,10 @@ public class Division2WaysPath : MonoBehaviour
             newEnemy.transform.SetParent(obj.transform);
 
             speed = waveConfig.GetMoveSpeed();
-            newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypointStart, speed, 0);
+            newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypointStart, speed, 0, waveConfig.GetIsMovingHorizontal());
 
             newEnemy.GetComponent<EnemyPathfinding>().DeploymentSinglePoint(waypointEnd[index]);
-           yield return new WaitForSeconds(.1f);
-           // yield return null;
-        }
-
-        yield return new WaitForSeconds(3f);
-
-        while (true)
-        {
-            // transform.position = startPos + transform.right * Mathf.Sin(Time.time * frequency + offset) * magnitude;
-
-            obj.transform.position = startPos + transform.up * Mathf.Sin(Time.time * 3f - 0.65f) * .2f;
-            yield return null;
-
+           yield return new WaitForSeconds(waveConfig.GetTimeBetweenSpawns());
         }
 
     }

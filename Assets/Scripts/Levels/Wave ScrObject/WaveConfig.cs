@@ -7,10 +7,15 @@ using UnityEngine;
 public class WaveConfig : ScriptableObject
 {
     [SerializeField] List<GameObject> divisions;
+    [SerializeField] float spawnDelay;
 
     public List<GameObject> GetDivisions()
     {
         return divisions;
+    }
+    public float GetDealy()
+    {
+        return spawnDelay;
     }
 
 }

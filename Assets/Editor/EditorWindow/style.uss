@@ -1,0 +1,13 @@
+.parent {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.container {
+    margin-left: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: rgba(248, 179, 36, 255);
+}

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadd344a85a577e439ad3cb6afb81c75, type: 3}
   m_Name: DivisionConfig 2
   m_EditorClassIdentifier: 
-  numberOfEnemies: 10
-  timeBetweenSpawns: 0.3
-  moveSpeed: 3
-  rotationSpeed: 300
+  numberOfEnemies: 12
+  timeBetweenSpawns: 0.27
+  moveSpeed: 3.5
+  rotationSpeed: 350
   enemyPrefabs:
   - {fileID: 5232501604013439184, guid: 4876ba47b7f7be443a56228e8f244185, type: 3}
   pathPrefab: {fileID: 1598127865075289960, guid: fde5ec1aa15ab9c47a1052c783e5a098, type: 3}
   formationPrefab: {fileID: 0}
-  isRotatingToForm: 1
+  isRotatingToForm: 0
+  isRotating: 1

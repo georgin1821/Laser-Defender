@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/Editor/EditorWindow/style.uss?fileID=7433441132597879392&amp;guid=7ab845f6cf7226945bc54ff0f78b11f0&amp;type=3#style" />
+    <ui:Toggle label="Toggle" value="false" text="Speed Play" name="toggle" />
+</ui:UXML>

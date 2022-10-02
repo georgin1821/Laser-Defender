@@ -1523,7 +1523,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1292294663, guid: a2b9e2e1d4c47d2418d5564d5da60643, type: 3}
+  m_Sprite: {fileID: 1392647439, guid: a2b9e2e1d4c47d2418d5564d5da60643, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1684,7 +1684,6 @@ MonoBehaviour:
   scoreTxt: {fileID: 8121063838255430679}
   coinsRewardTxt: {fileID: 8121063838420719784}
   levelStartTxt: {fileID: 1980201130}
-  coinText: {fileID: 0}
   defeatPanel: {fileID: 283589362}
   lvlStartPanel: {fileID: 2134061341}
   lvlCompletePanel: {fileID: 8121063838621038669}
@@ -2751,7 +2750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1292294663, guid: a2b9e2e1d4c47d2418d5564d5da60643, type: 3}
+  m_Sprite: {fileID: 1392647439, guid: a2b9e2e1d4c47d2418d5564d5da60643, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

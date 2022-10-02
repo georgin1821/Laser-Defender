@@ -9,6 +9,7 @@ public class DivisionEndlessMove : MonoBehaviour
 
     float speed;
     float rotationSpeed;
+    bool isRotating;
 
     List<Transform> waypoints;
     List<GameObject> waveEnemies;
@@ -52,7 +53,7 @@ public class DivisionEndlessMove : MonoBehaviour
                                               waypoints[0].position,
                                               enemyPrefabs[i].transform.rotation) as GameObject;
 
-            newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypoints, speed, rotationSpeed);
+            newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypoints, speed, rotationSpeed, true);
             waveEnemies.Add(newEnemy);
         }
 
@@ -61,9 +62,10 @@ public class DivisionEndlessMove : MonoBehaviour
 
     IEnumerator WaveSpawner()
     {
+        isRotating = waveConfig.GetIsRotating();
         foreach (var enemy in waveEnemies)
         {
-            enemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine();
+            enemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine(isRotating);
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
     }

@@ -7,15 +7,22 @@ public class EnemyAI : MonoBehaviour
 {
 
     [SerializeField] [Range(0, 100)] int chanceToReact;
-    [SerializeField] [Range(0, .5f)] float speedRF;
+    [SerializeField] [Range(0, 1f)] float speedRandFactor;
     [SerializeField] float speed;
+    [SerializeField] float disToPlayer = 2f;
+    [SerializeField] bool freeToReact = false;
 
-    Vector3 startingPosition;
-    public float distance;
     bool hasFired;
-    public bool isGoingToPlayer = true;
-    public Vector3 dir;
-    public bool isReacting;
+    bool isGoingToPlayer = true;
+    bool isReacting;
+    Vector3 startingPosition;
+    private void Start()
+    {
+        if (freeToReact)
+        {
+            AgentReacting(transform.position);
+        }
+    }
     public void AgentReacting(Vector3 startingPosition)
     {
         this.startingPosition = startingPosition;
@@ -33,21 +40,19 @@ public class EnemyAI : MonoBehaviour
     }
     IEnumerator AgentCycle()
     {
-
+        float distance;
+        hasFired = false;
         isReacting = true;
+        speed = Random.Range(speed - speedRandFactor, speed + speedRandFactor);
+
         distance = Vector3.Distance(Player.instance.gameObject.transform.position, transform.position);
-        while (distance >= 2 && isGoingToPlayer)
+        while (distance >= disToPlayer && isGoingToPlayer)
         {
             distance = Vector2.Distance(Player.instance.gameObject.transform.position, transform.position);
-
-            //Randomization of speed
-            speed = speed * (1 + Random.Range(-speedRF / 2f, speedRF / 2f));
 
             transform.position = Vector3.MoveTowards(transform.position,
                 Player.instance.gameObject.transform.position,
                 speed * Time.deltaTime);
-            // dir = (Player.instance.gameObject.transform.position.normalized - transform.position).normalized;
-            //  transform.Translate(dir * speed * Time.deltaTime, Space.World);
             yield return null;
 
         }
@@ -56,13 +61,13 @@ public class EnemyAI : MonoBehaviour
 
         if (!hasFired)
         {
-            GetComponent<Enemy>().Fire();
+           // GetComponent<Enemy>().Fire();
             hasFired = true;
         }
 
         while (Vector3.Distance(transform.position, startingPosition) > .1f)
         {
-            speed = speed * (1 + Random.Range(-speedRF / 2f, speedRF / 2f));
+            //speed = speed * (1 + Random.Range(-speedRandFactor / 2f, speedRandFactor / 2f));
             transform.position = Vector3.MoveTowards(transform.position,
                 startingPosition,
                 speed * Time.deltaTime);

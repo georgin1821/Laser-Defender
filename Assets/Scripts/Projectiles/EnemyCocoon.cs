@@ -2,33 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCocoon : MonoBehaviour
+public class EnemyCocoon : EnemyProjectileController
 {
-    [SerializeField] float speed;
-    [SerializeField] GameObject cocoonPrefab;
-    [SerializeField] GameObject projectile;
-    bool isDroping;
+    [SerializeField] ParticleSystem fireParticle;
+    [SerializeField] Transform fireTrans;
+    [SerializeField] AudioType fireSound;
+
+
+    GameObject projectile;
     private void Start()
     {
-
-        StartCoroutine(FireProcess());
+        InvokeRepeating("FireChance", minTimeToFire, maxTimeToFire);
     }
 
-    void Update()
-    {
-        if (isDroping)
-        {
-            transform.position += new Vector3(0, -1, 0) * speed * Time.deltaTime;
-
-        }
-
-    }
 
     IEnumerator FireProcess()
     {
-        yield return new WaitForSeconds(2);
-        isDroping = true;
-        cocoonPrefab.SetActive(false);
-        projectile.SetActive(true);
+        GameObject vfx = Instantiate(fireParticle, fireTrans.position, Quaternion.identity).gameObject;
+        vfx.transform.SetParent(gameObject.transform);
+        fireParticle.Play();
+        yield return new WaitForSeconds(1.5f);
+        Destroy(vfx);
+        projectile = Instantiate(prjectilePrefab, fireTrans.position, Quaternion.identity);
+        AudioController.Instance.PlayAudio(fireSound);
+    }
+
+    protected override void FireChance()
+    {
+        if (UnityEngine.Random.Range(1, 100) <= chanceToFire)
+        {
+            StartCoroutine(FireProcess());
+        }
     }
 }

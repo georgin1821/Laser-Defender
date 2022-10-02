@@ -22,5 +22,7 @@ public enum AudioType
     impact1,
     impact2,
     countDown,
-    bossMoving
+    bossMoving,
+    spaceAmbient,
+    impactFast
 }

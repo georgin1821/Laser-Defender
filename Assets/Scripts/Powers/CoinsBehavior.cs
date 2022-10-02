@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,18 +10,23 @@ public class CoinsBehavior : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private Animator anim;
+    private float rfSpeed = .2f;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        forwardSpeed = Random.Range(forwardSpeed - rfSpeed, forwardSpeed + rfSpeed);
+    }
     void Update()
     {
         {
             if (Vector3.Distance(Player.instance.transform.position, this.transform.position) > playerRange)
             {
-                transform.Translate(-Vector3.up * forwardSpeed * Time.deltaTime);
+                transform.Translate(new Vector3(0, -forwardSpeed, 0) * Time.deltaTime);
             }
             else
             {

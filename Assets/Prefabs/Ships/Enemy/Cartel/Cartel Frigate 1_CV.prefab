@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 7174735756349465068}
   - component: {fileID: 5164001442636253451}
   - component: {fileID: -8446897784497697657}
+  - component: {fileID: -8251426243054487419}
   m_Layer: 3
   m_Name: Cartel Frigate 1_CV
   m_TagString: Enemy
@@ -464,11 +465,12 @@ MonoBehaviour:
   health: 200
   scoreValue: 100
   projectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
-  chanceToFire: 4
   deathVFX: {fileID: 6617642959616773722, guid: 2cf4d65aab4c3b04ea5370f64f723fc4, type: 3}
   chanchToDropPower: 4
-  chanceOfDropingGold: 15
-  chanseOfDropGems: 15
+  chanceOfDropingGold: 4
+  chanceOfDropMultipleCoins: 0
+  chanseOfDropGems: 4
+  cointToSpwan: 0
 --- !u!114 &5164001442636253451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,9 +497,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chanceToReact: 0
-  speedRF: 0
+  speedRandFactor: 0
   speed: 0
-  distance: 0
-  isGoingToPlayer: 1
-  dir: {x: 0, y: 0, z: 0}
-  isReacting: 0
+  disToPlayer: 2
+  freeToReact: 0
+--- !u!114 &-8251426243054487419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5908782684963334939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a69c913a2d274b45af346824140eaec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceToFire: 10
+  prjectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
+  minTimeToFire: 2
+  maxTimeToFire: 5

@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3eca85cfbe12143b40cfbdb71e36ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 43d8e82359e98604eb3e1881530a9fb8, type: 2}
+  shipPrefab: {fileID: 3208788908259119242, guid: 6ab2217d70a2ee94ebf3d3f3d6c56fb8, type: 3}
+  shipsCount: 10
+  minSpawn: 1
+  maxSpawnTime: 3

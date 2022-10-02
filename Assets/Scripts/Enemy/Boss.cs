@@ -45,7 +45,7 @@ public class Boss : MonoBehaviour, IEnemy
     private void OnDieDropGold()
 
     {
-        CoinsController.instance.DropGold(this.transform);
+        CoinsController.instance.DropGold(this.transform, true, 1);
     }
 
     private void Die()
@@ -59,7 +59,7 @@ public class Boss : MonoBehaviour, IEnemy
 
     public void SetLevelOfDifficulty()
     {
-        float diff = GamePlayController.instance.difficulty;
+        float diff = GamePlayController.instance.Difficulty;
         health += (int)(health * diff);
         scoreValue += (int)(diff * .5f);
     }

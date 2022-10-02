@@ -7,6 +7,7 @@ public class EnemyPathfinding : MonoBehaviour
     int index = 0;
     Vector3 dir;
     Quaternion rot;
+    bool isMovingHorizontal;
 
     public bool isMovingAtFormation = true;
     public Vector3 FormationPosition { get; set; }
@@ -14,27 +15,40 @@ public class EnemyPathfinding : MonoBehaviour
     public float RotationSpeed { get; set; }
     public List<Transform> Waypoints { get; set; }
 
-    public void SetWaypoints(List<Transform> waypoints, float speed, float rotSpeed)
+    public void SetWaypoints(List<Transform> waypoints, float speed, float rotSpeed, bool isMovingHorizontal)
     {
         this.Waypoints = waypoints;
         this.Speed = speed;
         this.RotationSpeed = rotSpeed;
+        this.isMovingHorizontal = isMovingHorizontal;
     }
 
-    public void StartDeploymentRoutine()
+    public void StartDeploymentRoutine(bool isRotating)
     {
-        StartCoroutine(DeploymentRoutine());
+        StartCoroutine(DeploymentRoutine(isRotating));
     }
-    IEnumerator DeploymentRoutine()
+    IEnumerator DeploymentRoutine(bool isRotating)
     {
+                Vector3 velocity = Vector3.zero;
         while (index < Waypoints.Count - 1)
         {
             Vector3 nextPos = Waypoints[this.index + 1].position;
-            dir = (nextPos - transform.position).normalized;
-            rot = Quaternion.LookRotation(Vector3.forward, dir);
+            if (isRotating)
+            {
+                dir = (nextPos - transform.position).normalized;
+                rot = Quaternion.LookRotation(Vector3.forward, dir);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, RotationSpeed * Time.deltaTime);
+                transform.Translate(Vector3.up * Speed * Time.deltaTime);
+            }
+            else
+            {
+                //transform.position = Vector3.SmoothDamp(transform.position,
+                //                             nextPos, ref velocity, 04f,
+                //                             Speed * Time.deltaTime);
+                transform.position = Vector3.SmoothDamp(transform.position,
+                             nextPos, ref velocity, 0.8f );
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, RotationSpeed * Time.deltaTime);
-            transform.Translate(Vector3.up * Speed * Time.deltaTime);
+            }
 
             if (Vector3.Distance(transform.position, nextPos) < 0.2f)
             {
@@ -56,7 +70,7 @@ public class EnemyPathfinding : MonoBehaviour
     IEnumerator DeploymentRoutineSinglePoint(Transform end)
     {
 
-        while (Vector3.Distance(transform.position, end.position) > .2f)
+        while (Vector3.Distance(transform.position, end.position) > .01f)
         {
             Speed -= Time.deltaTime * (Speed + 2);
             if (Speed < 2) Speed = 2;
@@ -164,12 +178,27 @@ public class EnemyPathfinding : MonoBehaviour
     public IEnumerator FormationMove()
     {
         Vector3 startPos = gameObject.transform.position;
+        float frequency = Random.Range(3.5f, 3.7f);
+        float magnitude = Random.Range(0.05f, 0.07f);
 
         while (isMovingAtFormation)
         {
-            // transform.position = startPos + transform.right * Mathf.Sin(Time.time * frequency + offset) * magnitude;
-            transform.position = startPos + transform.up * Mathf.Sin(Time.time * 2f - 0.65f) * .3f;
+            // transform.position = startPos + transform.up * Mathf.Sin(Time.time * frequency- 0.5f) * magnitude;
 
+            Vector3 dir = Vector3.zero;
+            if (isMovingHorizontal)
+            {
+            dir.x = Mathf.Sin(Time.time * 2f - 0.5f) * .2f;
+            }
+            else
+            {
+                dir.x = 0;
+            }
+
+            dir.y = Mathf.Sin(Time.time * frequency - 0.5f) * magnitude;
+           // Vector3 pos = new Vector3(Mathf.Sin(Time.time * 2f - 0.5f) * .2f, Mathf.Sin(Time.time * frequency - 0.5f) * magnitude);
+
+            transform.position = startPos + dir;
             yield return null;
         }
     }

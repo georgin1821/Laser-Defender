@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acba9e8e3bd6bad48a87383286decde6, type: 3}
   m_Name: Wave Config Vertical
   m_EditorClassIdentifier: 
-  squads:
+  divisions:
   - {fileID: 5049398550342009626, guid: 3c5286b3906d33449a875b35ddcec956, type: 3}
+  spawnDelay: 0

@@ -9,8 +9,10 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     [SerializeField] string _iOSGameId;
     [SerializeField] bool _testMode = true;
     private string _gameId;
+    
 
    [SerializeField] RewardedAdsButton rewardedAdsButton;
+   
    // [SerializeField] InterstitialAdExample interstitialAdExample;
     void Awake()
     {
@@ -27,7 +29,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     public void OnInitializationComplete()
     {
-       Debug.Log("Unity Ads initialization complete.");
+      // Debug.Log("Unity Ads initialization complete.");
        rewardedAdsButton.LoadAd();
 
         //if(interstitialAdExample != null)

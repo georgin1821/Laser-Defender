@@ -23,18 +23,19 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         //Disable the button until the ad is ready to show:
         _showAdButton.interactable = false;
     }
-
+    
     // Load content to the Ad Unit:
     public void LoadAd()
     {
         // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
         Advertisement.Load(_adUnitId, this);
+       
     }
 
     // If the ad successfully loads, add a listener to the button and enable it:
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
-       // Debug.Log("Ad Loaded: " + adUnitId);
+      // Debug.Log("Ad Loaded: " + adUnitId);
 
         if (adUnitId.Equals(_adUnitId))
         {
@@ -48,6 +49,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     // Implement a method to execute when the user clicks the button:
     public void ShowAd()
     {
+        AudioController.Instance.PlayAudio(AudioType.UI_click_switch);
         // Disable the button:
         _showAdButton.interactable = false;
         // Then show the ad:
@@ -59,9 +61,9 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
-            //Debug.Log("Unity Ads Rewarded Ad Completed");
+           Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-
+            GamePlayController.instance.UpdateState(GameState.RETRY);
             // Load another ad:
             Advertisement.Load(_adUnitId, this);
         }

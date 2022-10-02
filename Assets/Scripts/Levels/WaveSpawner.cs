@@ -27,12 +27,13 @@ public class WaveSpawner : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(SpawnLevel());
     }
-    public IEnumerator SpawnLevel()
+    IEnumerator SpawnLevel()
     {
         for (int waveIndex = 0; waveIndex < waves.Count; waveIndex++)
         {
             //instantiate all the waves in the current level (waves)
             divisions = waves[waveIndex].GetDivisions();
+            float delay = waves[waveIndex].GetDealy();
             GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
 
             if (GameManager.Instance.isSpeedLevel)
@@ -50,6 +51,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 GameObject division = Instantiate(divisions[i]);
                 divisionInScene.Add(division);
+                yield return new WaitForSeconds(delay);
             }
 
             yield return new WaitForSeconds(1);

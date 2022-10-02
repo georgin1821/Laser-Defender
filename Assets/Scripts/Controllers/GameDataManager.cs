@@ -28,10 +28,11 @@ public class GameDataManager : Singleton<GameDataManager>
     public float musicVolume;
     public float soundVolume;
     public CurrentGameDifficulty currentDifficulty;
+    public bool[] dailyRewards;
     public bool[][] shipsSkills;
+    public int CurrentLevel { get; set; }
 
     private GameData data;
-    public int CurrentLevel { get; set; }
 
     protected override void Awake()
     {
@@ -45,10 +46,6 @@ public class GameDataManager : Singleton<GameDataManager>
     private void OnApplicationQuit()
     {
         Save();
-    }
-    public void LoadLevel(int index)
-    {
-        CurrentLevel = index;
     }
     public void Save()
     {
@@ -74,6 +71,7 @@ public class GameDataManager : Singleton<GameDataManager>
                 data.MusicVolume = musicVolume;
                 data.SoundVolume = soundVolume;
                 data.Skills = shipsSkills;
+                data.DailyRewards = dailyRewards;
 
                 bf.Serialize(file, data);
             }
@@ -142,6 +140,7 @@ public class GameDataManager : Singleton<GameDataManager>
             levels = new bool[5];
             ships = new bool[5];
             shipsPower = new int[6];
+            dailyRewards = new bool[4];
             currentDifficulty = CurrentGameDifficulty.EASY;
             musicVolume = 0.7f;
             soundVolume = 0.5f;
@@ -165,6 +164,10 @@ public class GameDataManager : Singleton<GameDataManager>
             {
                 shipsRank[i] = 0;
             }
+            for(int i = 0; i < dailyRewards.Length; i++)
+            {
+                dailyRewards[i] = false;
+            }
 
             ships[0] = true;
             ships[1] = true;
@@ -183,10 +186,10 @@ public class GameDataManager : Singleton<GameDataManager>
             data.EnemiesKilled = enemiesKilled;
             data.MusicVolume = musicVolume;
             data.SoundVolume = soundVolume;
+            data.DailyRewards = dailyRewards;
+
             Save();
             Load();
-
-
         }
     }
 }
@@ -215,7 +218,7 @@ class GameData
     public int EnemiesKilled { get; set; }
     public float MusicVolume { get; set; }
     public float SoundVolume { get; set; }
-
+    public bool[] DailyRewards { get; set; }
     public bool[][] Skills { get; set; }
 
 }

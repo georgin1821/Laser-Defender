@@ -14,6 +14,8 @@ public class DivisionConfigAndPath : ScriptableObject
     [SerializeField] GameObject pathPrefab;
     [SerializeField] GameObject formationPrefab;
     [SerializeField] bool isRotatingToForm;
+    [SerializeField] bool isRotating;
+    [SerializeField] bool isMovingHorizontal;
 
     public List<Transform> GetFormWaypoints()
     {
@@ -57,8 +59,14 @@ public class DivisionConfigAndPath : ScriptableObject
     {
         return enemyPrefabs;
     }
-
-
+    public bool GetIsRotating()
+    {
+        return isRotating;
+    }
+    public bool GetIsMovingHorizontal()
+    {
+        return isMovingHorizontal;
+    }
 
 
 }

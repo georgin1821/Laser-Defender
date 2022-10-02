@@ -13,22 +13,23 @@ public class Player : MonoBehaviour
     public static Player instance;
 
     [SerializeField] int health;
-    public int GameHealth { get; private set; }
 
     [SerializeField] ParticleSystem engineFlames;
     [SerializeField] ParticleSystem shootingFlames;
     [SerializeField] GameObject rocketPrefab;
     [SerializeField] Transform firePos;
     [SerializeField] GameObject shieldsVFX;
+    GameObject redFlashImage;
 
     AudioSource audioSource;
     Animator anim;
     float arcAngle = 40;
     bool playerHasShield;
+    bool isGameStatePLAY;
     Coroutine co;
     GameObject shields;
-    bool isGameStatePLAY;
 
+    public int GameHealth { get; private set; }
     public GameObject[] Targets { get; set; }
     public int UpgradeRank { get; private set; }
 
@@ -43,8 +44,8 @@ public class Player : MonoBehaviour
         }
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
+        redFlashImage = GameObject.Find("Red Flash");
     }
-
     private void OnEnable()
     {
         if (GamePlayController.instance != null)
@@ -65,12 +66,6 @@ public class Player : MonoBehaviour
         StopShootingClip();
         GameUIController.instance.SetPlayerStatus();
     }
-
-    public void StopShootingClip()
-    {
-        audioSource.Stop();
-    }
-
     void Update()
     {
         if (isGameStatePLAY)
@@ -78,6 +73,12 @@ public class Player : MonoBehaviour
             audioSource.loop = true;
         }
     }
+
+    public void StopShootingClip()
+    {
+        audioSource.Stop();
+    }
+
 
     IEnumerator ShieldsCountDown()
     {
@@ -97,10 +98,10 @@ public class Player : MonoBehaviour
         {
             GameHealth -= impactController.Damage;
 
-            GameUIController.instance.UpdateHealthText();
+            GameUIController.instance.UpdatePlayerHealthUI();
             impactController.ImapctProcess();
         }
-
+        redFlashImage.GetComponent<RedFlashAnim>().Flash();
         if (GameHealth <= 0)
         {
             PlayerDeath();

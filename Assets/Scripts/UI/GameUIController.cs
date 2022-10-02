@@ -25,13 +25,14 @@ public class GameUIController : MonoBehaviour
     [SerializeField] GameObject defeatPanel;
     [SerializeField] Slider healthSlider;
     [SerializeField] Slider enemyHealthSlider;
-
+    [SerializeField] Image redImage;
+    [SerializeField] Animator anim;
 
     [Header("Sound")]
     [SerializeField] AudioClip click1;
     [SerializeField] AudioClip click2;
 
-    public Animator anim;
+    public Animator anim1;
     public AnimationClip clip;
 
     #region Unity Functions
@@ -54,7 +55,7 @@ public class GameUIController : MonoBehaviour
     {
         coinsText.text = GameDataManager.Instance.coins.ToString();
         defeatScreenBtn.onClick.AddListener(DefeatScreen);
-        UpdateHealthText();
+        UpdatePlayerHealthUI();
     }
     void Update()
     {
@@ -82,7 +83,7 @@ public class GameUIController : MonoBehaviour
         }
     }
 
-    #region Unity Public
+
     public IEnumerator UpdateScore(int CurrentScore, int newScore)
     {
         while (CurrentScore < newScore)
@@ -102,7 +103,7 @@ public class GameUIController : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-    public void UpdateHealthText()
+    public void UpdatePlayerHealthUI()
     {
         int health = Player.instance.GameHealth;
         healthText.text = "" + health;
@@ -113,10 +114,9 @@ public class GameUIController : MonoBehaviour
     {
         StartCoroutine(UpdateCoinsRoutine(coins, coinsToAdd));
     }
-    public void RetryButton()
+    public void RetryLevel()
     {
-        AudioController.Instance.PlayAudio(AudioType.UI_click_switch);
-        GamePlayController.instance.UpdateState(GameState.INIT);
+        GamePlayController.instance.UpdateState(GameState.RETRY);
     }
     public void ResumeGame()
     {
@@ -203,7 +203,6 @@ public class GameUIController : MonoBehaviour
         GameManager.Instance.loadingFrom = LoadingFrom.DEFEAT;
         LoadingWithFadeScenes.Instance.LoadScene("LevelSelect");
     }
-    #endregion
 
 
 }

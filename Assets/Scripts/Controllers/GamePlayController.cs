@@ -7,25 +7,25 @@ using UnityEngine.SceneManagement;
 
 public class GamePlayController : MonoBehaviour
 {
-    [SerializeField] GameObject[] shipsPrefabs;
-    [SerializeField] GameObject[] sbgs;
-
     public static GamePlayController instance;
+
+    [SerializeField] GameObject[] shipsPrefabs;
+    [SerializeField] GameObject[] scrollingsBgsPrefabs;
+    [SerializeField] GameObject[] sbgGameObjects;
+
     public static event Action<GameState> OnGameStateChange;
-    public const int valuse = 10;
-    public GameState state;
+    public static event Action OnScrollingBGEnabled;
+    public GameState state; //to be serialize only
     public GameDifficulty ganeDifficulty;
-    public float difficulty;
     public AudioType soundtrack;
 
     GameObject playerPrefab;
-    GameObject sc1, sc2;
-
     int levelScore;
+    int batterySpend;
+    public float Difficulty { get; set; }
     public int Score { get; set; }
     public int levelCoins { get; set; }
     public int ShipPower { get; private set; }
-    //int batterySpend;
 
     private void Awake()
     {
@@ -37,30 +37,30 @@ public class GamePlayController : MonoBehaviour
     }
     private void Start()
     {
-        SelectShip();
+        SelectShipPrefabSetShipPower();
         SetLevelDifficulty();
         AudioController.Instance.PlayAudio(AudioType.Soundtrack_1);
         UpdateState(GameState.INIT);
     }
     private void Update()
     {
-        switch (state)
-        {
-            case GameState.LOADLEVEL:
-                break;
-            case GameState.LEVELCOMPLETE:
-                break;
-            case GameState.RETRY:
-                break;
-            case GameState.INIT:
-                break;
-            case GameState.PLAY:
-                break;
-            case GameState.PAUSE:
-                break;
-            case GameState.DEFEAT:
-                break;
-        }
+        //switch (state)
+        //{
+        //    case GameState.LOADLEVEL:
+        //        break;
+        //    case GameState.LEVELCOMPLETE:
+        //        break;
+        //    case GameState.RETRY:
+        //        break;
+        //    case GameState.INIT:
+        //        break;
+        //    case GameState.PLAY:
+        //        break;
+        //    case GameState.PAUSE:
+        //        break;
+        //    case GameState.DEFEAT:
+        //        break;
+        //}
     }
 
     public void UpdateState(GameState newState)
@@ -70,8 +70,8 @@ public class GamePlayController : MonoBehaviour
         {
             case GameState.INIT:
                 Time.timeScale = 1;
-                WaveSpawner.instance.DestroyWaves();
                 DestroyLevel();
+                WaveSpawner.instance.DestroyWaves();
                 InitializeScrollingBackrounds();
                 InitializePlayer();
                 BeginIntroSequence();
@@ -80,7 +80,7 @@ public class GamePlayController : MonoBehaviour
                 Score = 0;
                 levelScore = 0;
                 levelCoins = 0;
-                // batterySpend = 0;
+                batterySpend = 0;
                 GameUIController.instance.UpdateScore(Score);
                 ganeDifficulty = (GameDifficulty)GameDataManager.Instance.currentDifficulty;
 
@@ -114,11 +114,14 @@ public class GamePlayController : MonoBehaviour
             case GameState.DEFEAT:
                 Time.timeScale = 0;
                 Player.instance.StopShootingClip();
+                WaveSpawner.instance.StopAllCoroutines();
                 break;
 
             case GameState.LEVELCOMPLETE_UI:
                 break;
             case GameState.RETRY:
+                Time.timeScale = 1;
+                UpdateState(GameState.INIT);
                 break;
             case GameState.PAUSE:
                 Time.timeScale = 0;
@@ -147,13 +150,13 @@ public class GamePlayController : MonoBehaviour
         switch (ganeDifficulty)
         {
             case GameDifficulty.EASY:
-                difficulty = 0;
+                Difficulty = 0;
                 break;
             case GameDifficulty.MEDIUM:
-                difficulty = 1.5f;
+                Difficulty = 1.5f;
                 break;
             case GameDifficulty.HARD:
-                difficulty = 3f;
+                Difficulty = 3f;
                 break;
         }
     }
@@ -162,6 +165,29 @@ public class GamePlayController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(3);
         UpdateState(GameState.LEVELCOMPLETE_UI);
+    }
+
+    private void InitializeScrollingBackrounds()
+    {
+        sbgGameObjects = new GameObject[scrollingsBgsPrefabs.Length];
+        for (int i = 0; i < scrollingsBgsPrefabs.Length; i++)
+        {
+          sbgGameObjects[i] = Instantiate(scrollingsBgsPrefabs[i]);
+        }
+        OnScrollingBGEnabled?.Invoke();
+    }
+    private void InitializePlayer()
+    {
+        Player player = FindObjectOfType<Player>();
+        if (player == null)
+        {
+            Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
+        }
+
+    }
+    private void BeginIntroSequence()
+    {
+        StartCoroutine(PlayerStartingAnim());
     }
     IEnumerator PlayerStartingAnim()
     {
@@ -183,26 +209,6 @@ public class GamePlayController : MonoBehaviour
 
         UpdateState(GameState.LOADLEVEL);
     }
-
-    private void InitializeScrollingBackrounds()
-    {
-        for (int i = 0; i < sbgs.Length; i++)
-        {
-            Instantiate(sbgs[i]);
-        }
-    }
-    private void InitializePlayer()
-    {
-        Player player = FindObjectOfType<Player>();
-        if (player == null)
-        {
-            Instantiate(playerPrefab, new Vector3(0, -6, 0), Quaternion.identity);
-        }
-    }
-    private void BeginIntroSequence()
-    {
-        StartCoroutine(PlayerStartingAnim());
-    }
     private void DestroyLevel()
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
@@ -210,14 +216,15 @@ public class GamePlayController : MonoBehaviour
         {
             foreach (var enemy in enemies)
             {
-                // Debug.Log(enemies.Length + " Destroy Enemy");
                 Destroy(enemy.gameObject);
             }
         }
-        Destroy(sc1);
-        Destroy(sc2);
+        foreach (var sbg in sbgGameObjects)
+        {
+            Destroy(sbg);
+        }
     }
-    private void SelectShip()
+    private void SelectShipPrefabSetShipPower()
     {
         int index = GameDataManager.Instance.selectedShip;
         playerPrefab = shipsPrefabs[index];

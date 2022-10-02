@@ -1,42 +1,39 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
+    public  event Action<float> OnGettingDamage;
 
     [Header("Enemy Stats")]
-    [SerializeField] float health = 100;
+    public float health = 100;
     [SerializeField] int scoreValue = 150;
 
-    [Header("Shooting")]
-    float shotCounter;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] float chanceToFire;
     [Header("VFX")]
     [SerializeField] GameObject deathVFX;
+    [SerializeField] AudioType shipSound;
 
     [Header("PowerUps")]
     [SerializeField] int chanchToDropPower;
     [SerializeField] int chanceOfDropingGold;
+    [SerializeField] int chanceOfDropMultipleCoins;
     [SerializeField] int chanseOfDropGems;
+    [SerializeField] int cointToSpwan;
 
     bool isNotAlive;
 
     private void Start()
     {
         SetLevelOfDifficulty();
-        InvokeRepeating("FireChance", 3f, 3f);
+        if(shipSound != AudioType.None)
+        {
+            AudioController.Instance.LoopAudio(shipSound, true, 1);
+        }
     }
 
-    public void Fire()
-    {
-        Vector3 firePos = new Vector3(transform.position.x, transform.position.y - .5f, transform.position.z);
-        Instantiate(projectilePrefab,
-             firePos,
-             Quaternion.identity);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -47,7 +44,8 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private void ProcessHit(PlayerProjectileImpact impactProcess)
     {
-        health -= impactProcess.GetDamage();
+        health -= impactProcess.GetDamage(); ;
+        OnGettingDamage?.Invoke(health);
         impactProcess.ImapctProcess();
 
         if (health <= 0 && !isNotAlive)
@@ -63,21 +61,23 @@ public class Enemy : MonoBehaviour, IEnemy
     private void OnDieDropGold()
 
     {
-        if (Random.Range(1, 100) <= chanceOfDropingGold)
+        bool multipleCoins;
+        if (UnityEngine.Random.Range(1, 100) <= chanceOfDropingGold)
         {
-            CoinsController.instance.DropGold(this.transform);
+            multipleCoins = UnityEngine.Random.Range(1, 100) <= chanceOfDropMultipleCoins;
+            CoinsController.instance.DropGold(this.transform, multipleCoins, cointToSpwan);
         }
     }
     private void OnDieDropPower()
     {
-        if (Random.Range(1, 100) <= chanchToDropPower)
+        if (UnityEngine.Random.Range(1, 100) <= chanchToDropPower)
         {
             PowerUpController.instance.InstatiateRandomPower(this.transform);
         }
     }
     private void OnDiewDropGems()
     {
-        if (Random.Range(1, 100) <= chanchToDropPower)
+        if (UnityEngine.Random.Range(1, 100) <= chanchToDropPower)
         {
             PowerUpController.instance.InstatiateRandomPower(this.transform);
         }
@@ -92,17 +92,8 @@ public class Enemy : MonoBehaviour, IEnemy
     }
     public void SetLevelOfDifficulty()
     {
-        float diff = GamePlayController.instance.difficulty;
+        float diff = GamePlayController.instance.Difficulty;
         health += health * diff;
         scoreValue += (int)(diff * .5f);
     }
-    void FireChance()
-    {
-        if (Random.Range(1, 100) <= chanceToFire)
-        {
-            Fire();
-        }
-
-    }
-
 }
