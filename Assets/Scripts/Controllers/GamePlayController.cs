@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GamePlayController : MonoBehaviour
+public sealed class GamePlayController : MonoBehaviour
 {
     public static GamePlayController instance;
-
     [SerializeField] GameObject[] shipsPrefabs;
     [SerializeField] GameObject[] scrollingsBgsPrefabs;
     [SerializeField] GameObject[] sbgGameObjects;

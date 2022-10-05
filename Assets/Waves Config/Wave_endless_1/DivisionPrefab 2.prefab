@@ -44,4 +44,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3496480c45f6b054289f2c79a975f959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: fbaf2c4632c05e642a922b261ee09e38, type: 2}
+  divisionConfig:
+    numberOfEnemies: 6
+    timeBetweenSpawns: 1
+    rotationSpeed: 350
+    enemyPrefabs:
+    - {fileID: 7511995872613329462, guid: 09947c47588e4b941a95ca2523a7a589, type: 3}
+    - {fileID: 7511995872613329462, guid: 09947c47588e4b941a95ca2523a7a589, type: 3}
+    isRotatingToForm: 1
+    isRotating: 1
+    endlessMove: 1
+    isMovingHorizontal: 1
+    isMovingVertical: 1
+    AiChanceTOReact: 0
+    aiSpeed: 0
+    moveSpeed: 3
+  waypoints: []
+  formationWaypoints: []
+  Path: {fileID: 666767965152641466, guid: ccfbd1fb954132241b0f1c5e73588e2e, type: 3}

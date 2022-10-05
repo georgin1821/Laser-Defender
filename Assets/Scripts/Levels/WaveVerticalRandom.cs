@@ -10,7 +10,7 @@ public class WaveVerticalRandom : MonoBehaviour
 
     private float xMin, xMax, yMax;
 
-
+    [SerializeField] VerticalMoveSettings verticalMoveSettings;
     private void Start()
     {
         xMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
@@ -28,8 +28,11 @@ public class WaveVerticalRandom : MonoBehaviour
         {
             Vector3 startPos = new Vector3(Random.Range(xMin, xMax), yMax + 1f, 0);
 
-            GameObject enemy = Instantiate(shipPrefab, startPos, shipPrefab.transform.rotation);
-            enemy.GetComponent<EnemyPathfindingVertical>().StartDeployment();
+            GameObject newEnemy = Instantiate(shipPrefab, startPos, shipPrefab.transform.rotation);
+            // enemy.GetComponent<EnemyPathfindingVertical>().StartDeployment();
+            EnemyPathfinding ep = newEnemy.GetComponent<EnemyPathfinding>();
+            ep.SetVerticalMoveConfg(verticalMoveSettings);
+            ep.UpdateState(EnemyState.VerticalMovement);
 
             float time = CalculateSpawingIntervals(minSpawn, maxSpawnTime);
             yield return new WaitForSeconds(time);

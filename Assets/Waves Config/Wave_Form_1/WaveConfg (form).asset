@@ -15,3 +15,4 @@ MonoBehaviour:
   divisions:
   - {fileID: 5049398550342009626, guid: a03f34cb08b28184abcdb178ba28732e, type: 3}
   - {fileID: 5049398550342009626, guid: 5898efdc20c4f244d84f80e1e75f384f, type: 3}
+  spawnDelay: 0

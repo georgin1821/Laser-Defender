@@ -13,7 +13,7 @@ public class WaveConfig : ScriptableObject
     {
         return divisions;
     }
-    public float GetDealy()
+    public float GetDelay()
     {
         return spawnDelay;
     }

@@ -1,72 +1,38 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DivisionEndlessMove : MonoBehaviour
+public class DivisionEndlessMove : DivisionAbstract
 {
-    [SerializeField] DivisionConfigAndPath waveConfig;
-
-    float speed;
-    float rotationSpeed;
-    bool isRotating;
-
-    List<Transform> waypoints;
-    List<GameObject> waveEnemies;
-    float timeBetweenSpawns;
-
+    [SerializeField] private GameObject Path;
+    private void OnValidate()
+    {
+        divisionConfig.endlessMove = true;
+    }
     private void Awake()
     {
-        EnemyCount.instance.CountEnemiesAtScene(waveConfig.GetNumberOfEnemies());
+        this.path = Path;
     }
-    private void Start()
+    protected override IEnumerator InstantiateDivision()
     {
-        InstatiateWave();
-    }
-    public void InstatiateWave()
-    {
-        waveEnemies = new List<GameObject>();
+        GameObject[] enemyPrefabs = divisionConfig.enemyPrefabs;
+        GameObject obj = new GameObject("Wave");
 
-        waypoints = waveConfig.GetWaypoints();
-        speed = waveConfig.GetMoveSpeed();
-        rotationSpeed = waveConfig.GetRotationSpeed();
-        timeBetweenSpawns = waveConfig.GetTimeBetweenSpawns();
-        GameObject[] enemyPrefabs = waveConfig.GetEnemyPrefabsList();
-
-        // first instatiate all enemies and then start deplyment
-        for (int index = 0; index < waveConfig.GetNumberOfEnemies(); index++)
+        for (int index = 0; index < divisionConfig.numberOfEnemies; index++)
         {
-            int i = 0;
-            if (enemyPrefabs.Length > 1)
-            {
-                if (index % 2 == 0)
-                {
-                    i = 0;
-                }
-                else
-                {
-                    i = 1;
-                }
-            }
+            int i = Random.Range(0, enemyPrefabs.Length);
 
             GameObject newEnemy = Instantiate(enemyPrefabs[i],
                                               waypoints[0].position,
                                               enemyPrefabs[i].transform.rotation) as GameObject;
+            newEnemy.transform.SetParent(obj.transform);
 
-            newEnemy.GetComponent<EnemyPathfinding>().SetWaypoints(waypoints, speed, rotationSpeed, true);
-            waveEnemies.Add(newEnemy);
+            EnemyPathfinding ep = newEnemy.GetComponent<EnemyPathfinding>();
+            ep.SetDivisionConfiguration(divisionConfig, divisionAbstract: this);
+            ep.UpdateState(EnemyState.SinglePath);
+
+            yield return new WaitForSeconds(divisionConfig.timeBetweenSpawns);
         }
 
-        StartCoroutine(WaveSpawner());
-    }
-
-    IEnumerator WaveSpawner()
-    {
-        isRotating = waveConfig.GetIsRotating();
-        foreach (var enemy in waveEnemies)
-        {
-            enemy.GetComponent<EnemyPathfinding>().StartDeploymentRoutine(isRotating);
-            yield return new WaitForSeconds(timeBetweenSpawns);
-        }
     }
 }

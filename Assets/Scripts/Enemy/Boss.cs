@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Boss : MonoBehaviour, IEnemy
+public class Boss : MonoBehaviour
 {
     [SerializeField] int health;
     [SerializeField] int scoreValue;

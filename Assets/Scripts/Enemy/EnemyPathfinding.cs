@@ -1,53 +1,146 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyPathfinding : MonoBehaviour
 {
+    EnemyState state;
     int index = 0;
     Vector3 dir;
     Quaternion rot;
+    Vector3 formPosition;
+    float speed;
+    float speedRF;
     bool isMovingHorizontal;
+    bool isMovingVertical;
+    int AIchanceToReact;
+    float aiSpeed;
+    float disToPlayer = 2f;
+    float rotationSpeed;
+    Vector3 startingPosition;
+    bool isReacting;
+    bool isRotating;
+    bool endlessMove;
+    bool smoothMovement;
 
-    public bool isMovingAtFormation = true;
-    public Vector3 FormationPosition { get; set; }
-    public float Speed { get; set; }
-    public float RotationSpeed { get; set; }
-    public List<Transform> Waypoints { get; set; }
+    List<Transform> waypoints;
+    int id;
+    float yMax;
 
-    public void SetWaypoints(List<Transform> waypoints, float speed, float rotSpeed, bool isMovingHorizontal)
+    Transform endTrans;
+    DivisionAbstract divisionAbstract;
+
+    private void Start()
     {
-        this.Waypoints = waypoints;
-        this.Speed = speed;
-        this.RotationSpeed = rotSpeed;
-        this.isMovingHorizontal = isMovingHorizontal;
+        yMax = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y + 2;
     }
 
-    public void StartDeploymentRoutine(bool isRotating)
+    private void Update()
     {
-        StartCoroutine(DeploymentRoutine(isRotating));
+        switch (state)
+        {
+            case EnemyState.PointToPoint:
+                break;
+            case EnemyState.FormationMove:
+                break;
+            case EnemyState.MovingToPlayer:
+                break;
+            case EnemyState.SinglePath:
+                break;
+            case EnemyState.FormationDeployment:
+                break;
+            case EnemyState.VerticalMovement:
+                if (transform.position.y < -yMax)
+                {
+                    StopAllCoroutines();
+                    Destroy(this.gameObject);
+                    EnemyCount.instance.Count--;
+                }
+                break;
+        }
     }
+
+    public void UpdateState(EnemyState newState)
+    {
+        EndState();
+        state = newState;
+        switch (newState)
+        {
+            case EnemyState.PointToPoint:
+                this.endTrans = divisionAbstract.formationWaypoints[id];
+                StartCoroutine(DeploymentRoutineSinglePoint());
+                break;
+
+            case EnemyState.FormationMove:
+                isReacting = false;
+                StartCoroutine(FormationMove());
+                StartCoroutine(AgentChanceToReact());
+                break;
+
+            case EnemyState.MovingToPlayer:
+                StartCoroutine(AgentCycle());
+                break;
+
+            case EnemyState.SinglePath:
+                waypoints = divisionAbstract.waypoints;
+                StartCoroutine(DeploymentRoutine(isRotating));
+                break;
+
+            case EnemyState.FormationDeployment:
+                formPosition = divisionAbstract.formationWaypoints[id].position;
+                StartCoroutine(DeploymentFormationRoutine());
+                break;
+
+            case EnemyState.VerticalMovement:
+                StartCoroutine(VerticalMovement());
+                break;
+
+        }
+    }
+    void EndState()
+    {
+        switch (state)
+        {
+            case EnemyState.PointToPoint:
+                break;
+            case EnemyState.FormationMove:
+                StopAllCoroutines();
+                break;
+            case EnemyState.MovingToPlayer:
+                break;
+            case EnemyState.SinglePath:
+                StopAllCoroutines();
+                break;
+        }
+    }
+
     IEnumerator DeploymentRoutine(bool isRotating)
     {
-                Vector3 velocity = Vector3.zero;
-        while (index < Waypoints.Count - 1)
+        Vector3 velocity = Vector3.zero;
+        while (index < waypoints.Count - 1)
         {
-            Vector3 nextPos = Waypoints[this.index + 1].position;
+            Vector3 nextPos = waypoints[this.index + 1].position;
             if (isRotating)
             {
                 dir = (nextPos - transform.position).normalized;
                 rot = Quaternion.LookRotation(Vector3.forward, dir);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, RotationSpeed * Time.deltaTime);
-                transform.Translate(Vector3.up * Speed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotationSpeed * Time.deltaTime);
+                transform.Translate(Vector3.up * speed * Time.deltaTime);
             }
             else
             {
-                //transform.position = Vector3.SmoothDamp(transform.position,
-                //                             nextPos, ref velocity, 04f,
-                //                             Speed * Time.deltaTime);
-                transform.position = Vector3.SmoothDamp(transform.position,
-                             nextPos, ref velocity, 0.8f );
-
+                if (!smoothMovement)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position,
+                    nextPos,
+                    speed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.position = Vector3.SmoothDamp(transform.position,
+                    nextPos, ref velocity, 0.8f);
+                }
             }
 
             if (Vector3.Distance(transform.position, nextPos) < 0.2f)
@@ -55,154 +148,184 @@ public class EnemyPathfinding : MonoBehaviour
                 index++;
             }
             yield return null;
-
-            if (index == Waypoints.Count - 1)
+        }
+        if (endlessMove)
+        {
+            if (index == waypoints.Count - 1)
             {
                 index = -1;
             }
         }
-    }
-
-    public void DeploymentSinglePoint(Transform end)
-    {
-        StartCoroutine(DeploymentRoutineSinglePoint(end));
-    }
-    IEnumerator DeploymentRoutineSinglePoint(Transform end)
-    {
-
-        while (Vector3.Distance(transform.position, end.position) > .01f)
+        else
         {
-            Speed -= Time.deltaTime * (Speed + 2);
-            if (Speed < 2) Speed = 2;
+            UpdateState(EnemyState.FormationDeployment);
+        }
+    }
+    IEnumerator DeploymentRoutineSinglePoint()
+    {
+
+        while (Vector3.Distance(transform.position, endTrans.position) > .01f)
+        {
+            speed -= Time.deltaTime * (speed + 2);
+            if (speed < 2) speed = 2;
             transform.position = Vector3.MoveTowards(transform.position,
-               end.position,
-               Speed * Time.deltaTime);
+            endTrans.position,
+            speed * Time.deltaTime);
             yield return null;
         }
-        yield return new WaitForSeconds(3);
-        StartCoroutine(FormationMove());
-    }
-
-    public void DeploymentFormNoRotation()
-    {
-        StartCoroutine(DeploymentFormationNoRotationRoutine());
-    }
-    IEnumerator DeploymentFormationNoRotationRoutine()
-    {
-        while (index < Waypoints.Count - 1)
-        {
-            Vector3 nextPos = Waypoints[this.index + 1].position;
-
-            transform.position = Vector3.MoveTowards(transform.position,
-                                                     nextPos,
-                                                     Speed * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, nextPos) < 0.3f)
-            {
-                index++;
-            }
-            yield return null;
-        }
-
-        while (Vector3.Distance(transform.position, FormationPosition) > 0.01)
-        {
-            transform.position = Vector3.MoveTowards(transform.position,
-                                                     FormationPosition,
-                                                     Speed * Time.deltaTime);
-            yield return null;
-
-        }
-
         yield return new WaitForSeconds(1);
 
-        if (GetComponent<EnemyAI>() != null)
-        {
-            GetComponent<EnemyAI>().AgentReacting(FormationPosition);
-        }
-
-        StartCoroutine(FormationMove());
+        UpdateState(EnemyState.FormationMove);
     }
-
-    public void DeploymentWithFormation()
+    IEnumerator DeploymentFormationRoutine()
     {
-        StartCoroutine(DeploymentFormationRoutine());
-    }
-    public IEnumerator DeploymentFormationRoutine()
-    {
-        while (index < Waypoints.Count - 1)
-        {
-            Vector3 nextPos = Waypoints[this.index + 1].position;
-
-            dir = (nextPos - transform.position).normalized;
-            rot = Quaternion.LookRotation(Vector3.forward, dir);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, RotationSpeed * Time.deltaTime);
-
-            transform.Translate(Vector3.up * Speed * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, nextPos) < 0.3f)
-            {
-                index++;
-            }
-            yield return null;
-        }
-
-        dir = (FormationPosition - transform.position).normalized;
+        dir = (formPosition - transform.position).normalized;
         rot = Quaternion.LookRotation(Vector3.forward, dir);
-        while (Vector3.Distance(transform.position, FormationPosition) > 0.01)
+        while (Vector3.Distance(transform.position, formPosition) > 0.02)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, 700 * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotationSpeed * Time.deltaTime);
             transform.position = Vector3.MoveTowards(transform.position,
-              FormationPosition,
-               Speed * Time.deltaTime);
+            formPosition,
+            speed * Time.deltaTime);
             yield return null;
 
         }
         float time = Time.time;
-        while (Time.time < time + 1)
+        Quaternion rotation = Quaternion.Euler(0, 0, 180);
+        while (rotation != transform.rotation)
         {
-            Quaternion rotation = Quaternion.Euler(0, 0, 180);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 450 * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
+        yield return new WaitForSeconds(1f);
 
-        yield return new WaitForSeconds(1);
-        if (GetComponent<EnemyAI>() != null)
-        {
-            GetComponent<EnemyAI>().AgentReacting(FormationPosition);
-        }
+        UpdateState(EnemyState.FormationMove);
 
-        StartCoroutine(FormationMove());
+
     }
-
-    public IEnumerator FormationMove()
+    IEnumerator FormationMove()
     {
-        Vector3 startPos = gameObject.transform.position;
+        startingPosition = gameObject.transform.position;
         float frequency = Random.Range(3.5f, 3.7f);
         float magnitude = Random.Range(0.05f, 0.07f);
-
-        while (isMovingAtFormation)
+        Vector3 dir = Vector3.zero;
+        while (true)
         {
-            // transform.position = startPos + transform.up * Mathf.Sin(Time.time * frequency- 0.5f) * magnitude;
-
-            Vector3 dir = Vector3.zero;
             if (isMovingHorizontal)
             {
-            dir.x = Mathf.Sin(Time.time * 2f - 0.5f) * .2f;
+                dir.x = Mathf.Sin(Time.time * 2f - 0.5f) * .2f;
             }
-            else
+            if (isMovingVertical)
             {
-                dir.x = 0;
+
+                dir.y = Mathf.Sin(Time.time * frequency - 0.5f) * magnitude;
             }
 
-            dir.y = Mathf.Sin(Time.time * frequency - 0.5f) * magnitude;
-           // Vector3 pos = new Vector3(Mathf.Sin(Time.time * 2f - 0.5f) * .2f, Mathf.Sin(Time.time * frequency - 0.5f) * magnitude);
-
-            transform.position = startPos + dir;
+            transform.position = startingPosition + dir;
             yield return null;
         }
     }
+    IEnumerator AgentCycle()
+    {
+        float distance;
+
+        distance = Vector3.Distance(Player.instance.gameObject.transform.position, transform.position);
+        while (distance >= disToPlayer)
+        {
+            distance = Vector2.Distance(Player.instance.gameObject.transform.position, transform.position);
+
+            transform.position = Vector3.MoveTowards(transform.position,
+                Player.instance.gameObject.transform.position,
+                aiSpeed * Time.deltaTime);
+            yield return null;
+
+        }
+
+        //isGoingToPlayer = false;
+
+        ////if (!hasFired)
+        ////{
+        // GetComponent<Enemy>().Fire();
+        ////    hasFired = true;
+        ////}
+
+        while (Vector3.Distance(transform.position, startingPosition) > .1f)
+        {
+            //speed = speed * (1 + Random.Range(-speedRandFactor / 2f, speedRandFactor / 2f));
+            transform.position = Vector3.MoveTowards(transform.position,
+                startingPosition,
+                speed * Time.deltaTime);
+            yield return null;
+        }
+        UpdateState(EnemyState.FormationMove);
+
+        //isGoingToPlayer = true;
+
+    }
+    IEnumerator AgentChanceToReact()
+    {
+        while (!isReacting)
+        {
+            yield return new WaitForSeconds(2);
+
+            if (Random.Range(1, 100) <= AIchanceToReact)
+            {
+                UpdateState(EnemyState.MovingToPlayer);
+                isReacting = true;
+            }
+            yield return new WaitForSeconds(2);
+        }
+    }
+    IEnumerator VerticalMovement()
+    {
+        speed = Random.Range(speed - speedRF, speed + speedRF);
+
+        while (true)
+        {
+            transform.Translate(Vector3.up * speed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+
+
+
+    public void SetDivisionConfiguration(DivisionConfiguration divConfig, DivisionAbstract divisionAbstract, int id = 0)
+    {
+        this.divisionAbstract = divisionAbstract;
+        speed = divConfig.moveSpeed;
+        isRotating = divConfig.isRotating;
+        rotationSpeed = divConfig.rotationSpeed;
+        this.endlessMove = divConfig.endlessMove;
+        this.id = id;
+        smoothMovement = divConfig.smoothMovement;
+    }
+    public void SetFormMoveConfg(FormMoveSettings settings)
+    {
+        isMovingHorizontal = settings.isMovingHorizontal;
+        isMovingVertical = settings.isMovingVertical;
+    }
+    public void SetAIConfg(EnemyAISettings settings)
+    {
+        AIchanceToReact = settings.AiChanceToReact;
+        aiSpeed = settings.aiSpeed;
+    }
+    public void SetVerticalMoveConfg(VerticalMoveSettings settings)
+    {
+        speed = settings.speed;
+        speedRF = settings.speedRF;
+    }
+
 
 }
 
+public enum EnemyState
+{
+    PointToPoint,
+    FormationMove,
+    MovingToPlayer,
+    SinglePath,
+    FormationDeployment,
+    VerticalMovement
+}
 

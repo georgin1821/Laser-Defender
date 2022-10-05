@@ -33,7 +33,7 @@ public class WaveSpawner : MonoBehaviour
         {
             //instantiate all the waves in the current level (waves)
             divisions = waves[waveIndex].GetDivisions();
-            float delay = waves[waveIndex].GetDealy();
+            float delay = waves[waveIndex].GetDelay();
             GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
 
             if (GameManager.Instance.isSpeedLevel)
