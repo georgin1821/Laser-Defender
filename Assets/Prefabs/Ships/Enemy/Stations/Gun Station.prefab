@@ -43,9 +43,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3899844730140007650}
   - component: {fileID: -4162771845356797190}
-  - component: {fileID: 207049268902838722}
   - component: {fileID: 3229215462840187401}
-  - component: {fileID: -1045411645930510107}
+  - component: {fileID: 207049268902838722}
+  - component: {fileID: 6614014984757136112}
+  - component: {fileID: 4460007178788296117}
   m_Layer: 3
   m_Name: Gun Station
   m_TagString: Enemy
@@ -60,18 +61,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4419395394205435480}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2148014325432726985}
   - {fileID: 6744175244618210057}
-  - {fileID: 7261015464888695601}
-  - {fileID: 8333994878777439975}
+  - {fileID: 2915806819155835964}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!136 &-4162771845356797190
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -86,26 +86,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &207049268902838722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419395394205435480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 405216bedd9cced4a97378ccd5ab784b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 200
-  scoreValue: 100
-  projectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
-  chanceToFire: 2
-  deathVFX: {fileID: 4575250567042862182, guid: 6034dbf74d69f7941b3ac17ca1057817, type: 3}
-  chanchToDropPower: 2
-  chanceOfDropingGold: 10
-  chanseOfDropGems: 0
 --- !u!95 &3229215462840187401
 Animator:
   serializedVersion: 4
@@ -126,7 +106,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-1045411645930510107
+--- !u!114 &207049268902838722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,13 +115,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 4419395394205435480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c06ee7a382f9d841a7dcdb6a9adc586, type: 3}
+  m_Script: {fileID: 11500000, guid: 405216bedd9cced4a97378ccd5ab784b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  laser: {fileID: 0}
-  line: {fileID: 0}
-  laserClip: {fileID: 0}
+  health: 1000
+  scoreValue: 100
+  projectilePrefab: {fileID: 165506286884226736, guid: ddc99ffdd2325334ea0001908ac31cb1, type: 3}
+  deathVFX: {fileID: 4575250567042862182, guid: 6034dbf74d69f7941b3ac17ca1057817, type: 3}
+  shipSound: 0
+  chanchToDropPower: 2
+  chanceOfDropingGold: 10
+  chanceOfDropMultipleCoins: 0
+  chanseOfDropGems: 0
+  cointToSpwan: 0
+--- !u!114 &6614014984757136112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419395394205435480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4460007178788296117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419395394205435480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c848cd20e5fbe746baa7902e32bad99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laser: {fileID: 6959609935162348455}
+  line: {fileID: 5709142772519447768}
 --- !u!1 &5111476570012399670
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +196,6 @@ GameObject:
   - component: {fileID: 6744175244618210057}
   - component: {fileID: 488950614932853139}
   - component: {fileID: 9128901357789063270}
-  - component: {fileID: 3661946439647757218}
   m_Layer: 3
   m_Name: Quad
   m_TagString: Untagged
@@ -257,20 +268,53 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3661946439647757218
-MeshCollider:
+--- !u!1 &6959609935162348455
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5709142772519447768}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2915806819155835964}
+  - component: {fileID: 3654037318330567387}
+  m_Layer: 3
+  m_Name: Laser
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2915806819155835964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959609935162348455}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7261015464888695601}
+  - {fileID: 8333994878777439975}
+  m_Father: {fileID: 3899844730140007650}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3654037318330567387
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959609935162348455}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 12, y: 0.1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7230296031335181148
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,13 +340,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7230296031335181148}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: -0.9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3899844730140007650}
-  m_RootOrder: 3
+  m_Father: {fileID: 2915806819155835964}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!198 &621918947950070079
 ParticleSystem:
@@ -320,7 +364,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -5108,13 +5152,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7854653720178367023}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.91, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3899844730140007650}
-  m_RootOrder: 2
+  m_Father: {fileID: 2915806819155835964}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2488098829972560169
 ParticleSystem:
@@ -5132,7 +5176,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1

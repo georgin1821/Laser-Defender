@@ -132,19 +132,26 @@ public class GameUIController : MonoBehaviour
     {
         scoreText.text = "" + score;
     }
-    public void ShowWaveInfoText(int waveIndex, int wavesTotal)
+    public void ShowWaveInfoText(int waveIndex, int wavesTotal, string name = "")
     {
-
+        string text = "";
         if (waveIndex == 0)
         {
             introText.gameObject.SetActive(true);
-            waveText.gameObject.SetActive(true);
+        }
+        if (name != "")
+        {
+            text = name;
+            introText.gameObject.SetActive(true);
+            introText.text = "!!BOSS APPROCHING!!";
         }
         else
         {
-            waveText.gameObject.SetActive(true);
+            text = "WAVE " + (waveIndex + 1) + "/" + wavesTotal;
         }
-        waveText.text = "WAVE " + (waveIndex + 1) + "/" + wavesTotal;
+
+        waveText.gameObject.SetActive(true);
+        waveText.text = text;
         Invoke("WaveTextDisable", 4);
     }
     void WaveTextDisable()

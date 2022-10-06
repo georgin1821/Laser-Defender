@@ -5,9 +5,12 @@ using UnityEngine;
 public class DivisionEndlessMove : DivisionAbstract
 {
     [SerializeField] private GameObject Path;
+    [SerializeField] SpawnsSettings spawnsSettings;
+    [SerializeField] RotationSettings rotationSettings;
+
     private void OnValidate()
     {
-        divisionConfig.endlessMove = true;
+        spawnsSettings.endlessMove = true;
     }
     private void Awake()
     {
@@ -29,10 +32,13 @@ public class DivisionEndlessMove : DivisionAbstract
 
             EnemyPathfinding ep = newEnemy.GetComponent<EnemyPathfinding>();
             ep.SetDivisionConfiguration(divisionConfig, divisionAbstract: this);
-            ep.UpdateState(EnemyState.SinglePath);
+            ep.SetRotationConfig(rotationSettings);
+            ep.SetSpawnConfig(spawnsSettings);
+
+            ep.UpdateState(EnemyState.DivisionToPath);
 
             yield return new WaitForSeconds(divisionConfig.timeBetweenSpawns);
         }
-
     }
+
 }

@@ -47,14 +47,20 @@ MonoBehaviour:
   divisionConfig:
     enemyPrefabs:
     - {fileID: 8572463996034910515, guid: fb1376fecff8bb046947d19a0d8a9ad6, type: 3}
+    moveSpeed: 3
     numberOfEnemies: 5
     timeBetweenSpawns: 0.5
-    moveSpeed: 3
-    rotationSpeed: 350
-    isRotatingToForm: 0
-    isRotating: 0
-    endlessMove: 0
+    isFormMoving: 0
+    isChasingPlayer: 0
   waypoints: []
   formationWaypoints: []
-  Path: {fileID: 0}
-  Formation: {fileID: 0}
+  Path: {fileID: 6651778975470948023, guid: b2cc86cd87bf6af47adc220ba62ada8c, type: 3}
+  Formation: {fileID: 6651778975470948023, guid: b2cc86cd87bf6af47adc220ba62ada8c, type: 3}
+  formMoveSettings:
+    magitude: 0
+    frequency: 0
+    isMovingHorizontal: 0
+    isMovingVertical: 0
+  smoothDeltaSettings:
+    smoothDelta: 0
+    smoothMovement: 0

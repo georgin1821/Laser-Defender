@@ -6,7 +6,12 @@ public class Division2WaysPath : DivisionAbstract
 {
     [SerializeField] GameObject Path;
     [SerializeField] GameObject Formation;
+    [SerializeField] FormMoveSettings formMoveSettings;
+    [SerializeField] SmoothDeltaSettings smoothDeltaSettings;
 
+    private void OnValidate()
+    {
+    }
     private void Awake()
     {
         this.path = Path;
@@ -31,10 +36,13 @@ public class Division2WaysPath : DivisionAbstract
 
             EnemyPathfinding ep = newEnemy.GetComponent<EnemyPathfinding>();
             ep.SetDivisionConfiguration(divisionConfig,this, id: index);
+            ep.SetFormMoveConfg(formMoveSettings);
+            ep.SetSmoothDeltaConfig(smoothDeltaSettings);
             ep.UpdateState(EnemyState.PointToPoint);
 
-            yield return new WaitForSeconds(divisionConfig.numberOfEnemies);
+            yield return new WaitForSeconds(divisionConfig.timeBetweenSpawns);
         }
     }
+
 }
 

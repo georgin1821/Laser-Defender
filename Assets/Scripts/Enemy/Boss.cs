@@ -6,12 +6,10 @@ using TMPro;
 
 public class Boss : MonoBehaviour
 {
-    [SerializeField] int health;
+    public int health;
     [SerializeField] int scoreValue;
     [SerializeField] GameObject deathVFX;
 
-    Slider healthSlider;
-    TMP_Text healthTxt;
     bool isNotAlive;
 
     private void Awake()

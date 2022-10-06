@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCocoon : EnemyProjectileController
+public class EnemyCocoon : EnemyWeaponAbstract
 {
     [SerializeField] ParticleSystem fireParticle;
     [SerializeField] Transform fireTrans;
@@ -33,5 +33,15 @@ public class EnemyCocoon : EnemyProjectileController
         {
             StartCoroutine(FireProcess());
         }
+    }
+
+    protected override void Fire()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Firing()
+    {
+        throw new System.NotImplementedException();
     }
 }

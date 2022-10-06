@@ -8,6 +8,7 @@ public class WaveConfig : ScriptableObject
 {
     [SerializeField] List<GameObject> divisions;
     [SerializeField] float spawnDelay;
+    public bool isBoss;
 
     public List<GameObject> GetDivisions()
     {

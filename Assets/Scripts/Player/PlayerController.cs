@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     public bool mobileRelease;
-    Vector2 dir;
-
+    public Vector2 dir;
     private void Awake()
     {
         viewCamera = Camera.main;
@@ -59,11 +58,10 @@ public class PlayerController : MonoBehaviour
 
     private void MobileInput()
     {
-
         if (Input.touchCount > 0)
         {
-
             Touch touch = Input.GetTouch(0);
+
             if (touch.phase == TouchPhase.Moved)
             {
                 dir = touch.deltaPosition;
@@ -71,28 +69,41 @@ public class PlayerController : MonoBehaviour
 
                 if (dir.x > 0)
                 {
-                    // transform.rotation = Quaternion.Euler(0, -50, 0);
+                    transform.Rotate(0, -6, 0);
+                    if (transform.rotation.eulerAngles.y > -40)
+                    {
+                        transform.rotation = Quaternion.Euler(0, -40, 0);
+                    }
                 }
                 else if (dir.x < 0)
                 {
-                    // transform.rotation = Quaternion.Euler(0, 50, 0);
-                }
-                else if (dir.x == 0)
-                {
-                    // transform.rotation = Quaternion.Euler(0, 0, 0);
-
+                    transform.Rotate(0, 6, 0);
+                    if (transform.rotation.eulerAngles.y > 40)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 40, 0);
+                    }
                 }
             }
-        }
-        // transform.rotation = Quaternion.Euler(0, 0, 0);
 
+            if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Ended)
+            {
+               // transform.rotation = Quaternion.Euler(0, 0, 0);
+                var fromAngle = transform.rotation;
+                var toAngle = Quaternion.Euler(0, 0, 0);
+                for (var t = 0f; t < 1; t += Time.deltaTime / 0.2f)
+                {
+                    transform.rotation = Quaternion.Lerp(fromAngle, toAngle, t);
+                }
+
+            }
+        }
     }
 
     private void RestrictPlayerToScreen()
     {
         Vector3 temp = this.transform.position;
-        temp.x = Mathf.Clamp(temp.x, xMin , xMax );
-        temp.y = Mathf.Clamp(temp.y, yMin , yMax );
+        temp.x = Mathf.Clamp(temp.x, xMin, xMax);
+        temp.y = Mathf.Clamp(temp.y, yMin, yMax);
 
         this.transform.position = temp;
     }

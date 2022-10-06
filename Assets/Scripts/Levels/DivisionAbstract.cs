@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,14 @@ using UnityEngine;
 public abstract class DivisionAbstract : MonoBehaviour
 {
     [SerializeField] protected DivisionConfiguration divisionConfig;
-
+   
     protected GameObject path;
     protected GameObject formation;
 
     [HideInInspector] public List<Transform> waypoints;
     [HideInInspector] public List<Transform> formationWaypoints;
+
+    protected abstract IEnumerator InstantiateDivision();
 
     protected virtual void Start()
     {
@@ -37,5 +40,4 @@ public abstract class DivisionAbstract : MonoBehaviour
         StartCoroutine(InstantiateDivision());
     }
 
-    protected abstract IEnumerator InstantiateDivision();
 }

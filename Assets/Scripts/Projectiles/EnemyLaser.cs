@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLaser : EnemyProjectileController
+public class EnemyLaser : EnemyWeaponAbstract
 {
 
     private void Start()
@@ -10,12 +10,10 @@ public class EnemyLaser : EnemyProjectileController
         InvokeRepeating("FireChance", minTimeToFire, maxTimeToFire);
 
     }
-    public void Fire()
+    protected override void Fire()
     {
         Vector3 firePos = new Vector3(transform.position.x, transform.position.y - .5f, transform.position.z);
-        Instantiate(prjectilePrefab,
-                    firePos,
-                    Quaternion.identity);
+        Instantiate(prjectilePrefab, firePos, Quaternion.identity);
     }
    protected override void FireChance()
     {
@@ -25,4 +23,8 @@ public class EnemyLaser : EnemyProjectileController
         }
     }
 
+    public override void Firing()
+    {
+        Fire();
+    }
 }

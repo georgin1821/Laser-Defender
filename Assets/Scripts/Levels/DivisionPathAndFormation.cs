@@ -6,12 +6,16 @@ public class DivisionPathAndFormation : DivisionAbstract
 {
     [SerializeField] GameObject Path;
     [SerializeField] GameObject Formation;
+
     [SerializeField] EnemyAISettings enemyAISettings;
     [SerializeField] FormMoveSettings formMoveSettings;
+    [SerializeField] SpawnsSettings spawnsSettings;
+    [SerializeField] SmoothDeltaSettings smoothDeltaSettings;
+    [SerializeField] RotationSettings rotationSettings;
 
     private void OnValidate()
     {
-        divisionConfig.endlessMove = false;
+        spawnsSettings.endlessMove = false;
     }
     private void Awake()
     {
@@ -39,12 +43,15 @@ public class DivisionPathAndFormation : DivisionAbstract
             ep.SetDivisionConfiguration(divisionConfig, divisionAbstract: this, id: index);
             ep.SetFormMoveConfg(formMoveSettings);
             ep.SetAIConfg(enemyAISettings);
-            ep.UpdateState(EnemyState.SinglePath);
+            ep.SetSpawnConfig(spawnsSettings);
+            ep.SetRotationConfig(rotationSettings);
+            ep.SetSmoothDeltaConfig(smoothDeltaSettings);
+
+            ep.UpdateState(EnemyState.DivisionToPath);
+
 
             yield return new WaitForSeconds(divisionConfig.timeBetweenSpawns);
-
         }
     }
-
 
 }

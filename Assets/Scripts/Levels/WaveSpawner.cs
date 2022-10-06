@@ -8,11 +8,11 @@ public class WaveSpawner : MonoBehaviour
 
     public static event System.Action<int> OnEnemiesDieCount;
 
+
     List<WaveConfig> waves;
     List<GameObject> divisionInScene;
     List<GameObject> divisions;
 
-    int enemiesCount;
     private void Awake()
     {
         if (instance == null)
@@ -32,9 +32,14 @@ public class WaveSpawner : MonoBehaviour
         for (int waveIndex = 0; waveIndex < waves.Count; waveIndex++)
         {
             //instantiate all the waves in the current level (waves)
+            if (waves[waveIndex].isBoss)
+            {
+                GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count, "ARACHRON");
+            }
+            else GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
             divisions = waves[waveIndex].GetDivisions();
             float delay = waves[waveIndex].GetDelay();
-            GameUIController.instance.ShowWaveInfoText(waveIndex, waves.Count);
+
 
             if (GameManager.Instance.isSpeedLevel)
             {
@@ -51,6 +56,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 GameObject division = Instantiate(divisions[i]);
                 divisionInScene.Add(division);
+
                 yield return new WaitForSeconds(delay);
             }
 
@@ -75,12 +81,13 @@ public class WaveSpawner : MonoBehaviour
     }
     IEnumerator NoEnemiesOnWave()
     {
-        enemiesCount = EnemyCount.instance.Count;
+        int enemiesCount = EnemyCount.instance.Count;
+
         while (EnemyCount.instance.Count > 0)
         {
             yield return null;
         }
-      //  OnEnemiesDieCount(enemiesCount);
+        //  OnEnemiesDieCount(enemiesCount);
         yield return new WaitForSeconds(1);
     }
     public void SetWaves(List<WaveConfig> _waves)
