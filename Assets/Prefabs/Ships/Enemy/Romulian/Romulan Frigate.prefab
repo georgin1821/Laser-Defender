@@ -356,8 +356,8 @@ GameObject:
   - component: {fileID: 7728371002386133502}
   - component: {fileID: 8296172668079004567}
   - component: {fileID: 6297788516384175224}
-  - component: {fileID: 1097884271864149263}
   - component: {fileID: 60758929}
+  - component: {fileID: 1022739999753239585}
   m_Layer: 3
   m_Name: Romulan Frigate
   m_TagString: Enemy
@@ -467,19 +467,6 @@ MonoBehaviour:
   chanceOfDropMultipleCoins: 100
   chanseOfDropGems: 3
   cointToSpwan: 6
---- !u!114 &1097884271864149263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8321638869878801698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMovingAtFormation: 0
 --- !u!114 &60758929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,3 +510,16 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   fill: {fileID: 242387483}
+--- !u!114 &1022739999753239585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321638869878801698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3

@@ -5,12 +5,15 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public bool isSpeedLevel;
-    public LoadingFrom loadingFrom;
+    [HideInInspector] public LoadingFrom loadingFrom;
+
 
 }
+
 public enum LoadingFrom
 {
     MAIN,
     LVLCOMP,
     DEFEAT
 }
+

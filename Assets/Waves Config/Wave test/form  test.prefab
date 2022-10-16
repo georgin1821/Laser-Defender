@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6438535020281242702}
-  - component: {fileID: -3910883119402206946}
+  - component: {fileID: -4216537047025905763}
   m_Layer: 0
   m_Name: form  test
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3910883119402206946
+--- !u!114 &-4216537047025905763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,26 +41,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 5049398550342009626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671dae3805a0eb945b466a0ff824923c, type: 3}
+  m_Script: {fileID: 11500000, guid: bb4fd92a5d558fe48824a1fb3d5ba5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  divSet: 0
   divisionConfig:
-    enemyPrefabs:
-    - {fileID: 8572463996034910515, guid: fb1376fecff8bb046947d19a0d8a9ad6, type: 3}
-    moveSpeed: 3
-    numberOfEnemies: 5
-    timeBetweenSpawns: 0.5
-    isFormMoving: 0
-    isChasingPlayer: 0
+    general:
+      path: {fileID: 6651778975470948023, guid: b2cc86cd87bf6af47adc220ba62ada8c, type: 3}
+      formation: {fileID: 0}
+      enemyPrefabs:
+      - {fileID: 8572463996034910515, guid: fb1376fecff8bb046947d19a0d8a9ad6, type: 3}
+      isFormMoving: 0
+      isRotating: 0
+      endlessMove: 1
+      isChasingPlayer: 0
+    smooth:
+      smoothDelta: 0
+      smoothMovement: 0
+    rotation:
+      rotationSpeed: 0
+    spawns:
+      moveSpeed: 3
+      numberOfEnemies: 5
+      timeBetweenSpawns: 0.4
+    formMove:
+      magitude: 0
+      frequency: 0
+      isMovingHorizontal: 0
+      isMovingVertical: 0
+    aISettings:
+      AiChanceToReact: 0
+      aiSpeed: 0
   waypoints: []
   formationWaypoints: []
-  Path: {fileID: 6651778975470948023, guid: b2cc86cd87bf6af47adc220ba62ada8c, type: 3}
-  Formation: {fileID: 6651778975470948023, guid: b2cc86cd87bf6af47adc220ba62ada8c, type: 3}
-  formMoveSettings:
-    magitude: 0
-    frequency: 0
-    isMovingHorizontal: 0
-    isMovingVertical: 0
-  smoothDeltaSettings:
-    smoothDelta: 0
-    smoothMovement: 0

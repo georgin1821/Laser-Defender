@@ -470,7 +470,13 @@ MonoBehaviour:
       volume: 0.7
     - type: 18
       clip: {fileID: 8300000, guid: ed5e2404ec47d954e943650d188981dc, type: 3}
-      volume: 0.2
+      volume: 0.6
+    - type: 19
+      clip: {fileID: 8300000, guid: 6f6b57ca18e257244ab0a91aea0eb57a, type: 3}
+      volume: 0.8
+    - type: 20
+      clip: {fileID: 8300000, guid: 3f0892cbbd62b17459b5d201d9d8a293, type: 3}
+      volume: 0.8
   - source: {fileID: 4063994826276571740}
     audio:
     - type: 7

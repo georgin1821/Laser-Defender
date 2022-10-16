@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6438535020281242702}
-  - component: {fileID: 2307195323470113842}
+  - component: {fileID: 2404806390285757822}
   m_Layer: 0
   m_Name: Division 1
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2307195323470113842
+--- !u!114 &2404806390285757822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,32 +41,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 5049398550342009626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b08ced8501f88749b2788c8dec6b4c7, type: 3}
+  m_Script: {fileID: 11500000, guid: bb4fd92a5d558fe48824a1fb3d5ba5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  divSet: 1
   divisionConfig:
-    enemyPrefabs:
-    - {fileID: 5232501604013439184, guid: 4876ba47b7f7be443a56228e8f244185, type: 3}
-    moveSpeed: 3
-    numberOfEnemies: 10
+    general:
+      path: {fileID: 4144552916789586446, guid: ec67019affbe5cd4bafc90ef1ef9ceff, type: 3}
+      formation: {fileID: 2987657171358640454, guid: 3b30ee83b4268254b9de73da98e19f9d, type: 3}
+      enemyPrefabs:
+      - {fileID: 7129826148347833026, guid: 943891c3e7e6ef2478c9bffee73af982, type: 3}
+      isFormMoving: 1
+      isRotating: 0
+      endlessMove: 0
+    smooth:
+      smoothDelta: 0
+      smoothMovement: 0
+    rotation:
+      rotationSpeed: 350
+    spawns:
+      moveSpeed: 3
+      numberOfEnemies: 10
+      timeBetweenSpawns: 0.3
+    formMove:
+      magitude: 0.1
+      frequency: 1
+      isMovingHorizontal: 0
+      isMovingVertical: 1
+    aISettings:
+      AiChanceToReact: 4
+      aiSpeed: 2
   waypoints: []
   formationWaypoints: []
-  Path: {fileID: 6348485994909022431, guid: a2a6ad798959e094182db84553ca8db0, type: 3}
-  Formation: {fileID: 5301202760445331000, guid: 6a2a70b8426e83e42b14c4f70466c76a, type: 3}
-  enemyAISettings:
-    AiChanceToReact: 10
-    aiSpeed: 1
-  formMoveSettings:
-    magitude: 0.1
-    frequency: 1
-    isMovingHorizontal: 1
-    isMovingVertical: 1
-  spawnsSettings:
-    timeBetweenSpawns: 0.2
-    endlessMove: 0
-  smoothDeltaSettings:
-    smoothDelta: 0
-    smoothMovement: 0
-  rotationSettings:
-    rotationSpeed: 350
-    isRotating: 1

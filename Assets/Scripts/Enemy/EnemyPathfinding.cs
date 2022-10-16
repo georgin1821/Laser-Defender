@@ -22,24 +22,18 @@ public class EnemyPathfinding : MonoBehaviour
     bool isReacting;
     bool isRotating;
     bool endlessMove;
-    float chasingSpeed;
     bool isFormMoving;
-    bool isChasingPlayer;
     bool smoothMovement;
     float smoothDelta;
     float frequency;
     float magnitude;
+    bool isChasingPlayer;
     List<Transform> waypoints;
     int id;
-    float yMax;
 
     Transform endTrans;
-    DivisionAbstract divisionAbstract;
+    DivisionSpawn divSpawn;
 
-    private void Start()
-    {
-        yMax = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y + 2;
-    }
     private void Update()
     {
         switch (state)
@@ -48,19 +42,11 @@ public class EnemyPathfinding : MonoBehaviour
                 break;
             case EnemyState.FormationMove:
                 break;
-            case EnemyState.MovingToPlayer:
+            case EnemyState.AgentCycle:
                 break;
             case EnemyState.DivisionToPath:
                 break;
             case EnemyState.FormationDeployment:
-                break;
-            case EnemyState.VerticalMovement:
-                if (transform.position.y < -yMax)
-                {
-                    StopAllCoroutines();
-                    Destroy(this.gameObject);
-                    EnemyCount.instance.Count--;
-                }
                 break;
         }
     }
@@ -71,38 +57,34 @@ public class EnemyPathfinding : MonoBehaviour
         switch (newState)
         {
             case EnemyState.PointToPoint:
-                this.endTrans = divisionAbstract.formationWaypoints[id];
+                this.endTrans = divSpawn.formationWaypoints[id];
                 StartCoroutine(DeploymentRoutineSinglePoint());
                 break;
 
             case EnemyState.FormationMove:
-                isReacting = false;
                 StartCoroutine(FormationMove());
-                StartCoroutine(AgentChanceToReact());
+                if (AIchanceToReact > 0) StartCoroutine(AgentChanceToReact());
                 break;
 
-            case EnemyState.MovingToPlayer:
+            case EnemyState.AgentCycle:
+                StopAllCoroutines();
                 StartCoroutine(AgentCycle());
                 break;
 
             case EnemyState.DivisionToPath:
-                waypoints = divisionAbstract.waypoints;
+                waypoints = divSpawn.waypoints;
                 StartCoroutine(DeploymentRoutine(isRotating));
                 break;
 
             case EnemyState.FormationDeployment:
-                formPosition = divisionAbstract.formationWaypoints[id].position;
+                formPosition = divSpawn.formationWaypoints[id].position;
                 StartCoroutine(DeploymentFormationRoutine());
                 break;
 
-            case EnemyState.VerticalMovement:
-                StartCoroutine(VerticalMovement());
-                break;
-
             case EnemyState.ChasingPlayer:
-                StartCoroutine(ChasingPlayer());
+                this.endTrans = divSpawn.formationWaypoints[id];
+                StartCoroutine(DeploymentRoutineSinglePoint());
                 break;
-
         }
     }
     void EndState()
@@ -114,18 +96,19 @@ public class EnemyPathfinding : MonoBehaviour
                 {
                     UpdateState(EnemyState.FormationMove);
                 }
-                else if (isChasingPlayer)
-                {
-                    UpdateState(EnemyState.ChasingPlayer);
-                }
-
                 break;
             case EnemyState.FormationMove:
                 StopAllCoroutines();
                 break;
-            case EnemyState.MovingToPlayer:
+            case EnemyState.AgentCycle:
                 break;
             case EnemyState.DivisionToPath:
+                break;
+            case EnemyState.ChasingPlayer:
+                if (isChasingPlayer)
+                {
+                    StartCoroutine(ChasingPlayer());
+                }
                 break;
         }
     }
@@ -159,7 +142,7 @@ public class EnemyPathfinding : MonoBehaviour
                 }
             }
 
-            if (Vector3.Distance(transform.position, nextPos) < 0.2f)
+            if (Vector3.Distance(transform.position, nextPos) < 0.1f)
             {
                 index++;
             }
@@ -219,15 +202,14 @@ public class EnemyPathfinding : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        UpdateState(EnemyState.FormationMove);
-
-
+        if (isFormMoving)
+        {
+            UpdateState(EnemyState.FormationMove);
+        }
     }
     IEnumerator FormationMove()
     {
         startingPosition = gameObject.transform.position;
-        //  frequency = Random.Range(frequency - 0.1f, frequency + 0.1f);
-        //  magnitude = Random.Range(magnitude - 0.1f, magnitude + .1f);
         Vector3 dir = Vector3.zero;
 
         while (true)
@@ -242,16 +224,6 @@ public class EnemyPathfinding : MonoBehaviour
             }
 
             transform.position = startingPosition + dir;
-            yield return null;
-        }
-    }
-    IEnumerator VerticalMovement()
-    {
-        speed = Random.Range(speed - speedRF, speed + speedRF);
-
-        while (true)
-        {
-            transform.Translate(Vector3.up * speed * Time.deltaTime);
             yield return null;
         }
     }
@@ -285,7 +257,7 @@ public class EnemyPathfinding : MonoBehaviour
                                 aiSpeed * Time.deltaTime);
             yield return null;
         }
-
+        isReacting = false;
         UpdateState(EnemyState.FormationMove);
     }
     IEnumerator AgentChanceToReact()
@@ -296,7 +268,7 @@ public class EnemyPathfinding : MonoBehaviour
 
             if (Random.Range(1, 100) <= AIchanceToReact)
             {
-                UpdateState(EnemyState.MovingToPlayer);
+                UpdateState(EnemyState.AgentCycle);
                 isReacting = true;
             }
         }
@@ -308,7 +280,7 @@ public class EnemyPathfinding : MonoBehaviour
         float distance;
         distance = Vector3.Distance(Player.instance.gameObject.transform.position, transform.position);
         GameObject player = Player.instance.gameObject;
-        while ( distance >  .2f)
+        while (distance > .2f)
         {
             dir = (player.transform.position - transform.position).normalized;
             rot = Quaternion.LookRotation(Vector3.forward, dir);
@@ -318,67 +290,43 @@ public class EnemyPathfinding : MonoBehaviour
 
             transform.position = Vector3.SmoothDamp(transform.position,
                 player.transform.position, ref velicity,
-                0.9f ,chasingSpeed);
+                0.9f, speed);
             yield return null;
         }
-        
-
     }
 
-    public void SetDivisionConfiguration(DivisionConfiguration divConfig, DivisionAbstract divisionAbstract, int id = 0)
+    public void SetDivisionConfiguration(DivisionConfiguration divConfig, DivisionSpawn spawn, int id = 0)
     {
-        this.divisionAbstract = divisionAbstract;
-        speed = divConfig.moveSpeed;
+        divSpawn = spawn;
+        speed = divConfig.spawns.moveSpeed;
+
         this.id = id;
-        isChasingPlayer = divConfig.isChasingPlayer;
-        isFormMoving = divConfig.isFormMoving;
+        isFormMoving = divConfig.general.isFormMoving;
+        isMovingHorizontal = divConfig.formMove.isMovingHorizontal;
+        isMovingVertical = divConfig.formMove.isMovingVertical;
+        isChasingPlayer = divConfig.general.isChasingPlayer;
+        frequency = divConfig.formMove.frequency;
+        magnitude = divConfig.formMove.magitude;
+        if (divConfig.aISettings != null)
+        {
+            AIchanceToReact = divConfig.aISettings.AiChanceToReact;
+            aiSpeed = divConfig.aISettings.aiSpeed;
+        }
+        endlessMove = divConfig.general.endlessMove;
+        smoothDelta = divConfig.smooth.smoothDelta;
+        smoothMovement = divConfig.smooth.smoothMovement;
+        rotationSpeed = divConfig.rotation.rotationSpeed;
+        isRotating = divConfig.general.isRotating;
     }
-    public void SetFormMoveConfg(FormMoveSettings settings)
-    {
-        isMovingHorizontal = settings.isMovingHorizontal;
-        isMovingVertical = settings.isMovingVertical;
-        frequency = settings.frequency;
-        magnitude = settings.magitude;
-    }
-    public void SetAIConfg(EnemyAISettings settings)
-    {
-        AIchanceToReact = settings.AiChanceToReact;
-        aiSpeed = settings.aiSpeed;
-    }
-    public void SetVerticalMoveConfg(VerticalMoveSettings settings)
-    {
-        speed = settings.speed;
-        speedRF = settings.speedRF;
-    }
-    public void SetSpawnConfig(SpawnsSettings settings)
-    {
-        endlessMove = settings.endlessMove;
-    }
-    public void SetSmoothDeltaConfig(SmoothDeltaSettings settings)
-    {
-        smoothDelta = settings.smoothDelta;
-        smoothMovement = settings.smoothMovement;
-    }
-    public void SetRotationConfig(RotationSettings settings)
-    {
-        rotationSpeed = settings.rotationSpeed;
-        isRotating = settings.isRotating;
-    }
-    public void SetAIChasingPlayerConfig(AIChasingPlayerSettings settings)
-    {
-        chasingSpeed = settings.chasingSpeed;
-    }
-
 }
 
 public enum EnemyState
 {
     PointToPoint,
     FormationMove,
-    MovingToPlayer,
+    AgentCycle,
     DivisionToPath,
     FormationDeployment,
-    VerticalMovement,
     ChasingPlayer
 }
 

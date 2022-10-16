@@ -5,58 +5,61 @@ using UnityEngine;
 [System.Serializable]
 public class DivisionConfiguration
 {
-    public GameObject[] enemyPrefabs;
-    public float moveSpeed;
-    public int numberOfEnemies;
-    public float timeBetweenSpawns;
-    public bool isFormMoving;
-    public bool isChasingPlayer;
-}
-[System.Serializable]
-public class RotationSettings
-{
-    public float rotationSpeed;
-    public bool isRotating;
-}
+    public GeneralSettings general;
+    public SmoothDeltaSettings smooth;
+    public RotationSettings rotation;
+    public SpawnsSettings spawns;
+    public FormMoveSettings formMove;
+    public EnemyAISettings aISettings;
 
-[System.Serializable]
-public class SmoothDeltaSettings
-{
-    public float smoothDelta;
-    public bool smoothMovement;
-}
-[System.Serializable]
-public class SpawnsSettings
-{
-    public bool endlessMove;
-}
 
-[System.Serializable]
-public class FormMoveSettings
-{
-    public float magitude;
-    public float frequency;
-    public bool isMovingHorizontal;
-    public bool isMovingVertical;
-}
+    [System.Serializable]
+    public class GeneralSettings
+    {
+        public GameObject path;
+        public GameObject formation;
+        public GameObject[] enemyPrefabs;
+        public bool isFormMoving;
+        public bool isRotating;
+        public bool endlessMove;
+        public bool isChasingPlayer;
+    }
+    [System.Serializable]
+    public class RotationSettings
+    {
+        public float rotationSpeed;
+    }
 
-[System.Serializable]
-public class EnemyAISettings
-{
-    public int AiChanceToReact;
-    public float aiSpeed;
-}
+    [System.Serializable]
+    public class SmoothDeltaSettings
+    {
+        public float smoothDelta;
+        public bool smoothMovement;
+    }
+    [System.Serializable]
+    public class SpawnsSettings
+    {
+        public float moveSpeed;
+        public int numberOfEnemies;
+        public float timeBetweenSpawns;
+    }
 
-[System.Serializable]
-public class VerticalMoveSettings
-{
-    public float speed;
-    public float speedRF;
-}
-[System.Serializable]
-public class AIChasingPlayerSettings
-{
-    public float chasingSpeed;
+    [System.Serializable]
+    public class FormMoveSettings
+    {
+        public float magitude;
+        public float frequency;
+        public bool isMovingHorizontal;
+        public bool isMovingVertical;
+    }
+
+    [System.Serializable]
+    public class EnemyAISettings
+    {
+        public int AiChanceToReact;
+        public float aiSpeed;       
+    }
+
 }
 
 

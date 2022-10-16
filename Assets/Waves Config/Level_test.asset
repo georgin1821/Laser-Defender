@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level_test
   m_EditorClassIdentifier: 
   waves:
-  - {fileID: 11400000, guid: 6de91e8ad3fc3324f978d9517ddd253c, type: 2}
+  - {fileID: 11400000, guid: 198803c3759f46c4790e4a0374573f3c, type: 2}

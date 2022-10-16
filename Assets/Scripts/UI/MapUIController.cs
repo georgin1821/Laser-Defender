@@ -33,7 +33,7 @@ public class MapUIController : MonoBehaviour
     private void Start()
     {
         InitializeLevelMenu();
-
+        load = GameManager.Instance.loadingFrom;
         switch (load)
         {
             case LoadingFrom.MAIN:

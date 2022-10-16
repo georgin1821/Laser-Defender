@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6438535020281242702}
-  - component: {fileID: -9016823748654756514}
+  - component: {fileID: 8921518418381176212}
   m_Layer: 0
   m_Name: squad 1
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-9016823748654756514
+--- !u!114 &8921518418381176212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,26 +41,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 5049398550342009626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671dae3805a0eb945b466a0ff824923c, type: 3}
+  m_Script: {fileID: 11500000, guid: bb4fd92a5d558fe48824a1fb3d5ba5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  divSet: 2
   divisionConfig:
-    enemyPrefabs:
-    - {fileID: 7129826148347833026, guid: 943891c3e7e6ef2478c9bffee73af982, type: 3}
-    moveSpeed: 1
-    numberOfEnemies: 20
+    general:
+      path: {fileID: 6729811204258008710, guid: dc718e4e2c65c5a46b23d55e01d5a7f1, type: 3}
+      formation: {fileID: 1888121897689164408, guid: 86d022369af2ae749824f5a3bb44dd5a, type: 3}
+      enemyPrefabs:
+      - {fileID: 7129826148347833026, guid: 943891c3e7e6ef2478c9bffee73af982, type: 3}
+      isFormMoving: 1
+      isRotating: 0
+      endlessMove: 0
+    smooth:
+      smoothDelta: 0.5
+      smoothMovement: 1
+    rotation:
+      rotationSpeed: 0
+    spawns:
+      moveSpeed: 4
+      numberOfEnemies: 20
+      timeBetweenSpawns: 0.1
+    formMove:
+      magitude: 0.5
+      frequency: 1
+      isMovingHorizontal: 1
+      isMovingVertical: 0
+    aISettings:
+      AiChanceToReact: 5
+      aiSpeed: 1.5
   waypoints: []
   formationWaypoints: []
-  Path: {fileID: 6729811204258008710, guid: dc718e4e2c65c5a46b23d55e01d5a7f1, type: 3}
-  Formation: {fileID: 1888121897689164408, guid: 86d022369af2ae749824f5a3bb44dd5a, type: 3}
-  formMoveSettings:
-    magitude: 0.2
-    frequency: 1
-    isMovingHorizontal: 0
-    isMovingVertical: 1
-  spawnsSettings:
-    timeBetweenSpawns: 0.1
-    endlessMove: 0
-  smoothDeltaSettings:
-    smoothDelta: 0.3
-    smoothMovement: 1

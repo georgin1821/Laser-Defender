@@ -7,9 +7,10 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(Gun))]
+[RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
-
+    #region All Variables
     public static Player instance;
 
     [SerializeField] int health;
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem engineFlames;
     [SerializeField] ParticleSystem shootingFlames;
     [SerializeField] GameObject rocketPrefab;
+    [Space(10)]
+    [Tooltip("Fire posiyion")]
     [SerializeField] Transform firePos;
     [SerializeField] GameObject shieldsVFX;
     GameObject redFlashImage;
@@ -28,14 +31,13 @@ public class Player : MonoBehaviour
     bool isGameStatePLAY;
     Coroutine co;
     GameObject shields;
-
     public int GameHealth { get; private set; }
     public GameObject[] Targets { get; set; }
     public int UpgradeRank { get; private set; }
 
     [Header("GameDev Settings")]
     [SerializeField] bool collideWithEnemy = true;
-
+    #endregion
     private void Awake()
     {
         if (instance == null)
@@ -82,7 +84,6 @@ public class Player : MonoBehaviour
 
     IEnumerator ShieldsCountDown()
     {
-
         playerHasShield = true;
         shields = Instantiate(shieldsVFX, transform.position, Quaternion.identity);
         shields.transform.SetParent(gameObject.transform);
@@ -90,7 +91,6 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(4);
         playerHasShield = false;
         Destroy(shields);
-
     }
     private void ProcessHit(ImpactController impactController)
     {
@@ -167,7 +167,6 @@ public class Player : MonoBehaviour
                     if (damageDealer == null) { return; }
                     ProcessHit(damageDealer);
                     break;
-
                 case "gunUpgrade":
                     if (UpgradeRank < 9)
                     {

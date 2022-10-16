@@ -82,10 +82,10 @@ public class BossAI : MonoBehaviour
             routeTrans2.Add(child);
         }
     }
-    public void SetConfig(DivisionConfiguration dv)
-    {
-        speed = dv.moveSpeed;
-    }
+    //public void SetConfig(DivisionConfiguration dv)
+    //{
+    //    speed = dv.moveSpeed;
+    //}
 }
 enum FightStage
     {

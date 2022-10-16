@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Tasks/Editor/LDEditorCSS.uss?fileID=7433441132597879392&amp;guid=d9e89e51eeb401d4da4973fbb1eeb01f&amp;type=3#LDEditorCSS" />
+    <ui:VisualElement class="parent">
+        <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="testButton" />
+        <ui:Toggle label="Toggle" name="Toggle" />
+    </ui:VisualElement>
+    <uie:ObjectField label="Object Field" name="object" />
+</ui:UXML>

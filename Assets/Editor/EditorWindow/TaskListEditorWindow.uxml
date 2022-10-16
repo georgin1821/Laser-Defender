@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/Tasks/Editor/EditorWindow/TaskListEditorUCSS.uss?fileID=7433441132597879392&amp;guid=4f890fdd51a2bd444ac6cb56c6803140&amp;type=3#TaskListEditorUCSS" />
+    <ui:VisualElement name="LoadingTasks">
+        <uie:ObjectField label="Object Field" name="SavedTasksObjectField" />
+        <ui:Button text="LoadTask" display-tooltip-when-elided="true" name="LoadTasksButton" />
+    </ui:VisualElement>
+    <ui:VisualElement name="AddingTasks" class="parent" style="flex-direction: row; flex-wrap: wrap;">
+        <ui:Label text="Add New Task" display-tooltip-when-elided="true" />
+        <ui:TextField picking-mode="Ignore" text="new Task&#10;" name="taskText" max-length="10" />
+        <ui:Button text="Add" display-tooltip-when-elided="true" name="addTaskButton" />
+    </ui:VisualElement>
+    <ui:VisualElement name="DisplayingTasks">
+        <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="TaskList" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: DemoTasks
   m_EditorClassIdentifier: 
   tasks:
-  - 
-  - 
-  - 
-  - 
+  - Add Task
+  - Save
+  - Complete
+  - teast
+  - r44rr
+  - test

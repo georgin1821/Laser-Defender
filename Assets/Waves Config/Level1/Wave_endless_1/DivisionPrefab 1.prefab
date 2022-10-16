@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6438535020281242702}
-  - component: {fileID: -4150060724838678947}
+  - component: {fileID: 5837280449922178334}
   m_Layer: 0
   m_Name: DivisionPrefab 1
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4150060724838678947
+--- !u!114 &5837280449922178334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,20 +41,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 5049398550342009626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3496480c45f6b054289f2c79a975f959, type: 3}
+  m_Script: {fileID: 11500000, guid: bb4fd92a5d558fe48824a1fb3d5ba5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  divSet: 0
   divisionConfig:
-    enemyPrefabs:
-    - {fileID: 7129826148347833026, guid: 943891c3e7e6ef2478c9bffee73af982, type: 3}
-    moveSpeed: 4
-    numberOfEnemies: 12
+    general:
+      path: {fileID: 3305447395282386722, guid: 8dbee08d93016d14ea89f75f81e91bc6, type: 3}
+      formation: {fileID: 0}
+      enemyPrefabs:
+      - {fileID: 3994527224813682958, guid: d6e4f9f25f2759d4f90ee8b39a09463d, type: 3}
+      isFormMoving: 0
+      isRotating: 0
+      endlessMove: 1
+      isChasingPlayer: 0
+    smooth:
+      smoothDelta: 0
+      smoothMovement: 0
+    rotation:
+      rotationSpeed: 360
+    spawns:
+      moveSpeed: 2
+      numberOfEnemies: 10
+      timeBetweenSpawns: 0.3
+    formMove:
+      magitude: 0
+      frequency: 0
+      isMovingHorizontal: 0
+      isMovingVertical: 0
+    aISettings:
+      AiChanceToReact: 0
+      aiSpeed: 0
   waypoints: []
   formationWaypoints: []
-  Path: {fileID: 3305447395282386722, guid: 8dbee08d93016d14ea89f75f81e91bc6, type: 3}
-  spawnsSettings:
-    timeBetweenSpawns: 0.2
-    endlessMove: 1
-  rotationSettings:
-    rotationSpeed: 0
-    isRotating: 0

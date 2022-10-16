@@ -45,8 +45,8 @@ GameObject:
   - component: {fileID: -4162771845356797190}
   - component: {fileID: 3229215462840187401}
   - component: {fileID: 207049268902838722}
-  - component: {fileID: 6614014984757136112}
   - component: {fileID: 4460007178788296117}
+  - component: {fileID: 6010993476559468205}
   m_Layer: 3
   m_Name: Gun Station
   m_TagString: Enemy
@@ -128,18 +128,6 @@ MonoBehaviour:
   chanceOfDropMultipleCoins: 0
   chanseOfDropGems: 0
   cointToSpwan: 0
---- !u!114 &6614014984757136112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419395394205435480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0114d318a49533340bd3169c4ba21cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4460007178788296117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +142,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laser: {fileID: 6959609935162348455}
   line: {fileID: 5709142772519447768}
+--- !u!114 &6010993476559468205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419395394205435480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1815ca78a0a82b04c8038a3c86332101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5111476570012399670
 GameObject:
   m_ObjectHideFlags: 0
